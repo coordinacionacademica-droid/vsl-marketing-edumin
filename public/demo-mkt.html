@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Demo VSL Marketing - EDUMIN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background: #050016;
+      color: #fff;
+      font-family: system-ui, -apple-system, sans-serif;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .btn {
+      display: inline-block;
+      margin: 15px;
+      padding: 16px 32px;
+      background: linear-gradient(90deg, #FF7200, #F00006);
+      color: white;
+      text-decoration: none;
+      font-weight: 800;
+      border-radius: 12px;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+  </style>
+</head>
+<body>
+  <h1>Página de Ejemplo que diseña Marketing</h1>
+  <p>Cualquiera de los botones que diseñe Marketing abre el modal oficial automáticamente:</p>
+
+  <!-- Botón 1 -->
+  <a href="#checkout" class="btn">
+    PAGAR AHORA Y OBTENER ACCESO
+  </a>
+
+  <!-- Botón 2 -->
+  <a href="#checkout" class="btn">
+    QUIERO ACCEDER AL CURSO
+  </a>
+
+  <!-- SCRIPT QUE LES DAS A MARKETING -->
+  <script src="/edumin-checkout.js" 
+          data-curso="Curso Especializado en Gestión Minera" 
+          data-precio="129" 
+          data-wa="987423200">
+  </script>
+</body>
+</html>

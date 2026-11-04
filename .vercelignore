@@ -1,0 +1,8 @@
+.env
+.env.local
+*.log
+*.py
+*.bak
+pagos_verificados.json
+matriculas_registradas.json
+links_history.json

@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EDUMIN - Ficha de Matrícula Digital Q10</title>
+  <script>
+    // Romper iframe si dLocal Go lo cargó dentro de un modal
+    if (window.top !== window.self) {
+      try {
+        window.top.location.href = window.location.href;
+      } catch (e) {}
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-orange: #ff6600;
+      --primary-orange-hover: #e65c00;
+      --dark-header: #111827;
+      --dark-text: #0f172a;
+      --muted-text: #64748b;
+      --light-bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border-color: #e2e8f0;
+      --success-green: #059669;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--light-bg);
+      color: var(--dark-text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* HEADER */
+    header.main-header {
+      background-color: var(--dark-header);
+      padding: 16px 24px;
+      border-bottom: 3px solid var(--primary-orange);
+    }
+    .header-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo-img { height: 38px; width: auto; }
+    .header-badge {
+      color: #cbd5e1;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .main-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 650px;
+      width: 100%;
+    }
+
+    /* BANNER PAGO EXITOSO */
+    .success-banner {
+      background: #ecfdf5;
+      border: 1px solid #10b981;
+      border-radius: 14px;
+      padding: 18px 24px;
+      text-align: center;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.08);
+    }
+    .success-icon {
+      font-size: 2rem;
+      margin-bottom: 4px;
+    }
+    .success-banner h2 {
+      font-family: 'Montserrat', sans-serif;
+      color: #065f46;
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+    .success-banner p {
+      color: #047857;
+      font-size: 0.88rem;
+    }
+
+    /* FORM CARD */
+    .form-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 35px 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+    .form-header {
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+    }
+    .form-header h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+    .form-header p {
+      color: var(--muted-text);
+      font-size: 0.88rem;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 6px;
+    }
+    label .req { color: #dc2626; }
+
+    input, select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color: #0f172a;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      outline: none;
+      transition: all 0.2s;
+    }
+    input:focus, select:focus {
+      border-color: var(--primary-orange);
+      box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.15);
+    }
+
+    /* MONTO BLOQUEADO (NO EDITABLE) */
+    .locked-input-wrapper {
+      position: relative;
+    }
+    input[readonly] {
+      background: #f1f5f9;
+      border: 1px dashed #94a3b8;
+      color: #059669;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: not-allowed;
+      padding-right: 120px;
+    }
+    .lock-badge {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(5, 150, 105, 0.12);
+      border: 1px solid #059669;
+      color: #059669;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+    @media (max-width: 600px) {
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--primary-orange);
+      color: #ffffff;
+      border: none;
+      padding: 16px;
+      border-radius: 10px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 15px;
+      box-shadow: 0 6px 20px rgba(255, 102, 0, 0.3);
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-submit:hover {
+      background: var(--primary-orange-hover);
+      box-shadow: 0 8px 25px rgba(255, 102, 0, 0.4);
+      transform: translateY(-1px);
+    }
+
+    /* CARD DE AVISO: YA MATRICULADO */
+    .already-card {
+      display: none;
+      background: #ffffff;
+      border: 2px solid #3b82f6;
+      border-radius: 16px;
+      padding: 35px 25px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    }
+    .already-icon {
+      font-size: 3rem;
+      color: #3b82f6;
+      margin-bottom: 12px;
+    }
+    .already-card h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.4rem;
+      color: #0f172a;
+      margin-bottom: 8px;
+    }
+    .already-card p {
+      color: var(--muted-text);
+      font-size: 0.95rem;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+
+    /* CARD FINAL DE ÉXITO */
+    .final-success-card {
+      display: none;
+      background: #ffffff;
+      border: 2px solid #10b981;
+      border-radius: 16px;
+      padding: 35px 25px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    }
+    .final-check {
+      width: 60px;
+      height: 60px;
+      background: #ecfdf5;
+      color: #059669;
+      border: 2px solid #10b981;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      font-weight: 900;
+      margin: 0 auto 16px;
+    }
+
+    footer.site-footer {
+      border-top: 1px solid var(--border-color);
+      background: #ffffff;
+      padding: 20px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--muted-text);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="main-header">
+    <div class="header-inner">
+      <img src="https://videoconferenciasdiplomado-alt.github.io/imagenes/logo/logo%20blanco.png" alt="Logo EDUMIN" class="logo-img">
+      <div class="header-badge">Campus Virtual Q10 • Admisión</div>
+    </div>
+  </header>
+
+  <div class="main-wrap">
+    <div class="container">
+
+      <!-- BANNER DE COMPROBANTE VALIDADO -->
+      <div class="success-banner" id="bannerSuccess">
+        <div class="success-icon">✅</div>
+        <h2>¡Pago Confirmado por dLocal Go!</h2>
+        <p>Tu comprobante fue validado con éxito. Por favor completa la ficha para activar tu usuario y clave en <strong>Q10</strong>.</p>
+      </div>
+
+      <!-- CARD DE ALERTA: YA MATRICULADO (ANTI-DUPLICIDAD) -->
+      <div class="already-card" id="alreadyCard">
+        <div class="already-icon">ℹ️</div>
+        <h2>Esta compra ya fue formalizada</h2>
+        <p id="alreadyMessage">
+          Tus datos ya están registrados en el sistema académico Q10. Tus credenciales fueron enviadas a tu correo electrónico.
+        </p>
+        <a href="/" style="display: inline-block; background: #0f172a; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.9rem;">
+          Ir al Inicio
+        </a>
+      </div>
+
+      <!-- FORMULARIO DE MATRÍCULA -->
+      <div class="form-card" id="formCard">
+        <div class="form-header">
+          <h1>🎓 Ficha Oficial de Matrícula Q10</h1>
+          <p>Los datos ingresados se sincronizarán directamente con tu cuenta estudiantil.</p>
+        </div>
+
+        <form id="formMatricula" onsubmit="enviarMatricula(event)">
+
+          <!-- PROGRAMA MATRICULADO -->
+          <div class="form-group">
+            <label for="diplomado">Programa de Especialización <span class="req">*</span></label>
+            <select id="diplomado" required>
+              <option value="Gestión Minera">DAEM en Gestión Minera (120 Horas)</option>
+              <option value="Geometalurgia">DAEM en Geometalurgia (120 Horas)</option>
+            </select>
+          </div>
+
+          <!-- MONTO PAGADO (BLOQUEADO) -->
+          <div class="form-group">
+            <label for="montoPagado">Monto Abonado (Validado por Pasarela)</label>
+            <div class="locked-input-wrapper">
+              <input type="text" id="montoPagado" readonly value="27.00 USD">
+              <span class="lock-badge">🔒 Comprobante OK</span>
+            </div>
+            <small style="color: var(--muted-text); font-size: 0.75rem; margin-top: 4px; display: block;">
+              El monto se encuentra bloqueado y vinculado a tu ID de transacción en dLocal Go.
+            </small>
+          </div>
+
+          <div class="grid-2">
+            <!-- NOMBRES -->
+            <div class="form-group">
+              <label for="nombres">Nombres Completos <span class="req">*</span></label>
+              <input type="text" id="nombres" required placeholder="Ej: Juan Carlos">
+            </div>
+
+            <!-- APELLIDOS -->
+            <div class="form-group">
+              <label for="apellidos">Apellidos Completos <span class="req">*</span></label>
+              <input type="text" id="apellidos" required placeholder="Ej: Pérez Quispe">
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <!-- TIPO DE DOCUMENTO -->
+            <div class="form-group">
+              <label for="tipoDoc">Tipo de Documento <span class="req">*</span></label>
+              <select id="tipoDoc" required>
+                <option value="DNI">DNI (Perú)</option>
+                <option value="CE">Carnet de Extranjería</option>
+                <option value="PASAPORTE">Pasaporte</option>
+                <option value="CC">Cédula de Ciudadanía (Colombia)</option>
+                <option value="CURP">CURP / INE (México)</option>
+                <option value="RUT">RUT (Chile)</option>
+                <option value="OTRO">Otro Documento</option>
+              </select>
+            </div>
+
+            <!-- NÚMERO DE DOCUMENTO -->
+            <div class="form-group">
+              <label for="numDoc">Número de Documento <span class="req">*</span></label>
+              <input type="text" id="numDoc" required placeholder="Ingresa tu documento">
+            </div>
+          </div>
+
+          <!-- CORREO ELECTRÓNICO (BLOQUEABLE SI VIENE DE DLOCAL) -->
+          <div class="form-group">
+            <label for="correo">Correo Electrónico para Acceso a Q10 <span class="req">*</span></label>
+            <div class="locked-input-wrapper">
+              <input type="email" id="correo" required placeholder="tu-correo@ejemplo.com">
+              <span class="lock-badge" id="correoLockBadge" style="display: none;">🔒 Verificado</span>
+            </div>
+            <small id="correoHelpText" style="color: var(--muted-text); font-size: 0.75rem; margin-top: 4px; display: block;">
+              A esta dirección se enviará tu usuario y contraseña institucional.
+            </small>
+          </div>
+
+          <!-- TELÉFONO / WHATSAPP -->
+          <div class="form-group">
+            <label for="telefono">Teléfono / WhatsApp (Con código de país) <span class="req">*</span></label>
+            <input type="tel" id="telefono" required placeholder="Ej: +51 987654321">
+          </div>
+
+          <button type="submit" class="btn-submit" id="btnSubmitMatricula">
+            <span>FINALIZAR MATRÍCULA Y ACTIVAR EN Q10</span>
+            <span>➔</span>
+          </button>
+
+        </form>
+      </div>
+
+      <!-- TARJETA FINAL DE ÉXITO -->
+      <div class="final-success-card" id="finalSuccessCard">
+        <div class="final-check">✓</div>
+        <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.4rem; margin-bottom: 8px; color: #0f172a;">
+          ¡Matrícula Formalizada con Éxito!
+        </h2>
+        <p style="color: var(--muted-text); font-size: 0.9rem; line-height: 1.5; margin-bottom: 20px;">
+          Tus datos han sido registrados en la plataforma académica de EDUMIN. Hemos generado tus accesos al <strong>Aula Virtual Q10</strong> y los enviamos a tu correo.
+        </p>
+        <div style="background: #f8fafc; padding: 16px; border-radius: 10px; border: 1px solid var(--border-color); margin-bottom: 20px; text-align: left; font-size: 0.88rem;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+            <span style="color: var(--muted-text);">Estudiante:</span>
+            <strong id="resEstudiante" style="color: #0f172a;">-</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+            <span style="color: var(--muted-text);">Programa:</span>
+            <strong id="resDiplomado" style="color: var(--primary-orange);">-</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between;">
+            <span style="color: var(--muted-text);">Monto Validado:</span>
+            <strong id="resMonto" style="color: #059669;">-</strong>
+          </div>
+        </div>
+        <a href="/" style="display: inline-block; background: #0f172a; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.88rem;">
+          Volver al Inicio
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <p>© 2026 EDUMIN - Centro de Alta Especialización Minera. Aula Virtual Q10.</p>
+  </footer>
+
+  <script>
+    // 1. Leer parámetros de URL
+    const params = new URLSearchParams(window.location.search);
+    const orderId = params.get('order_id') || params.get('orderId') || '';
+    const emailParam = params.get('email') || '';
+    const monto = params.get('monto') || '27.00';
+    const moneda = params.get('moneda') || 'USD';
+    const diplomadoParam = params.get('diplomado') || params.get('producto') || '';
+    const campana = params.get('campana') || 'General';
+    const firstNameParam = params.get('first_name') || params.get('nombres') || '';
+    const lastNameParam = params.get('last_name') || params.get('apellidos') || '';
+    const dniParam = params.get('dni') || params.get('documento') || '';
+
+    // Precargar nombres, apellidos y DNI
+    if (firstNameParam) document.getElementById('nombres').value = decodeURIComponent(firstNameParam);
+    if (lastNameParam) document.getElementById('apellidos').value = decodeURIComponent(lastNameParam);
+    if (dniParam) document.getElementById('numDoc').value = decodeURIComponent(dniParam);
+
+    // Asignar monto bloqueado
+    const formattedAmount = `${monto} ${moneda}`;
+    document.getElementById('montoPagado').value = formattedAmount;
+
+    // Si viene email en la URL, pre-cargar y bloquear
+    if (emailParam) {
+      const inputCorreo = document.getElementById('correo');
+      inputCorreo.value = emailParam;
+      inputCorreo.readOnly = true;
+      document.getElementById('correoLockBadge').style.display = 'flex';
+      document.getElementById('correoHelpText').innerText = '🔒 Correo verificado con el comprobante de dLocal Go.';
+    }
+
+    // Precargar diplomado
+    if (diplomadoParam) {
+      const selectDiplomado = document.getElementById('diplomado');
+      for (let i = 0; i < selectDiplomado.options.length; i++) {
+        if (selectDiplomado.options[i].value.toLowerCase().includes(diplomadoParam.toLowerCase()) ||
+            diplomadoParam.toLowerCase().includes(selectDiplomado.options[i].value.toLowerCase())) {
+          selectDiplomado.selectedIndex = i;
+          break;
+        }
+      }
+    }
+
+    // 2. VALIDACIÓN ANTI-DUPLICIDAD: Verificar si este pago ya fue utilizado antes
+    async function validarEstadoPago() {
+      if (!orderId && !emailParam) return;
+
+      try {
+        const query = new URLSearchParams();
+        if (orderId) query.set('order_id', orderId);
+        if (emailParam) query.set('email', emailParam);
+
+        const res = await fetch(`/api/validar-pago?${query.toString()}`);
+        const data = await res.json();
+
+        if (data.already_registered) {
+          document.getElementById('formCard').style.display = 'none';
+          document.getElementById('bannerSuccess').style.display = 'none';
+          document.getElementById('alreadyMessage').innerText = data.message || 'Esta orden de compra ya completó su registro de matrícula en Q10.';
+          document.getElementById('alreadyCard').style.display = 'block';
+        }
+      } catch (err) {
+        console.warn('Verificación previa:', err);
+      }
+    }
+
+    validarEstadoPago();
+
+    // 3. Procesar matrícula y enviar a n8n
+    async function enviarMatricula(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnSubmitMatricula');
+      btn.disabled = true;
+      btn.innerText = "Formalizando matrícula en Q10...";
+
+      const payload = {
+        order_id: orderId,
+        diplomado: document.getElementById('diplomado').value,
+        nombres: document.getElementById('nombres').value.trim(),
+        apellidos: document.getElementById('apellidos').value.trim(),
+        tipoDocumento: document.getElementById('tipoDoc').value,
+        numeroDocumento: document.getElementById('numDoc').value.trim(),
+        correo: document.getElementById('correo').value.trim(),
+        telefono: document.getElementById('telefono').value.trim(),
+        montoPagado: formattedAmount,
+        campana: campana,
+        fechaRegistro: new Date().toISOString()
+      };
+
+      try {
+        const res = await fetch('/api/registrar-matricula', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+
+        if (!res.ok || !data.success) {
+          alert('⚠️ ' + (data.error || 'No se pudo completar el registro.'));
+          btn.disabled = false;
+          btn.innerText = "FINALIZAR MATRÍCULA Y ACTIVAR EN Q10 ➔";
+          return;
+        }
+
+        document.getElementById('formCard').style.display = 'none';
+        document.getElementById('bannerSuccess').style.display = 'none';
+
+        document.getElementById('resEstudiante').innerText = `${payload.nombres} ${payload.apellidos}`;
+        document.getElementById('resDiplomado').innerText = payload.diplomado;
+        document.getElementById('resMonto').innerText = payload.montoPagado;
+
+        document.getElementById('finalSuccessCard').style.display = 'block';
+
+      } catch (err) {
+        console.error('Error al registrar:', err);
+        alert('Hubo un inconveniente de conexión. Por favor reintenta.');
+        btn.disabled = false;
+        btn.innerText = "FINALIZAR MATRÍCULA Y ACTIVAR EN Q10 ➔";
+      }
+    }
+  </script>
+
+</body>
+</html>

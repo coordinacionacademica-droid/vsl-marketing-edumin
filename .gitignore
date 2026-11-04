@@ -1,0 +1,32 @@
+# Entorno y credenciales confidenciales (NUNCA SUBIR A GITHUB)
+.env
+.env.local
+.env.*.local
+
+# Dependencias
+node_modules/
+
+# Archivos de datos y credenciales locales
+pagos_verificados.json
+matriculas_registradas.json
+links_history.json
+auth_response.json
+integration_details.json
+merchant_me.json
+pagos_pasarela_wf.json
+docs_content.html
+
+# Logs y temporales
+*.log
+npm-debug.log*
+yarn-debug.log*
+.DS_Store
+Thumbs.db
+
+# Scripts de prueba y utilitarios temporales
+*.py
+*.bak
+find_dy.py
+patch_*.py
+scratch_*.py
+test_*.py

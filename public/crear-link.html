@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Campañas y Links de Pago - Marketing | Instituto Avanza</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0b1120;
+      color: #f8fafc;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      padding: 30px 20px;
+    }
+    .wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .header-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid #10b981;
+      color: #10b981;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.7rem;
+      color: #ffffff;
+    }
+
+    .card {
+      background: #1e293b;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      margin-bottom: 30px;
+    }
+    
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 640px) {
+      .form-grid-2 { grid-template-columns: 1fr; }
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #cbd5e1;
+      margin-bottom: 6px;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #334155;
+      background: #0f172a;
+      color: #ffffff;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input:focus, select:focus {
+      border-color: #10b981;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+    }
+
+    /* REGLAS DEL SISTEMA BLINDADAS */
+    .system-fixed-box {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin: 18px 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+    @media (max-width: 640px) {
+      .system-fixed-box { grid-template-columns: 1fr; }
+    }
+    .fixed-item-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+    .fixed-item-desc {
+      font-size: 0.78rem;
+      color: #64748b;
+      line-height: 1.4;
+    }
+
+    .btn-create {
+      width: 100%;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #fff;
+      border: none;
+      padding: 15px;
+      border-radius: 12px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform 0.2s, background 0.2s;
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+    }
+    .btn-create:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    }
+
+    /* RESULTADO CON EL LINK */
+    .result-box {
+      display: none;
+      background: #0f172a;
+      border: 1px solid #10b981;
+      border-radius: 16px;
+      padding: 22px;
+      margin-top: 25px;
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .result-title {
+      color: #10b981;
+      font-weight: 700;
+      font-size: 1.05rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .link-display {
+      background: #1e293b;
+      border: 1px solid #334155;
+      padding: 12px;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 0.88rem;
+      color: #38bdf8;
+      word-break: break-all;
+      margin-bottom: 15px;
+    }
+    .btn-copy {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s;
+    }
+    .btn-copy:hover { background: #1d4ed8; }
+    .btn-test {
+      background: #334155;
+      color: white;
+      text-decoration: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-left: 8px;
+    }
+    .btn-test:hover { background: #475569; }
+
+    /* TABLA DE HISTORIAL DE CAMPAÑAS */
+    .history-card {
+      background: #1e293b;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    }
+    .history-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    .history-header h2 {
+      font-size: 1.2rem;
+      font-family: 'Montserrat', sans-serif;
+      color: #fff;
+    }
+    .table-responsive {
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      text-align: left;
+    }
+    th {
+      background: #0f172a;
+      color: #94a3b8;
+      padding: 12px 14px;
+      font-weight: 600;
+      border-bottom: 1px solid #334155;
+    }
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: #cbd5e1;
+    }
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .btn-mini-copy {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-mini-copy:hover { background: #1d4ed8; }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+    
+    <!-- ENCABEZADO -->
+    <div class="header-banner">
+      <div>
+        <div class="badge">Autoservicio para Marketing</div>
+        <h1>Generador de Links de Pago por Campaña</h1>
+        <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 4px;">
+          Crea enlaces de pago personalizados según tu campaña publicitaria. Sincronización automática con n8n y Q10.
+        </p>
+      </div>
+      <a href="/" style="color: #38bdf8; font-size: 0.88rem; text-decoration: none;">← Ir a la VSL</a>
+    </div>
+
+    <!-- FORMULARIO DE GENERACIÓN DE CAMPAÑA -->
+    <div class="card">
+      <form id="campaignForm" onsubmit="crearLinkCampana(event)">
+
+        <div class="form-grid-2">
+          <!-- 1. PROGRAMA -->
+          <div class="form-group">
+            <label for="programSelect">Programas de Especialización Internacional:</label>
+            <select id="programSelect" required>
+              <option value="Gestión Minera">⛏️ Gestión Minera</option>
+              <option value="Geometalurgia">🔬 Geometalurgia</option>
+            </select>
+          </div>
+
+          <!-- 2. IDENTIFICADOR DE CAMPAÑA / UTM -->
+          <div class="form-group">
+            <label for="campaignName">Nombre o Código de la Campaña (UTM):</label>
+            <input type="text" id="campaignName" placeholder="Ej: fb-ads-marzo, webinar-vsl, tiktok-ads" required>
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <!-- 3. MONTO -->
+          <div class="form-group">
+            <label for="campaignAmount">Monto de Venta de esta Campaña:</label>
+            <input type="number" id="campaignAmount" step="0.01" min="1" placeholder="27.00" value="27.00" required>
+          </div>
+
+          <!-- 4. MONEDA -->
+          <div class="form-group">
+            <label for="campaignCurrency">Moneda de Cobro:</label>
+            <select id="campaignCurrency">
+              <option value="USD">USD - Dólares Americanos ($)</option>
+              <option value="PEN">PEN - Soles Peruanos (S/)</option>
+              <option value="COP">COP - Pesos Colombianos ($)</option>
+              <option value="MXN">MXN - Pesos Mexicanos ($)</option>
+              <option value="CLP">CLP - Pesos Chilenos ($)</option>
+              <option value="BRL">BRL - Reales Brasileños (R$)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 5. PAÍS DESTINO -->
+        <div class="form-group">
+          <label for="campaignCountry">País Destino del Link:</label>
+          <select id="campaignCountry">
+            <option value="ALL">🌐 TODOS LOS PAÍSES (El comprador selecciona su país)</option>
+            <option value="PE" selected>🇵🇪 Perú (Va directo a Yape, Plin, Tarjetas, PagoEfectivo)</option>
+            <option value="CO">🇨🇴 Colombia (Va directo a PSE, Tarjetas, Bancolombia)</option>
+            <option value="MX">🇲🇽 México (Va directo a SPEI, OXXO, Tarjetas, Cuotas)</option>
+            <option value="CL">🇨🇱 Chile (Va directo a Webpay, Redcompra, Tarjetas)</option>
+            <option value="EC">🇪🇨 Ecuador (Va directo a Transferencia, Tarjetas)</option>
+            <option value="AR">🇦🇷 Argentina (Va directo a Tarjetas, Medios Locales)</option>
+            <option value="BR">🇧🇷 Brasil (Va directo a Pix, Boleto, Cartão)</option>
+            <option value="US">🇺🇸 Estados Unidos / Internacional</option>
+          </select>
+        </div>
+
+        <!-- BLOQUE DE REGLAS BLINDADAS (NO MODIFICABLES POR MKT) -->
+        <div class="system-fixed-box">
+          <div>
+            <div class="fixed-item-title">
+              <span>🔒 Webhook de Ventas Blindado:</span>
+            </div>
+            <div class="fixed-item-desc">
+              Conectado a n8n (<code>https://n8n.gcg-corp.com/webhook/pagos-dlocalgo</code>). Se activa inmediatamente al pagar.
+            </div>
+          </div>
+          <div>
+            <div class="fixed-item-title">
+              <span>🎓 Redirección Automática Post-Pago:</span>
+            </div>
+            <div class="fixed-item-desc">
+              El alumno es enviado a la Ficha Oficial para registrarse en Q10 con su monto pagado bloqueado.
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-create" id="btnSubmit">
+          <span>⚡ Generar Link para esta Campaña</span>
+        </button>
+      </form>
+
+      <!-- CAJA DE RESULTADO -->
+      <div class="result-box" id="resultBox">
+        <div class="result-title">
+          <span>🎉</span> ¡Tu Link de Campaña ha sido Creado!
+        </div>
+        <div class="link-display" id="generatedLink">...</div>
+        
+        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+          <button class="btn-copy" onclick="copiarLinkResultado()" id="btnCopyResult">
+            📋 Copiar Link Oficial
+          </button>
+          <a class="btn-test" id="btnTestResult" href="#" target="_blank">
+            ↗ Probar Checkout
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLA DE HISTORIAL DE LINKS DE MARKETING -->
+    <div class="history-card">
+      <div class="history-header">
+        <h2>Historial de Links Generados</h2>
+        <span style="font-size: 0.8rem; color: #64748b;">Links listos para usar en tus anuncios y VSLs</span>
+      </div>
+
+      <div class="table-responsive">
+        <table id="historyTable">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Programa</th>
+              <th>Campaña (UTM)</th>
+              <th>Precio</th>
+              <th>País</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody id="historyBody">
+            <tr>
+              <td colspan="6" style="text-align: center; color: #64748b; padding: 20px;">Cargando historial de links...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Cargar historial de links al iniciar
+    async function cargarHistorial() {
+      try {
+        const res = await fetch('/api/links-history');
+        const data = await res.json();
+        const tbody = document.getElementById('historyBody');
+
+        if (data.success && data.links && data.links.length > 0) {
+          tbody.innerHTML = '';
+          data.links.forEach(item => {
+            const tr = document.createElement('tr');
+            const fecha = new Date(item.date).toLocaleDateString('es-ES', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+            tr.innerHTML = `
+              <td style="font-size: 0.8rem; color: #94a3b8;">${fecha}</td>
+              <td style="font-weight: 600; color: #fff;">${item.program}</td>
+              <td><span style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; padding: 2px 8px; border-radius: 4px; font-size: 0.78rem;">${item.campaign}</span></td>
+              <td style="font-weight: 700; color: #10b981;">${item.currency} ${item.amount}</td>
+              <td>${item.country}</td>
+              <td>
+                <button class="btn-mini-copy" onclick="copiarTexto('${item.url}', this)">📋 Copiar Link</button>
+              </td>
+            `;
+            tbody.appendChild(tr);
+          });
+        } else {
+          tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #64748b; padding: 20px;">No has creado ningún link todavía. Genera uno arriba.</td></tr>`;
+        }
+      } catch (e) {
+        console.error('Error cargando historial:', e);
+      }
+    }
+
+    // Generar nuevo link
+    async function crearLinkCampana(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnSubmit');
+      const program = document.getElementById('programSelect').value;
+      const campaign = document.getElementById('campaignName').value.trim();
+      const amount = parseFloat(document.getElementById('campaignAmount').value);
+      const currency = document.getElementById('campaignCurrency').value;
+      const country = document.getElementById('campaignCountry').value;
+
+      btn.disabled = true;
+      btn.innerText = "Creando en dLocal Go...";
+
+      try {
+        const res = await fetch('/api/create-recurring-link', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            description: program,
+            campaign,
+            amount,
+            currency,
+            country: country === 'ALL' ? undefined : country
+          })
+        });
+
+        const data = await res.json();
+
+        if (data.success && data.url) {
+          document.getElementById('generatedLink').innerText = data.url;
+          document.getElementById('btnTestResult').href = data.url;
+          document.getElementById('resultBox').style.display = 'block';
+
+          // Actualizar tabla de historial
+          cargarHistorial();
+        } else {
+          alert('Error: ' + (data.error || 'No se pudo generar el enlace'));
+        }
+      } catch (err) {
+        alert('Error de conexión con el servidor');
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "⚡ Generar Link para esta Campaña";
+      }
+    }
+
+    function copiarLinkResultado() {
+      const link = document.getElementById('generatedLink').innerText;
+      copiarTexto(link, document.getElementById('btnCopyResult'));
+    }
+
+    function copiarTexto(texto, btnElem) {
+      navigator.clipboard.writeText(texto).then(() => {
+        const textoOriginal = btnElem.innerText;
+        btnElem.innerText = "✅ ¡Copiado!";
+        setTimeout(() => { btnElem.innerText = textoOriginal; }, 2000);
+      });
+    }
+
+    // Inicializar
+    cargarHistorial();
+  </script>
+
+</body>
+</html>
