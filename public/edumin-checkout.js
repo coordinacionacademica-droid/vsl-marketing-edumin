@@ -147,9 +147,15 @@
       <div class="edumin-divider"><span>O COMPLETA TUS DATOS</span></div>
 
       <form id="eduminCheckoutForm">
-        <div class="edumin-form-group">
-          <label class="edumin-label">Nombre Completo *</label>
-          <input type="text" class="edumin-input" id="eduminNombre" placeholder="Ej. Dr. Carlos Mendoza" required>
+        <div class="edumin-grid-2">
+          <div class="edumin-form-group">
+            <label class="edumin-label">Nombres *</label>
+            <input type="text" class="edumin-input" id="eduminNombres" placeholder="Ej. Roger Jair" required>
+          </div>
+          <div class="edumin-form-group">
+            <label class="edumin-label">Apellidos *</label>
+            <input type="text" class="edumin-input" id="eduminApellidos" placeholder="Ej. Sanalea Calcina" required>
+          </div>
         </div>
 
         <div class="edumin-form-group">
@@ -245,7 +251,8 @@
       amount: Number(activePrecio),
       currency: 'PEN',
       country: 'PE',
-      nombres: document.getElementById('eduminNombre').value.trim(),
+      nombres: document.getElementById('eduminNombres').value.trim(),
+      apellidos: document.getElementById('eduminApellidos').value.trim(),
       dni: document.getElementById('eduminDni').value.trim(),
       correo: document.getElementById('eduminCorreo').value.trim(),
       telefono: document.getElementById('eduminTelefono').value.trim()

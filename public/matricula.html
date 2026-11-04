@@ -323,7 +323,7 @@
           <div class="form-group">
             <label for="diplomado">Programa de Especialización</label>
             <div class="locked-input-wrapper">
-              <input type="text" id="diplomado" readonly value="DAEM en Gestión Minera">
+              <input type="text" id="diplomado" readonly value="Curso Especializado en Gestión Minera">
               <span class="lock-badge">🔒 Programa Asignado</span>
             </div>
             <small style="color: var(--muted-text); font-size: 0.75rem; margin-top: 4px; display: block;">
@@ -455,8 +455,20 @@
     const telefonoParam = params.get('telefono') || params.get('phone') || '';
 
     // Precargar nombres, apellidos, DNI y teléfono
-    if (firstNameParam) document.getElementById('nombres').value = decodeURIComponent(firstNameParam);
-    if (lastNameParam) document.getElementById('apellidos').value = decodeURIComponent(lastNameParam);
+    if (firstNameParam && lastNameParam) {
+      document.getElementById('nombres').value = decodeURIComponent(firstNameParam);
+      document.getElementById('apellidos').value = decodeURIComponent(lastNameParam);
+    } else if (firstNameParam) {
+      const decoded = decodeURIComponent(firstNameParam).trim();
+      const parts = decoded.split(/\s+/);
+      if (parts.length >= 2) {
+        const mid = Math.ceil(parts.length / 2);
+        document.getElementById('nombres').value = parts.slice(0, mid).join(' ');
+        document.getElementById('apellidos').value = parts.slice(mid).join(' ');
+      } else {
+        document.getElementById('nombres').value = decoded;
+      }
+    }
     if (dniParam) document.getElementById('numDoc').value = decodeURIComponent(dniParam);
     if (telefonoParam) document.getElementById('telefono').value = decodeURIComponent(telefonoParam);
 
@@ -473,15 +485,16 @@
       document.getElementById('correoHelpText').innerText = '🔒 Correo verificado con el comprobante de dLocal Go.';
     }
 
-    // Precargar diplomado bloqueado (Formato oficial DAEM requerido por Admisión)
+    // Precargar diplomado bloqueado (Formato oficial Curso Especializado)
     if (diplomadoParam) {
       let cleanDiplomado = decodeURIComponent(diplomadoParam);
-      // Quitar cualquier conteo de módulos residual (ej. "(03 Módulos)")
+      // Quitar cualquier conteo de módulos u horas residual
       cleanDiplomado = cleanDiplomado.replace(/\s*\(\d+\s*m[oó]dulos\)/gi, '').trim();
+      cleanDiplomado = cleanDiplomado.replace(/\s*\(\d+\s*horas?\)/gi, '').trim();
       // Quitar cualquier prefijo residual para estandarizar
-      cleanDiplomado = cleanDiplomado.replace(/^(curso especializado en|diplomado en|daem en)\s*/gi, '').trim();
-      // Asignar el formato oficial DAEM
-      document.getElementById('diplomado').value = 'DAEM en ' + cleanDiplomado;
+      cleanDiplomado = cleanDiplomado.replace(/^(curso especializado en|diplomado en|daem en|especialización en)\s*/gi, '').trim();
+      // Asignar el formato oficial
+      document.getElementById('diplomado').value = 'Curso Especializado en ' + cleanDiplomado;
     }
 
     // 2. VALIDACIÓN ANTI-DUPLICIDAD: Verificar si este pago ya fue utilizado antes

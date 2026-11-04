@@ -286,9 +286,15 @@
 
       <!-- FORMULARIO DE PAGO DLOCAL GO -->
       <form id="formCheckout" onsubmit="procesarPago(event)">
-        <div class="form-group">
-          <label class="form-label">Nombre Completo *</label>
-          <input type="text" id="nombre" class="form-input" placeholder="Ej. Dr. Carlos Mendoza" required>
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">Nombres *</label>
+            <input type="text" id="nombres" class="form-input" placeholder="Ej. Roger Jair" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Apellidos *</label>
+            <input type="text" id="apellidos" class="form-input" placeholder="Ej. Sanalea Calcina" required>
+          </div>
         </div>
 
         <div class="form-group">
@@ -374,7 +380,8 @@
         amount: 129,
         currency: "PEN",
         country: "PE",
-        nombres: document.getElementById('nombre').value.trim(),
+        nombres: document.getElementById('nombres').value.trim(),
+        apellidos: document.getElementById('apellidos').value.trim(),
         dni: document.getElementById('dni').value.trim(),
         correo: document.getElementById('correo').value.trim(),
         telefono: document.getElementById('telefono').value.trim()

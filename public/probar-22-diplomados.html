@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel de Pruebas: 22 Diplomados DAEM - EDUMIN</title>
+  <title>Panel de Pruebas: 22 Cursos Especializados - EDUMIN</title>
 
   <!-- Confetti para feedback visual -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
@@ -219,11 +219,11 @@
 
   <div class="header">
     <div class="badge">CATÁLOGO OFICIAL • MODALIDAD ASINCRÓNICA</div>
-    <h1>Los 22 Diplomados <span>DAEM</span></h1>
-    <p class="sub">Haz clic en cualquier diplomado para probar el flujo completo: Modal de Pago &rarr; dLocal Go &rarr; Ficha Bloqueada &rarr; n8n / Q10.</p>
+    <h1>Los 22 Cursos Especializados <span>EDUMIN</span></h1>
+    <p class="sub">Haz clic en cualquier curso para probar el flujo completo: Modal &rarr; Pasarela dLocal Go prellenada &rarr; Ficha Bloqueada &rarr; n8n / Q10.</p>
   </div>
 
-  <!-- Contenedor Grid con los 22 diplomados generados dinámicamente -->
+  <!-- Contenedor Grid con los 22 cursos generados dinámicamente -->
   <div class="grid" id="gridDiplomados"></div>
 
   <!-- Modal de Pago -->
@@ -234,7 +234,7 @@
       <button class="btn-close" onclick="cerrarModal()">&times;</button>
 
       <div class="modal-tag">⚡ PRECIO ESPECIAL DE LANZAMIENTO</div>
-      <h3 class="modal-title" id="mTitulo">DAEM</h3>
+      <h3 class="modal-title" id="mTitulo">Curso Especializado</h3>
       <p class="modal-sub">Modalidad virtual-asincrónica • Acceso inmediato y certificación</p>
 
       <div class="price-box">
@@ -253,9 +253,15 @@
       <div class="divider"><span>O COMPLETA TUS DATOS</span></div>
 
       <form id="fPago" onsubmit="enviarPago(event)">
-        <div class="form-group">
-          <label class="form-label">Nombre Completo *</label>
-          <input type="text" id="mNombre" class="form-input" placeholder="Ej. Dr. Carlos Mendoza" required>
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">Nombres *</label>
+            <input type="text" id="mNombres" class="form-input" placeholder="Ej. Roger Jair" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Apellidos *</label>
+            <input type="text" id="mApellidos" class="form-input" placeholder="Ej. Sanalea Calcina" required>
+          </div>
         </div>
 
         <div class="form-group">
@@ -290,30 +296,30 @@
   </div>
 
   <script>
-    // LISTA OFICIAL DE LOS 22 DIPLOMADOS DAEM (SIN CONTEO DE MÓDULOS)
+    // LISTA OFICIAL DE LOS 22 CURSOS ESPECIALIZADOS (SIN CONTEO DE MÓDULOS)
     const diplomados = [
-      "DAEM en Derecho Minero",
-      "DAEM en Especialista en Comercio Internacional: Gestión Aduanera y Logística",
-      "DAEM en Geología Minera",
-      "DAEM en Geometalurgia",
-      "DAEM en Geomecánica Subterránea y Superficial",
-      "DAEM en Geotecnia Minera",
-      "DAEM en Gerencia de Sistemas Integrados de Gestión HSEQ",
-      "DAEM en Gerencia Estratégica y Liderazgo de Equipos en la Minería",
-      "DAEM en Gestión Ambiental para el Sector Minero e Industrial",
-      "DAEM en Gestión de Control Operativo en Procesos Mineros",
-      "DAEM en Gestión de Operaciones Industriales",
-      "DAEM en Gestión Estratégica para Empresas Utilizando Big Data y Análisis Predictivo",
-      "DAEM en Gestión Logística: Compras, Inventarios y Manejo de Proveedores",
-      "DAEM en Gestión Logística y Almacenes en Minería",
-      "DAEM en Gestión Logística y Proveedores en Industria y Minería",
-      "DAEM en Gestión Minera",
-      "DAEM en Legislación Laboral y Elaboración de Planillas",
-      "DAEM en Minería 4.0 y Digitalización Minera",
-      "DAEM en Prevención de la Conflictividad, Riesgos Sociales y Responsabilidad Social Minera",
-      "DAEM en Seguridad Industrial",
-      "DAEM en Seguridad y Salud Ocupacional en la Industria y Minería",
-      "DAEM en Supply Chain Management en Industria y Minería"
+      "Curso Especializado en Derecho Minero",
+      "Curso Especializado en Especialista en Comercio Internacional: Gestión Aduanera y Logística",
+      "Curso Especializado en Geología Minera",
+      "Curso Especializado en Geometalurgia",
+      "Curso Especializado en Geomecánica Subterránea y Superficial",
+      "Curso Especializado en Geotecnia Minera",
+      "Curso Especializado en Gerencia de Sistemas Integrados de Gestión HSEQ",
+      "Curso Especializado en Gerencia Estratégica y Liderazgo de Equipos en la Minería",
+      "Curso Especializado en Gestión Ambiental para el Sector Minero e Industrial",
+      "Curso Especializado en Gestión de Control Operativo en Procesos Mineros",
+      "Curso Especializado en Gestión de Operaciones Industriales",
+      "Curso Especializado en Gestión Estratégica para Empresas Utilizando Big Data y Análisis Predictivo",
+      "Curso Especializado en Gestión Logística: Compras, Inventarios y Manejo de Proveedores",
+      "Curso Especializado en Gestión Logística y Almacenes en Minería",
+      "Curso Especializado en Gestión Logística y Proveedores en Industria y Minería",
+      "Curso Especializado en Gestión Minera",
+      "Curso Especializado en Legislación Laboral y Elaboración de Planillas",
+      "Curso Especializado en Minería 4.0 y Digitalización Minera",
+      "Curso Especializado en Prevención de la Conflictividad, Riesgos Sociales y Responsabilidad Social Minera",
+      "Curso Especializado en Seguridad Industrial",
+      "Curso Especializado en Seguridad y Salud Ocupacional en la Industria y Minería",
+      "Curso Especializado en Supply Chain Management en Industria y Minería"
     ];
 
     // Renderizar tarjetas en el grid
@@ -325,7 +331,7 @@
         <div>
           <div class="card-top">
             <span class="card-num">${idx + 1}</span>
-            <span class="card-tag">DIPLOMADO OFICIAL</span>
+            <span class="card-tag">CURSO ESPECIALIZADO</span>
           </div>
           <div class="card-title">${nombre}</div>
         </div>
@@ -380,14 +386,15 @@
         amount: 129,
         currency: "PEN",
         country: "PE",
-        nombres: document.getElementById('mNombre').value.trim(),
+        nombres: document.getElementById('mNombres').value.trim(),
+        apellidos: document.getElementById('mApellidos').value.trim(),
         dni: document.getElementById('mDni').value.trim(),
         correo: document.getElementById('mCorreo').value.trim(),
         telefono: document.getElementById('mTelefono').value.trim()
       };
 
       try {
-        const res = await fetch("https://vsl-mkt-edumin.vercel.app/api/create-payment", {
+        const res = await fetch("/api/create-payment", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload)

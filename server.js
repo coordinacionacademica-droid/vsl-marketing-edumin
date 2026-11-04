@@ -66,18 +66,35 @@ app.get('/api/create-payment', (req, res) => {
 // 1. Endpoint para crear la orden de pago dinámica (Modal VSL)
 app.post('/api/create-payment', async (req, res) => {
   try {
-    const { diplomado, country, currency, amount, nombres, dni, correo, telefono } = req.body;
+    const { diplomado, country, currency, amount, nombres, apellidos, nombre, dni, correo, telefono } = req.body;
 
     const orderId = 'ORD-' + Date.now();
-    const paymentAmount = Number(amount) || 27.0;
-    const paymentCurrency = (currency || 'USD').toUpperCase();
+    const paymentAmount = Number(amount) || 129.0;
+    const paymentCurrency = (currency || 'PEN').toUpperCase();
+
+    // Normalizar a formato oficial "Curso Especializado en [Nombre]" (NUNCA DAEM ni conteo de módulos ni horas)
     let programaSeleccionado = diplomado || 'Gestión Minera';
-    // Normalizar a formato oficial DAEM sin conteo de módulos
-    programaSeleccionado = programaSeleccionado.replace(/\s*\(\d+\s*m[oó]dulos\)/gi, '').trim();
-    if (!programaSeleccionado.toLowerCase().startsWith('daem en ')) {
-      programaSeleccionado = programaSeleccionado.replace(/^(curso especializado en|diplomado en)\s*/gi, '').trim();
-      programaSeleccionado = 'DAEM en ' + programaSeleccionado;
+    programaSeleccionado = programaSeleccionado
+      .replace(/\s*\(\d+\s*m[oó]dulos\)/gi, '')
+      .replace(/\s*\(\d+\s*horas?\)/gi, '')
+      .trim();
+    programaSeleccionado = programaSeleccionado.replace(/^(daem en|curso especializado en|diplomado en|especialización en)\s*/gi, '').trim();
+    programaSeleccionado = 'Curso Especializado en ' + programaSeleccionado;
+
+    // Procesar nombres y apellidos (soporta separados o un solo string)
+    let firstName = (nombres || '').trim();
+    let lastName = (apellidos || '').trim();
+    if (!firstName && nombre) {
+      const parts = nombre.trim().split(/\s+/);
+      if (parts.length >= 2) {
+        const mid = Math.ceil(parts.length / 2);
+        firstName = parts.slice(0, mid).join(' ');
+        lastName = parts.slice(mid).join(' ');
+      } else {
+        firstName = parts[0] || '';
+      }
     }
+    const fullName = firstName && lastName ? `${firstName} ${lastName}` : (firstName || lastName || 'Estudiante');
 
     // Guardar registro previo de orden con datos del alumno
     const pagos = loadJsonFile(PAGOS_FILE, {});
@@ -88,7 +105,8 @@ app.post('/api/create-payment', async (req, res) => {
       diplomado: programaSeleccionado,
       status: 'PENDING',
       matricula_completada: false,
-      alumno_nombre: nombres || '',
+      alumno_nombre: firstName,
+      alumno_apellido: lastName,
       alumno_dni: dni || '',
       alumno_correo: correo || '',
       alumno_telefono: telefono || '',
@@ -102,13 +120,13 @@ app.post('/api/create-payment', async (req, res) => {
     const baseUrl = `${protocol}://${host}`;
 
     // URL a la que dLocal Go redirige al alumno tras pagar con todos los datos precargados
-    const successRedirectUrl = `${baseUrl}/matricula.html?order_id=${orderId}&monto=${paymentAmount}&moneda=${paymentCurrency}&diplomado=${encodeURIComponent(programaSeleccionado)}&email=${encodeURIComponent(correo || '')}&first_name=${encodeURIComponent(nombres || '')}&dni=${encodeURIComponent(dni || '')}&telefono=${encodeURIComponent(telefono || '')}`;
+    const successRedirectUrl = `${baseUrl}/matricula.html?order_id=${orderId}&monto=${paymentAmount}&moneda=${paymentCurrency}&diplomado=${encodeURIComponent(programaSeleccionado)}&email=${encodeURIComponent(correo || '')}&first_name=${encodeURIComponent(firstName)}&last_name=${encodeURIComponent(lastName)}&dni=${encodeURIComponent(dni || '')}&telefono=${encodeURIComponent(telefono || '')}`;
 
     const requestPayload = {
       currency: paymentCurrency,
       amount: paymentAmount,
       order_id: orderId,
-      description: programaSeleccionado,
+      description: programaSeleccionado.slice(0, 100),
       success_url: successRedirectUrl,
       back_url: baseUrl,
       notification_url: N8N_NOTIFICATION_URL
@@ -116,9 +134,28 @@ app.post('/api/create-payment', async (req, res) => {
 
     if (country && country !== 'ALL') {
       requestPayload.country = country.toUpperCase();
+    } else {
+      requestPayload.country = 'PE';
     }
 
-    console.log(`[dLocal Go] Generando pago para: "${programaSeleccionado}" - ${paymentCurrency} ${paymentAmount} (Orden: ${orderId})`);
+    // PRE-CARGA DE DATOS DEL PAGADOR EN DLOCAL GO (Para que el alumno no tenga que volver a escribirlos)
+    if (firstName || correo || dni) {
+      const cleanDoc = (dni || '').toString().trim().replace(/\D/g, '');
+      let phoneClean = undefined;
+      if (telefono) {
+        const numOnly = telefono.toString().replace(/\D/g, '');
+        phoneClean = telefono.toString().startsWith('+') ? telefono.toString().trim() : (numOnly ? `+51${numOnly}` : undefined);
+      }
+      requestPayload.payer = {
+        name: fullName.slice(0, 100),
+        email: (correo || '').trim().slice(0, 100),
+        document: cleanDoc.slice(0, 20),
+        document_type: 'DNI',
+        phone: phoneClean
+      };
+    }
+
+    console.log(`[dLocal Go] Generando pago para: "${programaSeleccionado}" - ${paymentCurrency} ${paymentAmount} (Orden: ${orderId}) con pagador:`, requestPayload.payer);
 
     const dlocalResponse = await fetch(`${API_URL}/v1/payments`, {
       method: 'POST',

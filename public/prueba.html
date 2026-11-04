@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Landing de Ejemplo - EDUMIN</title>
+
+  <!-- Canvas Confetti para efecto visual al pagar -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <style>
+    /* ========================================================
+       1. ESTILOS DE LA PÁGINA / LANDING
+       ======================================================== */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #050016;
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #FF7200;
+      background: rgba(255, 114, 0, 0.12);
+      border: 1px solid rgba(255, 114, 0, 0.3);
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: 2.4rem;
+      font-weight: 900;
+      max-width: 650px;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    h1 span {
+      background: linear-gradient(90deg, #FF7200, #F00006);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    p.desc {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.7);
+      max-width: 520px;
+      margin-bottom: 32px;
+      line-height: 1.5;
+    }
+    /* El botón principal de la landing */
+    .btn-cta {
+      background: linear-gradient(90deg, #FF7200, #F00006);
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 800;
+      padding: 18px 36px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(240, 0, 6, 0.35);
+      transition: transform 0.2s, filter 0.2s;
+    }
+    .btn-cta:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.1);
+    }
+
+    /* ========================================================
+       2. ESTILOS DEL MODAL (RÉPLICA EXACTA DE LA MUESTRA)
+       ======================================================== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 0, 22, 0.88);
+      backdrop-filter: blur(14px);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-card {
+      position: relative;
+      width: 100%;
+      max-width: 480px;
+      background: #0A001F;
+      border: 1px solid rgba(0, 1, 255, 0.4);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+      color: #ffffff;
+      text-align: left;
+      overflow: hidden;
+      transform: scale(0.95);
+      transition: transform 0.25s ease;
+    }
+    .modal-overlay.active .modal-card {
+      transform: scale(1);
+    }
+    /* Efectos de luz en esquinas */
+    .glow-blue {
+      position: absolute; top: -80px; right: -80px; width: 220px; height: 220px;
+      background: rgba(0, 1, 255, 0.25); border-radius: 50%; filter: blur(70px); pointer-events: none;
+    }
+    .glow-red {
+      position: absolute; bottom: -80px; left: -80px; width: 220px; height: 220px;
+      background: rgba(240, 0, 6, 0.2); border-radius: 50%; filter: blur(70px); pointer-events: none;
+    }
+    .btn-close {
+      position: absolute; top: 16px; right: 16px; background: none; border: none;
+      color: rgba(255, 255, 255, 0.6); font-size: 26px; cursor: pointer; line-height: 1;
+      padding: 4px; border-radius: 50%; transition: color 0.2s;
+    }
+    .btn-close:hover { color: #ffffff; }
+
+    .modal-tag {
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+      color: #FF7200; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;
+    }
+    .modal-title { font-size: 22px; font-weight: 800; margin-bottom: 6px; line-height: 1.25; }
+    .modal-sub { font-size: 13px; color: rgba(255, 255, 255, 0.65); margin-bottom: 16px; }
+
+    /* Caja de Precios */
+    .price-box {
+      background: #0D0026;
+      border: 1px solid rgba(0, 1, 255, 0.35);
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .price-regular { font-size: 11px; color: rgba(255, 255, 255, 0.5); text-decoration: line-through; }
+    .price-main { font-size: 24px; font-weight: 900; color: #FF7200; }
+    .price-main span { font-size: 11px; font-weight: 400; color: rgba(255, 255, 255, 0.7); }
+    .save-pill {
+      background: rgba(255, 114, 0, 0.15);
+      border: 1px solid rgba(255, 114, 0, 0.4);
+      color: #FF7200;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    /* Botón WhatsApp */
+    .btn-wa {
+      width: 100%;
+      background: #25D366;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 13px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-wa:hover { background: #20bd5a; transform: translateY(-1px); }
+
+    /* Divisor */
+    .divider {
+      position: relative; text-align: center; margin: 14px 0;
+    }
+    .divider::before {
+      content: ""; position: absolute; top: 50%; left: 0; right: 0;
+      height: 1px; background: rgba(255, 255, 255, 0.1); z-index: 1;
+    }
+    .divider span {
+      position: relative; z-index: 2; background: #0A001F; padding: 0 10px;
+      font-size: 11px; color: rgba(255, 255, 255, 0.4); text-transform: uppercase;
+    }
+
+    /* Inputs del Formulario */
+    .form-group { margin-bottom: 12px; }
+    .form-label {
+      display: flex; justify-content: space-between; font-size: 12px;
+      font-weight: 500; color: rgba(255, 255, 255, 0.85); margin-bottom: 5px;
+    }
+    .form-label small { color: #FF7200; font-size: 10px; }
+    .form-input {
+      width: 100%;
+      background: #070016;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: #ffffff;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-input:focus { border-color: #0001FF; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    /* Botón Submit Pagos */
+    .btn-submit {
+      width: 100%;
+      background: linear-gradient(90deg, #FF7200, #F00006);
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 800;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      cursor: pointer;
+      margin-top: 10px;
+      box-shadow: 0 8px 20px rgba(240, 0, 6, 0.3);
+      transition: filter 0.2s, transform 0.15s;
+    }
+    .btn-submit:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .btn-submit:disabled { opacity: 0.65; cursor: not-allowed; }
+
+    .modal-footer {
+      display: flex; justify-content: center; gap: 16px; margin-top: 14px;
+      font-size: 11px; color: rgba(255, 255, 255, 0.55); border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================
+       HERO DE LA LANDING
+       ========================================== -->
+  <div class="badge">EDUMIN • AULA VIRTUAL Q10</div>
+  <h1>Curso Especializado en <br><span>Derecho Minero</span></h1>
+  <p class="desc">10 clases especializadas • Modalidad asincrónica • Acceso inmediato y certificación oficial.</p>
+
+  <!-- ESTE ES EL BOTÓN QUE ABRE EL MODAL -->
+  <button class="btn-cta" onclick="abrirModal()">
+    QUIERO ESPECIALIZARME POR S/129
+  </button>
+
+
+  <!-- ==========================================
+       MODAL DE PAGO (RÉPLICA EXACTA)
+       ========================================== -->
+  <div class="modal-overlay" id="modalPago">
+    <div class="modal-card">
+      <div class="glow-blue"></div>
+      <div class="glow-red"></div>
+      <button class="btn-close" onclick="cerrarModal()">&times;</button>
+
+      <div class="modal-tag">⚡ PRECIO ESPECIAL DE LANZAMIENTO</div>
+      <h3 class="modal-title">Curso Especializado en Derecho Minero</h3>
+      <p class="modal-sub">10 clases especializadas • Modalidad asincrónica • Acceso inmediato</p>
+
+      <div class="price-box">
+        <div>
+          <div class="price-regular">Precio regular: S/ 199</div>
+          <div class="price-main">S/ 129 <span>Por Lanzamiento</span></div>
+        </div>
+        <span class="save-pill">Ahorras S/ 70</span>
+      </div>
+
+      <!-- BOTÓN WHATSAPP EN 1 CLICK -->
+      <button type="button" class="btn-wa" onclick="irAWhatsApp()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+        Inscribirme por WhatsApp en 1 click
+      </button>
+
+      <div class="divider"><span>O COMPLETA TUS DATOS</span></div>
+
+      <!-- FORMULARIO DE PAGO DLOCAL GO -->
+      <form id="formCheckout" onsubmit="procesarPago(event)">
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">Nombres *</label>
+            <input type="text" id="nombres" class="form-input" placeholder="Ej. Roger Jair" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Apellidos *</label>
+            <input type="text" id="apellidos" class="form-input" placeholder="Ej. Sanalea Calcina" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <span>DNI / Documento de Identidad *</span>
+            <small>Para aula virtual Q10</small>
+          </label>
+          <input type="text" id="dni" class="form-input" placeholder="Ej. 72496697" required style="font-family: monospace;">
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">Correo Electrónico *</label>
+            <input type="email" id="correo" class="form-input" placeholder="tuemail@ejemplo.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Teléfono / WhatsApp *</label>
+            <input type="tel" id="telefono" class="form-input" placeholder="+51 987 654 321" required>
+          </div>
+        </div>
+
+        <!-- BOTÓN QUE CONECTA A DLOCAL GO -->
+        <button type="submit" id="btnSubmit" class="btn-submit">
+          QUIERO ESPECIALIZARME POR S/129 &rarr;
+        </button>
+      </form>
+
+      <div class="modal-footer">
+        <span>🔒 Pago Seguro 100%</span>
+        <span>⚡ Acceso Inmediato Q10</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==========================================
+       3. SCRIPT JAVASCRIPT QUE CONECTA LA PASARELA
+       ========================================== -->
+  <script>
+    const modal = document.getElementById('modalPago');
+
+    function abrirModal() {
+      modal.classList.add('active');
+    }
+
+    function cerrarModal() {
+      modal.classList.remove('active');
+    }
+
+    // Cerrar si hace clic fuera del modal
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) cerrarModal();
+    });
+
+    // Botón WhatsApp con número 987423200
+    function irAWhatsApp() {
+      if (window.confetti) {
+        window.confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } });
+      }
+      const curso = "Curso Especializado en Derecho Minero";
+      const precio = "129";
+      const msg = encodeURIComponent(`Hola, deseo inscribirme al ${curso} con el precio de lanzamiento de S/ ${precio}.`);
+      window.open(`https://wa.me/51987423200?text=${msg}`, '_blank');
+    }
+
+    // FUNCIÓN QUE LLAMA A TU API DE DLOCAL GO EN VERCEL
+    async function procesarPago(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnSubmit');
+
+      // 1. Efecto confeti
+      if (window.confetti) {
+        window.confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+      }
+
+      // 2. Cambiar botón a estado cargando
+      btn.disabled = true;
+      btn.innerText = "CONECTANDO CON DLOCAL GO...";
+
+      // 3. Preparar datos del alumno
+      const payload = {
+        diplomado: "Curso Especializado en Derecho Minero",
+        amount: 129,
+        currency: "PEN",
+        country: "PE",
+        nombres: document.getElementById('nombres').value.trim(),
+        apellidos: document.getElementById('apellidos').value.trim(),
+        dni: document.getElementById('dni').value.trim(),
+        correo: document.getElementById('correo').value.trim(),
+        telefono: document.getElementById('telefono').value.trim()
+      };
+
+      try {
+        // 4. Llamar a tu API en Vercel
+        const response = await fetch("https://vsl-mkt-edumin.vercel.app/api/create-payment", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        // 5. Redirigir a dLocal Go
+        if (data && data.redirect_url) {
+          window.location.href = data.redirect_url;
+        } else {
+          alert("Error generando pasarela: " + (data.error || "Intente nuevamente"));
+          btn.disabled = false;
+          btn.innerText = "QUIERO ESPECIALIZARME POR S/129 →";
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Error de conexión con el servidor de pagos.");
+        btn.disabled = false;
+        btn.innerText = "QUIERO ESPECIALIZARME POR S/129 →";
+      }
+    }
+  </script>
+</body>
+</html>
