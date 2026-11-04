@@ -90,8 +90,13 @@ app.post('/api/create-payment', async (req, res) => {
     };
     saveJsonFile(PAGOS_FILE, pagos);
 
+    // Detectar dominio base (soporta localhost y Vercel en la nube)
+    const host = req.headers['x-forwarded-host'] || req.headers.host || `localhost:${PORT}`;
+    const protocol = req.headers['x-forwarded-proto'] || (req.secure || process.env.VERCEL ? 'https' : 'http');
+    const baseUrl = `${protocol}://${host}`;
+
     // URL a la que dLocal Go redirige al alumno tras pagar con todos los datos precargados
-    const successRedirectUrl = `http://localhost:${PORT}/matricula.html?order_id=${orderId}&monto=${paymentAmount}&moneda=${paymentCurrency}&diplomado=${encodeURIComponent(programaSeleccionado)}&email=${encodeURIComponent(correo || '')}&first_name=${encodeURIComponent(nombres || '')}&dni=${encodeURIComponent(dni || '')}&telefono=${encodeURIComponent(telefono || '')}`;
+    const successRedirectUrl = `${baseUrl}/matricula.html?order_id=${orderId}&monto=${paymentAmount}&moneda=${paymentCurrency}&diplomado=${encodeURIComponent(programaSeleccionado)}&email=${encodeURIComponent(correo || '')}&first_name=${encodeURIComponent(nombres || '')}&dni=${encodeURIComponent(dni || '')}&telefono=${encodeURIComponent(telefono || '')}`;
 
     const requestPayload = {
       currency: paymentCurrency,
@@ -99,7 +104,7 @@ app.post('/api/create-payment', async (req, res) => {
       order_id: orderId,
       description: programaSeleccionado,
       success_url: successRedirectUrl,
-      back_url: `http://localhost:${PORT}`,
+      back_url: baseUrl,
       notification_url: N8N_NOTIFICATION_URL
     };
 

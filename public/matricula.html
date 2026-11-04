@@ -319,13 +319,16 @@
 
         <form id="formMatricula" onsubmit="enviarMatricula(event)">
 
-          <!-- PROGRAMA MATRICULADO -->
+          <!-- PROGRAMA MATRICULADO (BLOQUEADO) -->
           <div class="form-group">
-            <label for="diplomado">Programa de Especialización <span class="req">*</span></label>
-            <select id="diplomado" required>
-              <option value="Gestión Minera">DAEM en Gestión Minera (120 Horas)</option>
-              <option value="Geometalurgia">DAEM en Geometalurgia (120 Horas)</option>
-            </select>
+            <label for="diplomado">Programa de Especialización</label>
+            <div class="locked-input-wrapper">
+              <input type="text" id="diplomado" readonly value="Curso Especializado en Gestión Minera">
+              <span class="lock-badge">🔒 Curso Asignado</span>
+            </div>
+            <small style="color: var(--muted-text); font-size: 0.75rem; margin-top: 4px; display: block;">
+              El curso corresponde exactamente a la compra validada por dLocal Go y no puede modificarse.
+            </small>
           </div>
 
           <!-- MONTO PAGADO (BLOQUEADO) -->
@@ -449,11 +452,13 @@
     const firstNameParam = params.get('first_name') || params.get('nombres') || '';
     const lastNameParam = params.get('last_name') || params.get('apellidos') || '';
     const dniParam = params.get('dni') || params.get('documento') || '';
+    const telefonoParam = params.get('telefono') || params.get('phone') || '';
 
-    // Precargar nombres, apellidos y DNI
+    // Precargar nombres, apellidos, DNI y teléfono
     if (firstNameParam) document.getElementById('nombres').value = decodeURIComponent(firstNameParam);
     if (lastNameParam) document.getElementById('apellidos').value = decodeURIComponent(lastNameParam);
     if (dniParam) document.getElementById('numDoc').value = decodeURIComponent(dniParam);
+    if (telefonoParam) document.getElementById('telefono').value = decodeURIComponent(telefonoParam);
 
     // Asignar monto bloqueado
     const formattedAmount = `${monto} ${moneda}`;
@@ -468,16 +473,14 @@
       document.getElementById('correoHelpText').innerText = '🔒 Correo verificado con el comprobante de dLocal Go.';
     }
 
-    // Precargar diplomado
+    // Precargar diplomado bloqueado (Sin DAEM, 100% fiel a la compra)
     if (diplomadoParam) {
-      const selectDiplomado = document.getElementById('diplomado');
-      for (let i = 0; i < selectDiplomado.options.length; i++) {
-        if (selectDiplomado.options[i].value.toLowerCase().includes(diplomadoParam.toLowerCase()) ||
-            diplomadoParam.toLowerCase().includes(selectDiplomado.options[i].value.toLowerCase())) {
-          selectDiplomado.selectedIndex = i;
-          break;
-        }
+      let cleanDiplomado = decodeURIComponent(diplomadoParam);
+      cleanDiplomado = cleanDiplomado.replace(/^DAEM en\s*/i, 'Curso Especializado en ');
+      if (!cleanDiplomado.toLowerCase().startsWith('curso especializado')) {
+        cleanDiplomado = 'Curso Especializado en ' + cleanDiplomado;
       }
+      document.getElementById('diplomado').value = cleanDiplomado;
     }
 
     // 2. VALIDACIÓN ANTI-DUPLICIDAD: Verificar si este pago ya fue utilizado antes
