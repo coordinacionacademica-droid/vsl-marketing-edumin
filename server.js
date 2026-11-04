@@ -53,6 +53,16 @@ function saveJsonFile(filePath, data) {
   }
 }
 
+// Endpoint informativo para pruebas GET en el navegador
+app.get('/api/create-payment', (req, res) => {
+  res.json({
+    status: 'online',
+    servicio: 'EDUMIN dLocal Go Payment Gateway',
+    metodo_requerido: 'POST',
+    mensaje: 'La API de cobros está 100% activa. Utilice una petición POST para generar pagos.'
+  });
+});
+
 // 1. Endpoint para crear la orden de pago dinámica (Modal VSL)
 app.post('/api/create-payment', async (req, res) => {
   try {
