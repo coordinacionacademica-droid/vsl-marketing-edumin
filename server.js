@@ -71,7 +71,13 @@ app.post('/api/create-payment', async (req, res) => {
     const orderId = 'ORD-' + Date.now();
     const paymentAmount = Number(amount) || 27.0;
     const paymentCurrency = (currency || 'USD').toUpperCase();
-    const programaSeleccionado = diplomado || 'Gestión Minera';
+    let programaSeleccionado = diplomado || 'Gestión Minera';
+    // Normalizar a formato oficial DAEM sin conteo de módulos
+    programaSeleccionado = programaSeleccionado.replace(/\s*\(\d+\s*m[oó]dulos\)/gi, '').trim();
+    if (!programaSeleccionado.toLowerCase().startsWith('daem en ')) {
+      programaSeleccionado = programaSeleccionado.replace(/^(curso especializado en|diplomado en)\s*/gi, '').trim();
+      programaSeleccionado = 'DAEM en ' + programaSeleccionado;
+    }
 
     // Guardar registro previo de orden con datos del alumno
     const pagos = loadJsonFile(PAGOS_FILE, {});

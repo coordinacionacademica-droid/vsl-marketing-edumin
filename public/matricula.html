@@ -323,11 +323,11 @@
           <div class="form-group">
             <label for="diplomado">Programa de Especialización</label>
             <div class="locked-input-wrapper">
-              <input type="text" id="diplomado" readonly value="Curso Especializado en Gestión Minera">
-              <span class="lock-badge">🔒 Curso Asignado</span>
+              <input type="text" id="diplomado" readonly value="DAEM en Gestión Minera">
+              <span class="lock-badge">🔒 Programa Asignado</span>
             </div>
             <small style="color: var(--muted-text); font-size: 0.75rem; margin-top: 4px; display: block;">
-              El curso corresponde exactamente a la compra validada por dLocal Go y no puede modificarse.
+              El diplomado corresponde exactamente a la compra validada por dLocal Go y no puede modificarse.
             </small>
           </div>
 
@@ -473,14 +473,15 @@
       document.getElementById('correoHelpText').innerText = '🔒 Correo verificado con el comprobante de dLocal Go.';
     }
 
-    // Precargar diplomado bloqueado (Sin DAEM, 100% fiel a la compra)
+    // Precargar diplomado bloqueado (Formato oficial DAEM requerido por Admisión)
     if (diplomadoParam) {
       let cleanDiplomado = decodeURIComponent(diplomadoParam);
-      cleanDiplomado = cleanDiplomado.replace(/^DAEM en\s*/i, 'Curso Especializado en ');
-      if (!cleanDiplomado.toLowerCase().startsWith('curso especializado')) {
-        cleanDiplomado = 'Curso Especializado en ' + cleanDiplomado;
-      }
-      document.getElementById('diplomado').value = cleanDiplomado;
+      // Quitar cualquier conteo de módulos residual (ej. "(03 Módulos)")
+      cleanDiplomado = cleanDiplomado.replace(/\s*\(\d+\s*m[oó]dulos\)/gi, '').trim();
+      // Quitar cualquier prefijo residual para estandarizar
+      cleanDiplomado = cleanDiplomado.replace(/^(curso especializado en|diplomado en|daem en)\s*/gi, '').trim();
+      // Asignar el formato oficial DAEM
+      document.getElementById('diplomado').value = 'DAEM en ' + cleanDiplomado;
     }
 
     // 2. VALIDACIÓN ANTI-DUPLICIDAD: Verificar si este pago ya fue utilizado antes
