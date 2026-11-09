@@ -583,16 +583,6 @@
             country: country === 'ALL' ? undefined : country
           })
         });
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            description: program,
-            campaign,
-            amount,
-            currency,
-            country: country === 'ALL' ? undefined : country
-          })
-        });
 
         const data = await res.json();
 
@@ -610,7 +600,7 @@
         alert('Error de conexión con el servidor');
       } finally {
         btn.disabled = false;
-        btn.innerText = "⚡ Generar Link para esta Campaña";
+        cambiarEntorno(document.querySelector('input[name="environment"]:checked').value);
       }
     }
 
