@@ -16,9 +16,34 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-const API_KEY = process.env.DLOCALGO_API_KEY;
-const SECRET_KEY = process.env.DLOCALGO_SECRET_KEY;
-const API_URL = process.env.DLOCALGO_API_URL || 'https://api-sbx.dlocalgo.com';
+// Credenciales y configuración multi-entorno (Sandbox vs Producción)
+const DLOCAL_CONFIGS = {
+  sandbox: {
+    apiUrl: process.env.DLOCALGO_SBX_API_URL || process.env.DLOCALGO_API_URL || 'https://api-sbx.dlocalgo.com',
+    apiKey: process.env.DLOCALGO_SBX_API_KEY || process.env.DLOCALGO_API_KEY || 'uhIKoryaDNzefniRQIPSMpQzyyKvJIEe',
+    secretKey: process.env.DLOCALGO_SBX_SECRET_KEY || process.env.DLOCALGO_SECRET_KEY || 'aU8EoeweTg3ziY9YNO73nWmg9IuCfjrpi4acPcaL',
+    envName: 'sandbox',
+    envLabel: '🟡 PRUEBA'
+  },
+  production: {
+    apiUrl: process.env.DLOCALGO_PROD_API_URL || 'https://api.dlocalgo.com',
+    apiKey: process.env.DLOCALGO_PROD_API_KEY || 'VaZTWsEPrpZWngyUOeqFpBgtJcncWYUr',
+    secretKey: process.env.DLOCALGO_PROD_SECRET_KEY || 'qjEawz77ry8xmbFr9zlUMOJ3nqpXRYFOQCkCw5ZD',
+    envName: 'production',
+    envLabel: '🟢 REAL'
+  }
+};
+
+function getDlocalConfig(env) {
+  if (env === 'production' || env === 'prod' || env === 'live') {
+    return DLOCAL_CONFIGS.production;
+  }
+  return DLOCAL_CONFIGS.sandbox;
+}
+
+const API_KEY = process.env.DLOCALGO_API_KEY || DLOCAL_CONFIGS.sandbox.apiKey;
+const SECRET_KEY = process.env.DLOCALGO_SECRET_KEY || DLOCAL_CONFIGS.sandbox.secretKey;
+const API_URL = process.env.DLOCALGO_API_URL || DLOCAL_CONFIGS.sandbox.apiUrl;
 
 // URL FIJA Y BLINDADA DE N8N PARA PAGOS (Marketing no puede tocarla)
 const N8N_NOTIFICATION_URL = process.env.DLOCALGO_NOTIFICATION_URL || 'https://n8n.gcg-corp.com/webhook/matricula-vsl-dlocalgo';
@@ -66,7 +91,8 @@ app.get('/api/create-payment', (req, res) => {
 // 1. Endpoint para crear la orden de pago dinámica (Modal VSL)
 app.post('/api/create-payment', async (req, res) => {
   try {
-    const { diplomado, country, currency, amount, nombres, apellidos, nombre, dni, correo, telefono } = req.body;
+    const { diplomado, country, currency, amount, nombres, apellidos, nombre, dni, correo, telefono, environment } = req.body;
+    const config = getDlocalConfig(environment);
 
     const orderId = 'ORD-' + Date.now();
     const paymentAmount = Number(amount) || 129.0;
@@ -155,13 +181,13 @@ app.post('/api/create-payment', async (req, res) => {
       };
     }
 
-    console.log(`[dLocal Go] Generando pago para: "${programaSeleccionado}" - ${paymentCurrency} ${paymentAmount} (Orden: ${orderId}) con pagador:`, requestPayload.payer);
+    console.log(`[dLocal Go - ${config.envLabel}] Generando pago para: "${programaSeleccionado}" - ${paymentCurrency} ${paymentAmount} (Orden: ${orderId}) con pagador:`, requestPayload.payer);
 
-    const dlocalResponse = await fetch(`${API_URL}/v1/payments`, {
+    const dlocalResponse = await fetch(`${config.apiUrl}/v1/payments`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${API_KEY}:${SECRET_KEY}`,
+        'Authorization': `Bearer ${config.apiKey}:${config.secretKey}`,
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
       },
       body: JSON.stringify(requestPayload)
@@ -198,7 +224,8 @@ app.post('/api/create-payment', async (req, res) => {
 // 2. Endpoint para crear Links Reutilizables de Campaña (Para Marketing)
 app.post('/api/create-recurring-link', async (req, res) => {
   try {
-    const { description, amount, currency, country, campaign } = req.body;
+    const { description, amount, currency, country, campaign, environment } = req.body;
+    const config = getDlocalConfig(environment);
 
     const paymentAmount = Number(amount) || 27.0;
     const paymentCurrency = (currency || 'USD').toUpperCase();
@@ -223,13 +250,13 @@ app.post('/api/create-recurring-link', async (req, res) => {
       requestPayload.country = country.toUpperCase();
     }
 
-    console.log(`[dLocal Go] Creando Link de Campaña: "${programaNombre}" - ${paymentCurrency} ${paymentAmount} [${campanaNombre}]`);
+    console.log(`[dLocal Go - ${config.envLabel}] Creando Link de Campaña: "${programaNombre}" - ${paymentCurrency} ${paymentAmount} [${campanaNombre}]`);
 
-    const dlocalResponse = await fetch(`${API_URL}/v1/recurring-payments/`, {
+    const dlocalResponse = await fetch(`${config.apiUrl}/v1/recurring-payments/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${API_KEY}:${SECRET_KEY}`,
+        'Authorization': `Bearer ${config.apiKey}:${config.secretKey}`,
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
       },
       body: JSON.stringify(requestPayload)
@@ -252,6 +279,8 @@ app.post('/api/create-recurring-link', async (req, res) => {
       amount: paymentAmount,
       currency: paymentCurrency,
       country: country || 'ALL',
+      environment: config.envName,
+      envLabel: config.envLabel,
       url: data.url
     };
     history.unshift(newEntry);

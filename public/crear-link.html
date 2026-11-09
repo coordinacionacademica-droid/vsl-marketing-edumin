@@ -257,6 +257,57 @@
       cursor: pointer;
     }
     .btn-mini-copy:hover { background: #1d4ed8; }
+
+    /* SELECTOR DE ENTORNO: SANDBOX VS PRODUCCIÓN */
+    .env-selector-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+    @media(max-width: 600px) {
+      .env-selector-grid { grid-template-columns: 1fr; }
+    }
+    .env-card {
+      border: 2px solid #334155;
+      background: #0f172a;
+      border-radius: 12px;
+      padding: 14px 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      transition: all 0.2s;
+    }
+    .env-card:hover {
+      border-color: #64748b;
+    }
+    .env-card.active-sbx {
+      border-color: #f59e0b;
+      background: rgba(245, 158, 11, 0.08);
+      box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+    }
+    .env-card.active-prod {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.08);
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+    }
+    .env-card input[type="radio"] {
+      margin-top: 3px;
+      cursor: pointer;
+      width: 16px;
+      height: 16px;
+    }
+    .env-title {
+      font-weight: 800;
+      font-size: 0.95rem;
+      margin-bottom: 2px;
+    }
+    .env-desc {
+      color: #94a3b8;
+      font-size: 0.78rem;
+      line-height: 1.3;
+    }
   </style>
 </head>
 <body>
@@ -278,6 +329,29 @@
     <!-- FORMULARIO DE GENERACIÓN DE CAMPAÑA -->
     <div class="card">
       <form id="campaignForm" onsubmit="crearLinkCampana(event)">
+
+        <!-- SELECTOR DE ENTORNO: SANDBOX VS PRODUCCIÓN -->
+        <div style="margin-bottom: 20px;">
+          <label style="font-size: 0.88rem; font-weight: 800; color: #f8fafc; margin-bottom: 10px; display: block;">
+            🎯 Selecciona el Entorno del Link:
+          </label>
+          <div class="env-selector-grid">
+            <label class="env-card active-sbx" id="cardSbx">
+              <input type="radio" name="environment" value="sandbox" checked onchange="cambiarEntorno('sandbox')">
+              <div>
+                <div class="env-title" style="color: #fbbf24;">🟡 Modo Prueba (Sandbox)</div>
+                <div class="env-desc">Genera links seguros para testear sin cobrar dinero real.</div>
+              </div>
+            </label>
+            <label class="env-card" id="cardProd">
+              <input type="radio" name="environment" value="production" onchange="cambiarEntorno('production')">
+              <div>
+                <div class="env-title" style="color: #34d399;">🟢 Modo Real (Producción)</div>
+                <div class="env-desc">Cobro en vivo a clientes con tarjetas de crédito/débito reales.</div>
+              </div>
+            </label>
+          </div>
+        </div>
 
         <div class="form-grid-2">
           <!-- 1. PROGRAMA -->
@@ -408,6 +482,7 @@
           <thead>
             <tr>
               <th>Fecha</th>
+              <th>Entorno</th>
               <th>Programa</th>
               <th>Campaña (UTM)</th>
               <th>Precio</th>
@@ -417,7 +492,7 @@
           </thead>
           <tbody id="historyBody">
             <tr>
-              <td colspan="6" style="text-align: center; color: #64748b; padding: 20px;">Cargando historial de links...</td>
+              <td colspan="7" style="text-align: center; color: #64748b; padding: 20px;">Cargando historial de links...</td>
             </tr>
           </tbody>
         </table>
@@ -427,6 +502,24 @@
   </div>
 
   <script>
+    function cambiarEntorno(env) {
+      const cardSbx = document.getElementById('cardSbx');
+      const cardProd = document.getElementById('cardProd');
+      const btn = document.getElementById('btnSubmit');
+
+      if (env === 'production') {
+        cardProd.classList.add('active-prod');
+        cardSbx.classList.remove('active-sbx');
+        btn.style.background = 'linear-gradient(90deg, #10b981, #059669)';
+        btn.innerHTML = '<span>🟢 Generar Link REAL (Cobro en Vivo)</span>';
+      } else {
+        cardSbx.classList.add('active-sbx');
+        cardProd.classList.remove('active-prod');
+        btn.style.background = 'linear-gradient(90deg, #f59e0b, #d97706)';
+        btn.innerHTML = '<span>🟡 Generar Link de PRUEBA (Sandbox)</span>';
+      }
+    }
+
     // Cargar historial de links al iniciar
     async function cargarHistorial() {
       try {
@@ -439,8 +532,12 @@
           data.links.forEach(item => {
             const tr = document.createElement('tr');
             const fecha = new Date(item.date).toLocaleDateString('es-ES', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+            const envTag = item.envLabel || (item.environment === 'production' ? '🟢 REAL' : '🟡 PRUEBA');
+            const envBadgeStyle = item.environment === 'production' ? 'background: rgba(16, 185, 129, 0.15); color: #34d399;' : 'background: rgba(245, 158, 11, 0.15); color: #fbbf24;';
+
             tr.innerHTML = `
               <td style="font-size: 0.8rem; color: #94a3b8;">${fecha}</td>
+              <td><span style="${envBadgeStyle} padding: 3px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">${envTag}</span></td>
               <td style="font-weight: 600; color: #fff;">${item.program}</td>
               <td><span style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; padding: 2px 8px; border-radius: 4px; font-size: 0.78rem;">${item.campaign}</span></td>
               <td style="font-weight: 700; color: #10b981;">${item.currency} ${item.amount}</td>
@@ -452,7 +549,7 @@
             tbody.appendChild(tr);
           });
         } else {
-          tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #64748b; padding: 20px;">No has creado ningún link todavía. Genera uno arriba.</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #64748b; padding: 20px;">No has creado ningún link todavía. Genera uno arriba.</td></tr>`;
         }
       } catch (e) {
         console.error('Error cargando historial:', e);
@@ -463,6 +560,7 @@
     async function crearLinkCampana(e) {
       e.preventDefault();
       const btn = document.getElementById('btnSubmit');
+      const environment = document.querySelector('input[name="environment"]:checked').value;
       const program = document.getElementById('programSelect').value;
       const campaign = document.getElementById('campaignName').value.trim();
       const amount = parseFloat(document.getElementById('campaignAmount').value);
@@ -470,10 +568,21 @@
       const country = document.getElementById('campaignCountry').value;
 
       btn.disabled = true;
-      btn.innerText = "Creando en dLocal Go...";
+      btn.innerText = environment === 'production' ? "Creando en dLocal Go Real..." : "Creando en dLocal Go Sandbox...";
 
       try {
         const res = await fetch('/api/create-recurring-link', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            environment,
+            description: program,
+            campaign,
+            amount,
+            currency,
+            country: country === 'ALL' ? undefined : country
+          })
+        });
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
