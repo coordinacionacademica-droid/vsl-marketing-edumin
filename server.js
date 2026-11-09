@@ -21,7 +21,7 @@ const SECRET_KEY = process.env.DLOCALGO_SECRET_KEY;
 const API_URL = process.env.DLOCALGO_API_URL || 'https://api-sbx.dlocalgo.com';
 
 // URL FIJA Y BLINDADA DE N8N PARA PAGOS (Marketing no puede tocarla)
-const N8N_NOTIFICATION_URL = process.env.DLOCALGO_NOTIFICATION_URL || 'https://n8n.gcg-corp.com/webhook/pagos-dlocalgo';
+const N8N_NOTIFICATION_URL = process.env.DLOCALGO_NOTIFICATION_URL || 'https://n8n.gcg-corp.com/webhook/matricula-vsl-dlocalgo';
 // Webhook activo del Workflow "PAGOS PASARELA" en n8n (Registra en Q10, Sheets y envía correo Gmail con accesos)
 const N8N_PASARELA_Q10_URL = 'https://n8n.gcg-corp.com/webhook/c592d97d-78d1-4ead-8bed-673be3464658';
 const N8N_MATRICULA_URL = 'https://n8n.gcg-corp.com/webhook/matricula-q10';
@@ -208,8 +208,13 @@ app.post('/api/create-recurring-link', async (req, res) => {
     // Generar identificador de campaña
     const linkId = 'LNK-' + Date.now();
 
-    // Redirección obligatoria a la Matrícula de Q10
-    const successRedirectUrl = `http://localhost:${PORT}/matricula.html?monto=${paymentAmount}&moneda=${paymentCurrency}&diplomado=${encodeURIComponent(programaNombre)}&campana=${encodeURIComponent(campanaNombre)}&link_id=${linkId}`;
+    // Detectar dominio base (soporta localhost y Vercel en la nube)
+    const host = req.headers['x-forwarded-host'] || req.headers.host || `localhost:${PORT}`;
+    const protocol = req.headers['x-forwarded-proto'] || (req.secure || process.env.VERCEL ? 'https' : 'http');
+    const baseUrl = `${protocol}://${host}`;
+
+    // Redirección al Campus Virtual Q10 o Ficha
+    const successRedirectUrl = `${baseUrl}/matricula.html?monto=${paymentAmount}&moneda=${paymentCurrency}&diplomado=${encodeURIComponent(programaNombre)}&campana=${encodeURIComponent(campanaNombre)}&link_id=${linkId}`;
 
     const requestPayload = {
       currency: paymentCurrency,
