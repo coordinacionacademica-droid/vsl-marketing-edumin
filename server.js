@@ -119,8 +119,8 @@ app.post('/api/create-payment', async (req, res) => {
     const protocol = req.headers['x-forwarded-proto'] || (req.secure || process.env.VERCEL ? 'https' : 'http');
     const baseUrl = `${protocol}://${host}`;
 
-    // URL a la que dLocal Go redirige al alumno tras pagar con todos los datos precargados
-    const successRedirectUrl = `${baseUrl}/matricula.html?order_id=${orderId}&monto=${paymentAmount}&moneda=${paymentCurrency}&diplomado=${encodeURIComponent(programaSeleccionado)}&email=${encodeURIComponent(correo || '')}&first_name=${encodeURIComponent(firstName)}&last_name=${encodeURIComponent(lastName)}&dni=${encodeURIComponent(dni || '')}&telefono=${encodeURIComponent(telefono || '')}`;
+    // URL a la que dLocal Go redirige al alumno tras pagar exitosamente (Campus Virtual Q10)
+    const successRedirectUrl = 'https://edumin.q10.com/';
 
     const requestPayload = {
       currency: paymentCurrency,
@@ -208,13 +208,8 @@ app.post('/api/create-recurring-link', async (req, res) => {
     // Generar identificador de campaña
     const linkId = 'LNK-' + Date.now();
 
-    // Detectar dominio base (soporta localhost y Vercel en la nube)
-    const host = req.headers['x-forwarded-host'] || req.headers.host || `localhost:${PORT}`;
-    const protocol = req.headers['x-forwarded-proto'] || (req.secure || process.env.VERCEL ? 'https' : 'http');
-    const baseUrl = `${protocol}://${host}`;
-
-    // Redirección al Campus Virtual Q10 o Ficha
-    const successRedirectUrl = `${baseUrl}/matricula.html?monto=${paymentAmount}&moneda=${paymentCurrency}&diplomado=${encodeURIComponent(programaNombre)}&campana=${encodeURIComponent(campanaNombre)}&link_id=${linkId}`;
+    // Redirección directa al Campus Virtual Q10 oficial
+    const successRedirectUrl = 'https://edumin.q10.com/';
 
     const requestPayload = {
       currency: paymentCurrency,
