@@ -357,22 +357,16 @@ async function fetchDLocalRecurringLinks(env = 'production') {
   return results;
 }
 
-// 2.1 Endpoint para obtener el historial de links de Marketing (Conexión Directa a dLocal Go API)
+// 2.1 Endpoint para obtener el historial de links de Marketing (EXCLUSIVAMENTE PRODUCCIÓN / COBRO REAL)
 app.get('/api/links-history', async (req, res) => {
-  const env = req.query.environment || req.query.env;
-  const localHistory = loadJsonFile(HISTORY_FILE, []);
+  // Filtramos la metadata local para conservar ÚNICAMENTE links reales de producción
+  const localHistory = loadJsonFile(HISTORY_FILE, []).filter(item => 
+    item && item.environment !== 'sandbox' && (!item.url || !item.url.includes('-sbx'))
+  );
 
   try {
-    let dlocalLinks = [];
-    if (!env || env === 'all') {
-      const [prodLinks, sbxLinks] = await Promise.all([
-        fetchDLocalRecurringLinks('production'),
-        fetchDLocalRecurringLinks('sandbox')
-      ]);
-      dlocalLinks = [...prodLinks, ...sbxLinks];
-    } else {
-      dlocalLinks = await fetchDLocalRecurringLinks(env === 'sandbox' ? 'sandbox' : 'production');
-    }
+    // Consultamos únicamente la API de Producción Real de dLocal Go
+    const dlocalLinks = await fetchDLocalRecurringLinks('production');
 
     // Indexar metadata local para enriquecer con datos del asesor y alumno
     const localMap = new Map();
@@ -397,7 +391,7 @@ app.get('/api/links-history', async (req, res) => {
       return link;
     });
 
-    // Agregar items locales que dLocal Go todavía no haya indexado
+    // Agregar items locales que dLocal Go todavía no haya indexado (solo producción)
     const existingIds = new Set(combined.map(c => c.id));
     localHistory.forEach(localItem => {
       if (localItem && localItem.id && !existingIds.has(localItem.id)) {

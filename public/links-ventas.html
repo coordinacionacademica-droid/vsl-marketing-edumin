@@ -477,18 +477,14 @@
         <div class="brand-logo">💳</div>
         <div class="brand-text">
           <h1>Generador de Links de Pago - Asesores Comerciales</h1>
-          <p>EDUMIN & Instituto Avanza • Cobros Reales en Dólares ($ USD) para Todo el Mundo</p>
+          <p>EDUMIN • Cobros Reales en Dólares ($ USD) para Todo el Mundo</p>
         </div>
       </div>
 
-      <!-- SWITCH DE ENTORNO: REAL (PRODUCCIÓN) POR DEFECTO -->
-      <div class="env-switch">
-        <button type="button" class="env-btn active real" id="btnEnvReal" onclick="setEnvironment('production')">
-          🟢 Cobro Real (PROD)
-        </button>
-        <button type="button" class="env-btn" id="btnEnvSbx" onclick="setEnvironment('sandbox')">
-          🟡 Pruebas (SBX)
-        </button>
+      <!-- ENTORNO EXCLUSIVO DE COBRO REAL -->
+      <div style="display: flex; align-items: center; gap: 8px; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); padding: 8px 16px; border-radius: 20px; font-weight: 700; color: #34d399; font-size: 0.85rem;">
+        <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span>
+        ENTORNO OFICIAL: COBROS REALES (PROD)
       </div>
     </header>
 
@@ -1029,17 +1025,22 @@
       try {
         let serverLinks = [];
         try {
-          const res = await fetch('/api/links-history?environment=all');
+          const res = await fetch('/api/links-history');
           const data = await res.json();
-          if (data.success && data.links) serverLinks = data.links;
+          if (data.success && data.links) {
+            serverLinks = data.links.filter(l => l && l.environment !== 'sandbox' && (!l.url || !l.url.includes('-sbx')));
+          }
         } catch (_) {}
 
         let localLinks = [];
         try {
           localLinks = JSON.parse(localStorage.getItem('edumin_links_history') || '[]');
+          // Limpiar links de sandbox si existían en el almacenamiento local del navegador
+          localLinks = localLinks.filter(l => l && l.environment !== 'sandbox' && (!l.url || !l.url.includes('-sbx')));
+          localStorage.setItem('edumin_links_history', JSON.stringify(localLinks));
         } catch (_) {}
 
-        // Fusionar por id y url sin duplicados
+        // Fusionar por id y url sin duplicados (solo reales)
         const map = new Map();
         [...serverLinks, ...localLinks].forEach(item => {
           if (item && item.url && !map.has(item.url)) {
@@ -1056,19 +1057,19 @@
 
     function renderTablaHistorial(links) {
       const tbody = document.getElementById('historyTableBody');
-      if (!links || links.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #64748b; padding: 25px;">Aún no hay links en el registro. ¡Genera el primero arriba!</td></tr>';
+      const filteredLinks = (links || []).filter(l => l && l.environment !== 'sandbox' && (!l.url || !l.url.includes('-sbx')));
+      
+      if (!filteredLinks || filteredLinks.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #64748b; padding: 25px;">Aún no hay links reales en el registro. ¡Genera el primero arriba!</td></tr>';
         return;
       }
 
-      tbody.innerHTML = links.map(l => {
+      tbody.innerHTML = filteredLinks.map(l => {
         const fechaStr = new Date(l.date).toLocaleDateString('es-PE', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
         const mod = l.modalidad || (l.program?.includes('CUOTA') ? l.program.split(' - ')[1] : 'PAGO TOTAL');
         const detalleAsesor = l.asesor ? `<strong>${l.asesor}</strong>` : (l.campaign || '-');
         const detalleAlumno = l.alumno ? `<div style="font-size:0.75rem; color:#94a3b8;">Alu: ${l.alumno}</div>` : '';
         const isAuto = l.tieneAutomatizacion !== false && l.tipoProducto !== 'certificacion';
-        const isProd = l.environment === 'production' || (l.url && !l.url.includes('-sbx'));
-        const badgeEnv = isProd ? `<span class="badge-pill badge-real">🟢 Real</span>` : `<span class="badge-pill badge-sbx">🟡 Pruebas</span>`;
         const badgeTipo = isAuto ? `<span class="badge-pill badge-auto">⚡ Auto Q10</span>` : `<span class="badge-pill badge-manual">⚠️ Manual</span>`;
 
         return `
@@ -1078,7 +1079,7 @@
             <td><span class="badge-pill badge-modalidad">${mod}</span></td>
             <td>${detalleAsesor}${detalleAlumno}</td>
             <td style="color: #34d399; font-weight: 800; white-space: nowrap;">$${l.amount} ${l.currency || 'USD'}</td>
-            <td style="white-space: nowrap;">${badgeEnv} ${badgeTipo}</td>
+            <td style="white-space: nowrap;"><span class="badge-pill badge-real">🟢 Real</span> ${badgeTipo}</td>
             <td style="white-space: nowrap;">
               <button class="btn-table-action" onclick="copiarTexto('${l.url}')" title="Copiar Link">📋 Copiar</button>
               <button class="btn-table-action btn-table-wa" onclick="reenviarWhatsAppHistorial('${encodeURIComponent(JSON.stringify(l))}')" title="Enviar WhatsApp">🟢 WA</button>
