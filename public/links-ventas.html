@@ -3,22 +3,89 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Generador de Links de Pago - Asesores Comerciales | EDUMIN</title>
+  <title>Portal de Pagos - Asesores Comerciales | EDUMIN</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Montserrat:wght@700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: #090d16;
-      color: #f1f5f9;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      min-height: 100vh;
-      padding: 24px 16px;
+    :root {
+      --bg-dark: #060911;
+      --card-bg: rgba(13, 20, 36, 0.85);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --emerald-neon: #10b981;
+      --emerald-glow: rgba(16, 185, 129, 0.35);
+      --blue-accent: #3b82f6;
+      --amber-accent: #f59e0b;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
     }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(ellipse at 15% 0%, rgba(16, 185, 129, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 15%, rgba(59, 130, 246, 0.1) 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 90%, rgba(16, 185, 129, 0.08) 0%, transparent 60%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      padding: 32px 18px;
+      -webkit-font-smoothing: antialiased;
+    }
+
     .container {
-      max-width: 1040px;
+      max-width: 1060px;
       margin: 0 auto;
+    }
+
+    /* TOP LIVE BAR */
+    .top-live-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding: 10px 18px;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 50px;
+    }
+    .live-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: #34d399;
+      text-transform: uppercase;
+    }
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 10px #10b981;
+      animation: pulseAnim 2s infinite;
+    }
+    @keyframes pulseAnim {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+    .top-stats {
+      display: flex;
+      gap: 16px;
+      font-size: 0.8rem;
+      color: #94a3b8;
+    }
+    .top-stats span strong {
+      color: #f1f5f9;
     }
 
     /* HEADER */
@@ -27,179 +94,191 @@
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 16px;
-      margin-bottom: 24px;
-      padding-bottom: 18px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      gap: 20px;
+      margin-bottom: 28px;
     }
     .brand-title {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 16px;
     }
     .brand-logo {
-      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-      width: 46px;
-      height: 46px;
+      background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.7rem;
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .brand-text h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.65rem;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: -0.6px;
+      line-height: 1.2;
+    }
+    .brand-text h1 span {
+      background: linear-gradient(135deg, #34d399 0%, #60a5fa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .brand-text p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+    
+    .env-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      padding: 10px 18px;
+      border-radius: 50px;
+      font-weight: 800;
+      color: #34d399;
+      font-size: 0.82rem;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15);
+    }
+
+    /* MAIN GLASS CARD */
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(24px);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 34px;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.6), rgba(59, 130, 246, 0.6), transparent);
+    }
+
+    /* SECTION STEP LABELS */
+    .section-step {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #38bdf8;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 14px;
+    }
+    .section-step .step-num {
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+
+    /* PRODUCT TYPE SELECTOR (2 CARDS) */
+    .product-type-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    @media (max-width: 680px) {
+      .product-type-grid { grid-template-columns: 1fr; }
+    }
+    .type-card {
+      border: 2px solid rgba(255, 255, 255, 0.07);
+      background: rgba(11, 17, 32, 0.7);
+      border-radius: 18px;
+      padding: 18px 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+    .type-card:hover {
+      border-color: rgba(59, 130, 246, 0.5);
+      transform: translateY(-2px);
+      background: rgba(15, 23, 42, 0.9);
+    }
+    .type-card.active-curso {
+      border-color: #10b981;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(11, 17, 32, 0.8) 100%);
+      box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.3);
+    }
+    .type-card.active-cert {
+      border-color: #f59e0b;
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(11, 17, 32, 0.8) 100%);
+      box-shadow: 0 10px 30px -10px rgba(245, 158, 11, 0.3);
+    }
+    .type-card input { display: none; }
+    .type-icon {
+      font-size: 2rem;
+      background: rgba(255, 255, 255, 0.05);
+      width: 48px;
+      height: 48px;
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.5rem;
-      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
-    }
-    .brand-text h1 {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.45rem;
-      font-weight: 800;
-      color: #ffffff;
-      letter-spacing: -0.5px;
-    }
-    .brand-text p {
-      font-size: 0.85rem;
-      color: #94a3b8;
-    }
-
-    /* SWITCH ENTORNO */
-    .env-switch {
-      display: flex;
-      background: #1e293b;
-      border: 1px solid #334155;
-      padding: 4px;
-      border-radius: 12px;
-      gap: 4px;
-    }
-    .env-btn {
-      padding: 8px 14px;
-      border-radius: 8px;
-      border: none;
-      background: transparent;
-      color: #94a3b8;
-      font-size: 0.82rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.2s ease;
-    }
-    .env-btn.active.real {
-      background: #10b981;
-      color: #ffffff;
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
-    }
-    .env-btn.active.sbx {
-      background: #f59e0b;
-      color: #ffffff;
-      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
-    }
-
-    /* MAIN CARD */
-    .card {
-      background: #131c2e;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
-      padding: 28px;
-      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
-      margin-bottom: 24px;
-    }
-
-    /* REGLAS BAR */
-    .rules-bar {
-      background: rgba(16, 185, 129, 0.06);
-      border: 1px dashed rgba(16, 185, 129, 0.4);
-      border-radius: 12px;
-      padding: 12px 16px;
-      margin-bottom: 22px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px;
-      font-size: 0.8rem;
-      color: #a7f3d0;
-    }
-    .rules-bar strong { color: #34d399; }
-
-    /* SELECTOR TIPO DE PRODUCTO (TABS) */
-    .product-type-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 22px;
-    }
-    @media (max-width: 640px) {
-      .product-type-grid { grid-template-columns: 1fr; }
-    }
-    .type-card {
-      border: 2px solid #293548;
-      background: #0b1120;
-      border-radius: 14px;
-      padding: 14px 16px;
-      cursor: pointer;
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      transition: all 0.2s ease;
-    }
-    .type-card:hover {
-      border-color: #3b82f6;
-    }
-    .type-card.active-curso {
-      border-color: #10b981;
-      background: rgba(16, 185, 129, 0.08);
-    }
-    .type-card.active-cert {
-      border-color: #f59e0b;
-      background: rgba(245, 158, 11, 0.08);
-    }
-    .type-card input {
-      display: none;
-    }
-    .type-icon {
-      font-size: 1.5rem;
+      flex-shrink: 0;
     }
     .type-title {
       font-weight: 800;
-      font-size: 0.95rem;
-      margin-bottom: 3px;
+      font-size: 1.02rem;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
     .type-desc {
-      font-size: 0.76rem;
+      font-size: 0.8rem;
       color: #94a3b8;
-      line-height: 1.35;
+      line-height: 1.4;
     }
 
-    /* WARNING BOX (PARA CERTIFICACIONES SIN AUTOMATIZACIÓN) */
+    /* WARNING BOX */
     .warning-box {
       display: none;
-      background: rgba(245, 158, 11, 0.12);
-      border: 2px solid #f59e0b;
-      border-radius: 12px;
-      padding: 14px 18px;
-      margin-bottom: 22px;
-      font-size: 0.85rem;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      border-left: 5px solid #f59e0b;
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      font-size: 0.88rem;
       color: #fef3c7;
-      line-height: 1.45;
+      line-height: 1.5;
       animation: fadeIn 0.3s ease;
-    }
-    .warning-box strong {
-      color: #fbbf24;
-      font-size: 0.9rem;
     }
 
     /* FORM ELEMENTS */
     .grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
+      gap: 20px;
     }
-    @media (max-width: 720px) {
+    @media (max-width: 768px) {
       .grid-2 { grid-template-columns: 1fr; }
     }
 
     .form-group {
-      margin-bottom: 18px;
+      margin-bottom: 22px;
     }
     label {
       display: flex;
@@ -208,9 +287,9 @@
       font-size: 0.82rem;
       font-weight: 700;
       color: #cbd5e1;
-      margin-bottom: 7px;
+      margin-bottom: 8px;
       text-transform: uppercase;
-      letter-spacing: 0.4px;
+      letter-spacing: 0.5px;
     }
     label span.hint {
       color: #64748b;
@@ -220,74 +299,90 @@
     }
     input, select {
       width: 100%;
-      padding: 12px 14px;
-      border: 1px solid #293548;
-      background: #0b1120;
+      padding: 14px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(8, 13, 26, 0.8);
       color: #ffffff;
-      border-radius: 10px;
+      border-radius: 12px;
       font-size: 0.95rem;
       font-family: inherit;
       outline: none;
-      transition: all 0.2s;
+      transition: all 0.2s ease;
     }
     input:focus, select:focus {
       border-color: #10b981;
-      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+      background: rgba(11, 17, 32, 0.95);
+    }
+    select optgroup {
+      background: #0f172a;
+      color: #94a3b8;
+      font-weight: 700;
+    }
+    select option {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 8px;
     }
 
-    /* PILLS CONTAINER */
+    /* PILLS (CUOTAS & MONTOS) */
     .pills-container {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-top: 8px;
+      margin-top: 10px;
     }
     .pill-btn {
-      background: #1e293b;
-      border: 1px solid #334155;
-      color: #e2e8f0;
-      padding: 6px 14px;
-      border-radius: 20px;
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #cbd5e1;
+      padding: 8px 16px;
+      border-radius: 30px;
       font-size: 0.82rem;
       font-weight: 700;
       cursor: pointer;
-      transition: all 0.15s ease;
+      transition: all 0.2s ease;
     }
     .pill-btn:hover {
-      border-color: #10b981;
-      color: #10b981;
+      border-color: #38bdf8;
+      color: #38bdf8;
       transform: translateY(-1px);
     }
     .pill-btn.active {
       background: #10b981;
       border-color: #10b981;
       color: #ffffff;
-      box-shadow: 0 4px 10px rgba(16, 185, 129, 0.35);
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
     }
 
     /* SUBMIT BUTTON */
     .btn-generate {
       width: 100%;
-      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
       color: #ffffff;
       border: none;
-      padding: 16px;
-      border-radius: 12px;
+      padding: 18px 24px;
+      border-radius: 14px;
       font-family: 'Montserrat', sans-serif;
-      font-size: 1.05rem;
-      font-weight: 800;
+      font-size: 1.08rem;
+      font-weight: 900;
+      letter-spacing: 0.4px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
-      transition: all 0.2s ease;
-      margin-top: 8px;
+      gap: 12px;
+      box-shadow: 0 12px 30px rgba(16, 185, 129, 0.4);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      margin-top: 12px;
     }
     .btn-generate:hover {
-      filter: brightness(1.1);
+      filter: brightness(1.12);
       transform: translateY(-2px);
+      box-shadow: 0 16px 36px rgba(16, 185, 129, 0.5);
+    }
+    .btn-generate:active {
+      transform: translateY(0);
     }
     .btn-generate:disabled {
       opacity: 0.6;
@@ -295,110 +390,159 @@
       transform: none;
     }
 
-    /* RESULT CARD */
+    /* RESULT CARD (DIGITAL RECEIPT / REVEAL) */
     .result-card {
       display: none;
-      background: #0f172a;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(15, 23, 42, 0.95) 100%);
       border: 2px solid #10b981;
-      border-radius: 16px;
-      padding: 22px;
-      margin-top: 24px;
-      animation: fadeIn 0.3s ease;
+      border-radius: 20px;
+      padding: 26px;
+      margin-top: 28px;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 25px rgba(16, 185, 129, 0.2);
+      animation: fadeIn 0.35s ease;
     }
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
+      from { opacity: 0; transform: translateY(12px); }
       to { opacity: 1; transform: translateY(0); }
     }
     .result-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 10px;
     }
     .result-tag {
-      background: rgba(16, 185, 129, 0.2);
+      background: rgba(16, 185, 129, 0.25);
       color: #34d399;
       font-weight: 800;
-      font-size: 0.75rem;
-      padding: 4px 10px;
+      font-size: 0.78rem;
+      padding: 6px 12px;
       border-radius: 8px;
+      letter-spacing: 0.5px;
       text-transform: uppercase;
+      border: 1px solid rgba(16, 185, 129, 0.4);
     }
     .link-display {
-      background: #050811;
-      border: 1px solid #334155;
-      padding: 12px;
-      border-radius: 10px;
-      font-family: monospace;
-      font-size: 0.9rem;
+      background: #040711;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 14px 16px;
+      border-radius: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.92rem;
       color: #38bdf8;
       word-break: break-all;
-      margin-bottom: 14px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
     }
     .action-buttons {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 12px;
     }
-    @media (max-width: 580px) {
+    @media (max-width: 600px) {
       .action-buttons { grid-template-columns: 1fr; }
     }
     .btn-action {
-      padding: 12px;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 0.9rem;
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 0.92rem;
       border: none;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      transition: all 0.15s;
+      gap: 10px;
+      transition: all 0.2s ease;
     }
-    .btn-copy { background: #3b82f6; color: white; }
-    .btn-copy:hover { background: #2563eb; }
-    .btn-whatsapp { background: #25d366; color: #0b2210; font-weight: 800; }
-    .btn-whatsapp:hover { background: #20ba59; }
+    .btn-copy {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      color: white;
+      box-shadow: 0 6px 18px rgba(59, 130, 246, 0.35);
+    }
+    .btn-copy:hover { transform: translateY(-2px); filter: brightness(1.1); }
+    .btn-whatsapp {
+      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+      color: #ffffff;
+      box-shadow: 0 6px 18px rgba(34, 197, 94, 0.35);
+    }
+    .btn-whatsapp:hover { transform: translateY(-2px); filter: brightness(1.1); }
     .btn-open {
       grid-column: span 2;
-      background: #334155;
-      color: #e2e8f0;
-      font-size: 0.85rem;
-      margin-top: 6px;
-    }
-    @media (max-width: 580px) { .btn-open { grid-column: span 1; } }
-    .btn-open:hover { background: #475569; }
-
-    /* WA PREVIEW */
-    .wa-preview {
-      margin-top: 16px;
-      background: linear-gradient(135deg, rgba(6, 78, 59, 0.3) 0%, rgba(6, 95, 70, 0.15) 100%);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      border-radius: 10px;
-      padding: 12px 14px;
-      font-size: 0.82rem;
-      line-height: 1.5;
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       color: #cbd5e1;
+      font-size: 0.88rem;
+      margin-top: 4px;
     }
-    .wa-preview strong { color: #ffffff; }
+    @media (max-width: 600px) { .btn-open { grid-column: span 1; } }
+    .btn-open:hover { background: #334155; color: #ffffff; }
 
-    /* HISTORY SECTION (REGISTRO PERSISTENTE) */
-    .history-card {
-      background: #131c2e;
+    /* REALISTIC WHATSAPP CHAT PREVIEW BUBBLE */
+    .wa-preview-container {
+      margin-top: 20px;
+      background: #0b141a;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
-      padding: 24px;
+      border-radius: 16px;
+      padding: 16px;
+      position: relative;
+    }
+    .wa-preview-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #94a3b8;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .wa-bubble {
+      background: #005c4b;
+      color: #e9edef;
+      border-radius: 12px 12px 2px 12px;
+      padding: 14px 16px;
+      font-size: 0.85rem;
+      line-height: 1.55;
+      max-width: 95%;
+      margin-left: auto;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      position: relative;
+      white-space: pre-wrap;
+    }
+    .wa-bubble-time {
+      font-size: 0.68rem;
+      color: rgba(255, 255, 255, 0.6);
+      text-align: right;
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 4px;
+    }
+
+    /* HISTORY CARD (REGISTRO PERSISTENTE) */
+    .history-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(24px);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 30px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
     }
     .history-controls {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 12px;
+      gap: 16px;
       flex-wrap: wrap;
-      margin-bottom: 14px;
+      margin-bottom: 18px;
     }
     .search-box {
       position: relative;
@@ -406,42 +550,55 @@
       min-width: 240px;
     }
     .search-box input {
-      padding: 8px 12px 8px 34px;
-      font-size: 0.85rem;
+      padding: 10px 14px 10px 38px;
+      font-size: 0.88rem;
+      border-radius: 30px;
     }
     .search-icon {
       position: absolute;
-      left: 12px;
+      left: 14px;
       top: 50%;
       transform: translateY(-50%);
       color: #64748b;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
+    }
+    
+    .history-table-wrapper {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(11, 17, 32, 0.6);
     }
     .history-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.84rem;
+      font-size: 0.86rem;
     }
     .history-table th {
       text-align: left;
-      padding: 10px 12px;
-      background: #0f172a;
+      padding: 14px 16px;
+      background: rgba(15, 23, 42, 0.95);
       color: #94a3b8;
-      font-weight: 700;
-      border-bottom: 1px solid #1e293b;
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 0.74rem;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
     .history-table td {
-      padding: 12px;
-      border-bottom: 1px solid #1e293b;
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       color: #e2e8f0;
       vertical-align: middle;
     }
-    .history-table tr:hover { background: rgba(255, 255, 255, 0.02); }
-    
+    .history-table tr:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
     .badge-pill {
-      padding: 3px 8px;
-      border-radius: 6px;
-      font-size: 0.72rem;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.74rem;
       font-weight: 800;
       display: inline-block;
     }
@@ -449,63 +606,86 @@
     .badge-auto { background: rgba(16, 185, 129, 0.15); color: #34d399; }
     .badge-manual { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
     .badge-real { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
-    .badge-sbx { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
     
     .btn-table-action {
-      padding: 6px 10px;
-      border-radius: 6px;
-      border: 1px solid #334155;
-      background: #1e293b;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(30, 41, 59, 0.8);
       color: #38bdf8;
-      font-size: 0.75rem;
-      font-weight: 700;
+      font-size: 0.78rem;
+      font-weight: 800;
       cursor: pointer;
-      margin-right: 4px;
+      margin-right: 6px;
+      transition: all 0.15s ease;
     }
-    .btn-table-action:hover { background: #334155; }
-    .btn-table-wa { color: #4ade80; border-color: rgba(74, 222, 128, 0.3); }
-    .btn-table-wa:hover { background: rgba(74, 222, 128, 0.15); }
+    .btn-table-action:hover {
+      background: #334155;
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+    .btn-table-wa {
+      color: #4ade80;
+      border-color: rgba(74, 222, 128, 0.35);
+      background: rgba(34, 197, 94, 0.12);
+    }
+    .btn-table-wa:hover {
+      background: rgba(34, 197, 94, 0.25);
+    }
   </style>
 </head>
 <body>
 
   <div class="container">
+
+    <!-- TOP STATUS STRIP -->
+    <div class="top-live-bar">
+      <div class="live-pill">
+        <span class="pulse-dot"></span>
+        <span>Pasarela Oficial dLocal Go • Producción Real</span>
+      </div>
+      <div class="top-stats">
+        <span>🌍 Cobertura: <strong>Internacional (Todos los países)</strong></span>
+        <span>💵 Moneda: <strong>Dólares ($ USD)</strong></span>
+        <span>⚡ Matrícula: <strong>Campus Virtual Q10</strong></span>
+      </div>
+    </div>
     
     <!-- HEADER -->
     <header class="header">
       <div class="brand-title">
         <div class="brand-logo">💳</div>
         <div class="brand-text">
-          <h1>Generador de Links de Pago - Asesores Comerciales</h1>
-          <p>EDUMIN • Cobros Reales en Dólares ($ USD) para Todo el Mundo</p>
+          <h1>Portal Comercial <span>EDUMIN</span></h1>
+          <p>Generador Oficial de Enlaces de Cobro Recurrente para Ventas Internacionales</p>
         </div>
       </div>
 
-      <!-- ENTORNO EXCLUSIVO DE COBRO REAL -->
-      <div style="display: flex; align-items: center; gap: 8px; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); padding: 8px 16px; border-radius: 20px; font-weight: 700; color: #34d399; font-size: 0.85rem;">
+      <div class="env-badge-pill">
         <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span>
-        ENTORNO OFICIAL: COBROS REALES (PROD)
+        ENTORNO EN VIVO (PRODUCCIÓN)
       </div>
     </header>
 
     <!-- FORMULARIO PRINCIPAL -->
     <main class="card">
       
-      <!-- BARRA DE REGLAS BLINDADAS -->
-      <div class="rules-bar">
-        <div>🌍 <strong>Moneda:</strong> Dólares ($ USD) — Cobertura Internacional</div>
-        <div>🎓 <strong>Post-pago:</strong> Redirige a <strong>Campus Q10 (https://edumin.q10.com/)</strong></div>
-        <div>⚡ <strong>Webhook Oficial:</strong> <code style="background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 4px; color: #6ee7b7;">https://n8n.gcg-corp.com/webhook/pagos-dlocalgo</code></div>
+      <!-- PASO 1 -->
+      <div class="section-step">
+        <span class="step-num">PASO 01</span>
+        <span>Selecciona el Tipo de Concepto a Cobrar</span>
       </div>
 
-      <!-- 1. TIPO DE PRODUCTO: CURSO OFICIAL VS CERTIFICACIÓN/OTRO -->
       <div class="product-type-grid">
         <label class="type-card active-curso" id="cardTipoCurso" onclick="cambiarTipoProducto('curso')">
           <input type="radio" name="tipoProducto" value="curso" checked>
           <div class="type-icon">🎓</div>
           <div>
-            <div class="type-title" style="color: #34d399;">Cursos Especializados (Los 22 Oficiales)</div>
-            <div class="type-desc">Incluye flujo automático con Q10, Campus Virtual y entrega de credenciales.</div>
+            <div class="type-title" style="color: #34d399;">
+              Cursos Especializados
+              <span class="badge-pill badge-auto" style="font-size:0.68rem;">⚡ Auto Q10</span>
+            </div>
+            <div class="type-desc">Catálogo de Diplomados Oficiales con matrícula y acceso automático a Q10.</div>
           </div>
         </label>
 
@@ -513,29 +693,38 @@
           <input type="radio" name="tipoProducto" value="certificacion">
           <div class="type-icon">📜</div>
           <div>
-            <div class="type-title" style="color: #fbbf24;">Certificación / Trámite Libre</div>
-            <div class="type-desc">Cobro libre de certificación física, duplicados u otros conceptos independientes.</div>
+            <div class="type-title" style="color: #fbbf24;">
+              Certificación / Trámite Libre
+              <span class="badge-pill badge-manual" style="font-size:0.68rem;">⚠️ Manual</span>
+            </div>
+            <div class="type-desc">Cobro libre de certificaciones físicas, trámites administrativos o cuotas especiales.</div>
           </div>
         </label>
       </div>
 
-      <!-- BANNER DE ADVERTENCIA PARA CERTIFICACIONES (SIN AUTOMATIZACIÓN) -->
+      <!-- BANNER DE ADVERTENCIA PARA CERTIFICACIONES -->
       <div class="warning-box" id="bannerCertificacionWarning">
-        ⚠️ <strong>AVISO IMPORTANTE PARA EL ASESOR COMERCIAL:</strong><br>
-        Este concepto (Certificación / Trámite Libre) <strong>NO TIENE FLUJO DE AUTOMATIZACIÓN NI MATRÍCULA AUTOMÁTICA EN Q10</strong>.<br>
-        El link procesará el cobro real en dLocal Go y registrará el pago, pero la emisión, entrega física o gestión de la certificación <strong>debe coordinarse manualmente con el área académica</strong>.
+        ⚠️ <strong>AVISO PARA EL ASESOR COMERCIAL:</strong><br>
+        Este concepto (Certificación / Trámite Libre) <strong>NO CUENTA CON MATRÍCULA AUTOMÁTICA EN Q10</strong>.<br>
+        El cobro se procesará con éxito en dLocal Go, pero la emisión física o trámite <strong>debe coordinarse directamente con el área académica</strong>.
       </div>
 
       <form id="formLinkVenta" onsubmit="generarLinkVenta(event)">
         
-        <!-- SELECCIÓN PARA CURSOS OFICIALES (SE OCULTA SI ES CERTIFICACIÓN) -->
+        <!-- PASO 2 -->
+        <div class="section-step" style="margin-top: 10px;">
+          <span class="step-num">PASO 02</span>
+          <span>Configura el Programa y Modalidad de Cuota</span>
+        </div>
+
+        <!-- SELECCIÓN PARA CURSOS OFICIALES -->
         <div class="form-group" id="groupCursoSelector">
           <label for="selectDiplomado">
-            <span>Seleccionar de los 22 Cursos Oficiales</span>
-            <span class="hint">Catálogo Oficial EDUMIN</span>
+            <span>Curso Oficial EDUMIN</span>
+            <span class="hint">Organizado alfabéticamente</span>
           </label>
           <select id="selectDiplomado" onchange="seleccionarCursoOficial(this.value)">
-            <optgroup label="✅ Cursos Disponibles para Venta">
+            <optgroup label="✅ Cursos Disponibles para Venta Inmediata">
               <option value="Curso Especializado en Geometalurgia" selected>🔬 Curso Especializado en Geometalurgia</option>
               <option value="Curso Especializado en Gestión Minera">⛏️ Curso Especializado en Gestión Minera</option>
             </optgroup>
@@ -564,11 +753,11 @@
           </select>
         </div>
 
-        <!-- 2. PAGO COMPLETO O EN CUOTAS (SELECTOR DE CUOTA) -->
+        <!-- SELECTOR DE CUOTA -->
         <div class="form-group">
           <label for="selectCuota">
-            <span>PAGO COMPLETO O EN CUOTAS</span>
-            <span class="hint">Modalidad de cobro</span>
+            <span>Modalidad: Pago Completo o Cuotas</span>
+            <span class="hint">Selección rápida con botones</span>
           </label>
           <select id="selectCuota" onchange="actualizarNombreCompleto()">
             <option value="PAGO TOTAL" selected>💳 PAGO TOTAL (Pago Completo)</option>
@@ -579,7 +768,7 @@
           </select>
 
           <!-- BOTONES RÁPIDOS DE CUOTA -->
-          <div class="pills-container" style="margin-top: 8px;">
+          <div class="pills-container">
             <button type="button" class="pill-btn active" id="pillPagoTotal" onclick="setCuota('PAGO TOTAL')">Pago Total</button>
             <button type="button" class="pill-btn" id="pillCuota1" onclick="setCuota('PRIMERA CUOTA')">1ra Cuota</button>
             <button type="button" class="pill-btn" id="pillCuota2" onclick="setCuota('SEGUNDA CUOTA')">2da Cuota</button>
@@ -588,23 +777,28 @@
           </div>
         </div>
 
-        <!-- 3. NOMBRE FINAL DEL CURSO O CONCEPTO A COBRAR (100% EDITABLE) -->
+        <!-- NOMBRE FINAL EDITABLE -->
         <div class="form-group">
           <label for="inputPrograma">
-            <span id="labelNombreCobro">Nombre del Curso / Concepto a Cobrar</span>
-            <span class="hint">100% Editable por el Asesor</span>
+            <span id="labelNombreCobro">Concepto del Cobro que verá el Alumno</span>
+            <span class="hint" style="color: #38bdf8;">✏️ 100% Editable libremente</span>
           </label>
-          <input type="text" id="inputPrograma" value="Curso Especializado en Gestión Minera - PAGO TOTAL" required oninput="actualizarPreviewWA()">
+          <input type="text" id="inputPrograma" value="Curso Especializado en Geometalurgia - PAGO TOTAL" required oninput="actualizarPreviewWA()">
         </div>
 
-        <!-- 4. MONTO Y PAÍS -->
+        <!-- PASO 3 -->
+        <div class="section-step" style="margin-top: 10px;">
+          <span class="step-num">PASO 03</span>
+          <span>Importe en Dólares ($ USD) y Cobertura</span>
+        </div>
+
         <div class="grid-2">
           
           <!-- MONTO EN USD -->
           <div class="form-group">
             <label for="inputMonto">
               <span>Monto en Dólares ($ USD)</span>
-              <span class="hint">Editable</span>
+              <span class="hint">Clic en un atajo o escribe el monto</span>
             </label>
             <input type="number" id="inputMonto" value="149" min="1" step="0.5" required oninput="actualizarPreviewWA()">
             
@@ -622,7 +816,7 @@
           <div class="form-group">
             <label for="selectPais">
               <span>País del Comprador</span>
-              <span class="hint">Internacional / Global</span>
+              <span class="hint">Cobertura global</span>
             </label>
             <select id="selectPais">
               <option value="ALL">🌍 Todos los países (Link Internacional)</option>
@@ -651,31 +845,42 @@
       <div class="result-card" id="resultCard">
         <div class="result-header">
           <div>
-            <span class="result-tag" id="resEnvTag">🟢 LINK REAL GENERADO</span>
+            <span class="result-tag" id="resEnvTag">🟢 LINK REAL GENERADO CON ÉXITO</span>
             <span class="badge-pill badge-modalidad" id="resModalidadTag" style="margin-left: 8px;">PAGO TOTAL</span>
           </div>
-          <span style="font-size: 0.8rem; color: #94a3b8;" id="resFecha"></span>
+          <span style="font-size: 0.82rem; color: #94a3b8;" id="resFecha"></span>
         </div>
 
-        <div class="link-display" id="resUrlDisplay">https://checkout.dlocalgo.com/...</div>
+        <div class="link-display">
+          <span id="resUrlDisplay">https://checkout.dlocalgo.com/...</span>
+          <button type="button" class="btn-table-action" onclick="copiarLinkGenerado()" style="margin: 0;">📋 Copiar</button>
+        </div>
 
         <!-- BOTONES DE ACCIÓN RÁPIDA -->
         <div class="action-buttons">
           <button type="button" class="btn-action btn-copy" onclick="copiarLinkGenerado()">
-            📋 Copiar Enlace
+            📋 Copiar Enlace Directo
           </button>
           <button type="button" class="btn-action btn-whatsapp" onclick="abrirWhatsAppAlumno()">
-            🟢 Enviar por WhatsApp
+            🟢 Enviar Mensaje por WhatsApp
           </button>
           <button type="button" class="btn-action btn-open" onclick="probarLinkGenerado()">
-            👁️ Abrir y Probar Link de Pago
+            👁️ Abrir y Probar Pasarela de Pago
           </button>
         </div>
 
-        <!-- VISTA PREVIA DEL MENSAJE DE WHATSAPP -->
-        <div class="wa-preview" id="waPreviewBox">
-          <strong>Vista previa del mensaje de WhatsApp:</strong><br>
-          <span id="waPreviewText">...</span>
+        <!-- SIMULADOR CHAT WHATSAPP -->
+        <div class="wa-preview-container" id="waPreviewBox">
+          <div class="wa-preview-header">
+            <span>💬 Vista previa del mensaje que recibirá el alumno:</span>
+          </div>
+          <div class="wa-bubble">
+            <div id="waPreviewText">...</div>
+            <div class="wa-bubble-time">
+              <span>Justo ahora</span>
+              <span style="color:#53bdeb; font-weight:bold;">✓✓</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -685,25 +890,25 @@
     <section class="history-card">
       <div class="history-controls">
         <div>
-          <h2 style="font-size: 1.15rem; font-family: 'Montserrat', sans-serif; font-weight: 800;">
-            📜 Registro de Todos los Links Creados
+          <h2 style="font-size: 1.25rem; font-family: 'Montserrat', sans-serif; font-weight: 800; display:flex; align-items:center; gap:10px;">
+            📜 Registro de Enlaces Activos
           </h2>
-          <p style="font-size: 0.78rem; color: #94a3b8;">
-            Guarda todos los enlaces para reutilizarlos en tus ventas y compartirlos más adelante.
+          <p style="font-size: 0.82rem; color: #94a3b8; margin-top: 3px;">
+            Historial de cobros reales listos para usar generados a partir del 19 de Noviembre.
           </p>
         </div>
         
-        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
           <div class="search-box">
             <span class="search-icon">🔍</span>
             <input type="text" id="inputBuscarHistorial" placeholder="Buscar por curso o cuota..." oninput="filtrarHistorial(this.value)">
           </div>
-          <button type="button" class="btn-table-action" onclick="exportarHistorialCSV()">📥 Exportar Excel</button>
+          <button type="button" class="btn-table-action" onclick="exportarHistorialCSV()">📥 Exportar CSV</button>
           <button type="button" class="btn-table-action" onclick="cargarHistorial()">🔄 Actualizar</button>
         </div>
       </div>
       
-      <div style="overflow-x: auto;">
+      <div class="history-table-wrapper">
         <table class="history-table">
           <thead>
             <tr>
@@ -717,7 +922,7 @@
           </thead>
           <tbody id="historyTableBody">
             <tr>
-              <td colspan="6" style="text-align: center; color: #64748b; padding: 25px;">Cargando registro de links...</td>
+              <td colspan="6" style="text-align: center; color: #64748b; padding: 28px;">Cargando registro de links en vivo...</td>
             </tr>
           </tbody>
         </table>
