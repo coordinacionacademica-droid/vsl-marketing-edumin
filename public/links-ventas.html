@@ -640,35 +640,6 @@
 
         </div>
 
-        <!-- 5. DATOS DEL ASESOR Y ALUMNO -->
-        <div class="grid-2">
-          
-          <div class="form-group">
-            <label for="inputAsesor">
-              <span>Tu Nombre (Asesor Comercial)</span>
-              <span class="hint">Se guarda en este equipo</span>
-            </label>
-            <input type="text" id="inputAsesor" placeholder="Ej: Roger Sanalea" oninput="saveAsesor(this.value); actualizarPreviewWA();">
-          </div>
-
-          <div class="form-group">
-            <label for="inputAlumno">
-              <span>Nombre del Alumno (Opcional)</span>
-              <span class="hint">Personaliza WhatsApp</span>
-            </label>
-            <input type="text" id="inputAlumno" placeholder="Ej: Carlos Mendoza" oninput="actualizarPreviewWA()">
-          </div>
-
-        </div>
-
-        <div class="form-group">
-          <label for="inputTelefono">
-            <span>WhatsApp del Alumno (Opcional)</span>
-            <span class="hint">Con código de país ej: 51987654321</span>
-          </label>
-          <input type="tel" id="inputTelefono" placeholder="Ej: 51987654321 (O deja vacío para elegir contacto)">
-        </div>
-
         <!-- BOTÓN GENERAR -->
         <button type="submit" class="btn-generate" id="btnSubmit">
           <span>🚀 GENERAR LINK DE PAGO RECURRENTE (DÓLARES)</span>
@@ -725,7 +696,7 @@
         <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
           <div class="search-box">
             <span class="search-icon">🔍</span>
-            <input type="text" id="inputBuscarHistorial" placeholder="Buscar por curso, alumno o cuota..." oninput="filtrarHistorial(this.value)">
+            <input type="text" id="inputBuscarHistorial" placeholder="Buscar por curso o cuota..." oninput="filtrarHistorial(this.value)">
           </div>
           <button type="button" class="btn-table-action" onclick="exportarHistorialCSV()">📥 Exportar Excel</button>
           <button type="button" class="btn-table-action" onclick="cargarHistorial()">🔄 Actualizar</button>
@@ -739,15 +710,14 @@
               <th>Fecha</th>
               <th>Concepto / Programa</th>
               <th>Modalidad</th>
-              <th>Asesor / Alumno</th>
               <th>Monto</th>
-              <th>Tipo</th>
+              <th>Estado</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody id="historyTableBody">
             <tr>
-              <td colspan="7" style="text-align: center; color: #64748b; padding: 25px;">Cargando registro de links...</td>
+              <td colspan="6" style="text-align: center; color: #64748b; padding: 25px;">Cargando registro de links...</td>
             </tr>
           </tbody>
         </table>
@@ -767,26 +737,12 @@
 
     // Inicializar al cargar
     document.addEventListener('DOMContentLoaded', () => {
-      const savedAsesor = localStorage.getItem('edumin_asesor_nombre');
-      if (savedAsesor) {
-        document.getElementById('inputAsesor').value = savedAsesor;
-      }
       actualizarNombreCompleto();
       cargarHistorial();
     });
 
     function setEnvironment(env) {
       currentEnv = env;
-      const btnReal = document.getElementById('btnEnvReal');
-      const btnSbx = document.getElementById('btnEnvSbx');
-      
-      if (env === 'production') {
-        btnReal.className = 'env-btn active real';
-        btnSbx.className = 'env-btn';
-      } else {
-        btnReal.className = 'env-btn';
-        btnSbx.className = 'env-btn active sbx';
-      }
     }
 
     function cambiarTipoProducto(tipo) {
@@ -869,26 +825,17 @@
       actualizarPreviewWA();
     }
 
-    function saveAsesor(val) {
-      localStorage.setItem('edumin_asesor_nombre', val);
-    }
-
     function buildWhatsAppMessage(linkUrl) {
-      const alumno = document.getElementById('inputAlumno').value.trim();
-      const asesor = document.getElementById('inputAsesor').value.trim();
       const programa = document.getElementById('inputPrograma').value.trim();
       const cuota = document.getElementById('selectCuota').value;
       const monto = document.getElementById('inputMonto').value || '149';
       const url = linkUrl || (lastGeneratedUrl || '[LINK DE PAGO]');
 
-      const saludo = alumno ? `¡Hola ${alumno}! 👋` : `¡Hola! 👋`;
-      const firma = asesor ? `Te saluda ${asesor} del Instituto EDUMIN.` : `Te saluda el equipo de Admisiones de EDUMIN.`;
-
       let notaAuto = currentTipo === 'curso' 
         ? 'Una vez realizado el pago, tu acceso al Campus Virtual Q10 queda habilitado de inmediato.' 
         : 'Una vez realizado el pago, envíame tu comprobante por este medio para proceder con la emisión de tu certificación.';
 
-      return `${saludo} ${firma}\n\nAquí tienes tu enlace oficial y seguro para realizar tu pago de:\n🎓 *${programa}*\n📋 *Modalidad:* ${cuota}\n\n💳 *Monto Total:* $${monto} USD\n🌍 *Acceso Internacional:* Válido para tarjeta de crédito/débito y banca móvil de cualquier país.\n🔗 *Link de Pago Seguro:* ${url}\n\n${notaAuto} ¡Cualquier consulta estoy aquí para apoyarte! 🚀`;
+      return `¡Hola! 👋 Te saluda el equipo de Admisiones de EDUMIN.\n\nAquí tienes tu enlace oficial y seguro para realizar tu pago de:\n🎓 *${programa}*\n📋 *Modalidad:* ${cuota}\n\n💳 *Monto Total:* $${monto} USD\n🌍 *Acceso Internacional:* Válido para tarjeta de crédito/débito y banca móvil de cualquier país.\n🔗 *Link de Pago Seguro:* ${url}\n\n${notaAuto} ¡Cualquier consulta estamos aquí para apoyarte! 🚀`;
     }
 
     function actualizarPreviewWA() {
@@ -908,8 +855,6 @@
       const modalidad = document.getElementById('selectCuota').value;
       const monto = Number(document.getElementById('inputMonto').value);
       const pais = document.getElementById('selectPais').value;
-      const asesor = document.getElementById('inputAsesor').value.trim();
-      const alumno = document.getElementById('inputAlumno').value.trim();
 
       try {
         const payload = {
@@ -917,9 +862,7 @@
           amount: monto,
           currency: 'USD',
           country: pais,
-          campaign: asesor ? `Asesor: ${asesor}` : 'Venta Asesor',
-          asesor: asesor,
-          alumno: alumno,
+          campaign: 'Venta Asesor EDUMIN',
           modalidad: modalidad,
           tipoProducto: currentTipo,
           environment: currentEnv
@@ -938,7 +881,7 @@
           lastProgramName = programa;
           lastAmount = monto;
 
-          // Guardar también en localStorage para persistencia permanente del asesor
+          // Guardar también en localStorage para persistencia permanente
           guardarEnLocalStorage(data.entry || {
             id: 'LNK-' + Date.now(),
             date: new Date().toISOString(),
@@ -946,8 +889,11 @@
             modalidad: modalidad,
             tipoProducto: currentTipo,
             tieneAutomatizacion: currentTipo === 'curso',
-            asesor: asesor,
-            alumno: alumno,
+            amount: monto,
+            currency: 'USD',
+            environment: currentEnv,
+            url: data.url
+          });
             amount: monto,
             currency: 'USD',
             environment: currentEnv,
@@ -998,14 +944,8 @@
 
     function abrirWhatsAppAlumno() {
       if (!lastGeneratedUrl) return;
-      const phoneRaw = document.getElementById('inputTelefono').value.replace(/\D/g, '');
       const msg = encodeURIComponent(buildWhatsAppMessage(lastGeneratedUrl));
-      
-      let waUrl = `https://wa.me/?text=${msg}`;
-      if (phoneRaw) {
-        waUrl = `https://wa.me/${phoneRaw}?text=${msg}`;
-      }
-      window.open(waUrl, '_blank');
+      window.open(`https://wa.me/?text=${msg}`, '_blank');
     }
 
     function probarLinkGenerado() {
@@ -1093,24 +1033,21 @@
       const filteredLinks = (links || []).filter(esLinkValidoNov19);
       
       if (!filteredLinks || filteredLinks.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #64748b; padding: 25px;">Aún no hay links activos creados desde el 19 de noviembre. ¡Genera el primero arriba!</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #64748b; padding: 25px;">Aún no hay links activos creados desde el 19 de noviembre. ¡Genera el primero arriba!</td></tr>';
         return;
       }
 
       tbody.innerHTML = filteredLinks.map(l => {
         const fechaStr = new Date(l.date).toLocaleDateString('es-PE', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
         const mod = l.modalidad || (l.program?.includes('CUOTA') ? l.program.split(' - ')[1] : 'PAGO TOTAL');
-        const detalleAsesor = l.asesor ? `<strong>${l.asesor}</strong>` : (l.campaign || '-');
-        const detalleAlumno = l.alumno ? `<div style="font-size:0.75rem; color:#94a3b8;">Alu: ${l.alumno}</div>` : '';
         const isAuto = l.tieneAutomatizacion !== false && l.tipoProducto !== 'certificacion';
         const badgeTipo = isAuto ? `<span class="badge-pill badge-auto">⚡ Auto Q10</span>` : `<span class="badge-pill badge-manual">⚠️ Manual</span>`;
 
         return `
           <tr>
             <td style="white-space: nowrap;">${fechaStr}</td>
-            <td style="font-weight: 600; max-width: 260px;">${l.program}</td>
+            <td style="font-weight: 600; max-width: 300px;">${l.program}</td>
             <td><span class="badge-pill badge-modalidad">${mod}</span></td>
-            <td>${detalleAsesor}${detalleAlumno}</td>
             <td style="color: #34d399; font-weight: 800; white-space: nowrap;">$${l.amount} ${l.currency || 'USD'}</td>
             <td style="white-space: nowrap;"><span class="badge-pill badge-real">🟢 Real Activo</span> ${badgeTipo}</td>
             <td style="white-space: nowrap;">
@@ -1130,9 +1067,7 @@
       }
       const filtrados = allLinksHistory.filter(l => 
         (l.program && l.program.toLowerCase().includes(q)) ||
-        (l.modalidad && l.modalidad.toLowerCase().includes(q)) ||
-        (l.asesor && l.asesor.toLowerCase().includes(q)) ||
-        (l.alumno && l.alumno.toLowerCase().includes(q))
+        (l.modalidad && l.modalidad.toLowerCase().includes(q))
       );
       renderTablaHistorial(filtrados);
     }
@@ -1140,17 +1075,12 @@
     function reenviarWhatsAppHistorial(itemJsonStr) {
       try {
         const item = JSON.parse(decodeURIComponent(itemJsonStr));
-        const alumno = item.alumno || '';
-        const asesor = item.asesor || '';
         const programa = item.program || 'Curso Especializado';
         const monto = item.amount || 149;
         const cuota = item.modalidad || 'PAGO TOTAL';
         const url = item.url;
 
-        const saludo = alumno ? `¡Hola ${alumno}! 👋` : `¡Hola! 👋`;
-        const firma = asesor ? `Te saluda ${asesor} del Instituto EDUMIN.` : `Te saluda el equipo de Admisiones de EDUMIN.`;
-
-        const msg = `${saludo} ${firma}\n\nAquí tienes tu enlace oficial para realizar tu pago de:\n🎓 *${programa}*\n📋 *Modalidad:* ${cuota}\n\n💳 *Monto:* $${monto} USD\n🔗 *Link de Pago Seguro:* ${url}\n\n¡Cualquier consulta estoy a tu disposición! 🚀`;
+        const msg = `¡Hola! 👋 Te saluda el equipo de Admisiones de EDUMIN.\n\nAquí tienes tu enlace oficial para realizar tu pago de:\n🎓 *${programa}*\n📋 *Modalidad:* ${cuota}\n\n💳 *Monto:* $${monto} USD\n🔗 *Link de Pago Seguro:* ${url}\n\n¡Cualquier consulta estamos a tu disposición! 🚀`;
         window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
       } catch (e) {
         console.error(e);
@@ -1162,16 +1092,18 @@
         alert('No hay links en el registro para exportar.');
         return;
       }
-      let csv = 'Fecha,Programa,Modalidad,Asesor,Alumno,Monto,Moneda,Automatizacion,URL\n';
+      let csv = 'Fecha,Programa,Modalidad,Monto,Moneda,Automatizacion,URL\n';
       allLinksHistory.forEach(l => {
         const isAuto = l.tieneAutomatizacion !== false && l.tipoProducto !== 'certificacion' ? 'SI' : 'NO';
-        csv += `"${l.date}","${(l.program || '').replace(/"/g, '""')}","${l.modalidad || 'PAGO TOTAL'}","${(l.asesor || '').replace(/"/g, '""')}","${(l.alumno || '').replace(/"/g, '""')}","${l.amount}","${l.currency || 'USD'}","${isAuto}","${l.url}"\n`;
+        csv += `"${l.date}","${(l.program || '').replace(/"/g, '""')}","${l.modalidad || 'PAGO TOTAL'}","${l.amount}","${l.currency || 'USD'}","${isAuto}","${l.url}"\n`;
       });
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
       a.download = `registro_links_edumin_${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click();
+    }
       a.click();
     }
 
