@@ -221,16 +221,16 @@ app.post('/api/create-payment', async (req, res) => {
   }
 });
 
-// 2. Endpoint para crear Links Reutilizables de Campaña (Para Marketing)
+// 2. Endpoint para crear Links Reutilizables de Campaña y Venta de Asesores
 app.post('/api/create-recurring-link', async (req, res) => {
   try {
-    const { description, amount, currency, country, campaign, environment } = req.body;
+    const { description, amount, currency, country, campaign, asesor, alumno, environment } = req.body;
     const config = getDlocalConfig(environment);
 
-    const paymentAmount = Number(amount) || 27.0;
+    const paymentAmount = Number(amount) || 149.0;
     const paymentCurrency = (currency || 'USD').toUpperCase();
-    const programaNombre = description || 'Gestión Minera';
-    const campanaNombre = campaign || 'Campaña General';
+    const programaNombre = (description || 'Curso Especializado en Gestión Minera').trim();
+    const campanaNombre = (campaign || (asesor ? `Asesor: ${asesor}` : 'Venta Directa')).trim();
 
     // Generar identificador de campaña
     const linkId = 'LNK-' + Date.now();
@@ -238,10 +238,17 @@ app.post('/api/create-recurring-link', async (req, res) => {
     // Redirección directa al Campus Virtual Q10 oficial
     const successRedirectUrl = 'https://edumin.q10.com/';
 
+    // Construir descripción limpia para la pasarela (máximo 100 caracteres)
+    let dlocalDesc = programaNombre;
+    if (campanaNombre && !programaNombre.toLowerCase().includes(campanaNombre.toLowerCase())) {
+      dlocalDesc = `${programaNombre} (${campanaNombre})`;
+    }
+    dlocalDesc = dlocalDesc.slice(0, 100);
+
     const requestPayload = {
       currency: paymentCurrency,
       amount: paymentAmount,
-      description: `${programaNombre} (${campanaNombre})`,
+      description: dlocalDesc,
       success_url: successRedirectUrl,
       notification_url: N8N_NOTIFICATION_URL // Blindado permanentemente a n8n
     };
@@ -250,7 +257,7 @@ app.post('/api/create-recurring-link', async (req, res) => {
       requestPayload.country = country.toUpperCase();
     }
 
-    console.log(`[dLocal Go - ${config.envLabel}] Creando Link de Campaña: "${programaNombre}" - ${paymentCurrency} ${paymentAmount} [${campanaNombre}]`);
+    console.log(`[dLocal Go - ${config.envLabel}] Creando Link Recurrente: "${dlocalDesc}" - ${paymentCurrency} ${paymentAmount} [Asesor: ${asesor || 'No especificado'}]`);
 
     const dlocalResponse = await fetch(`${config.apiUrl}/v1/recurring-payments/`, {
       method: 'POST',
@@ -269,13 +276,15 @@ app.post('/api/create-recurring-link', async (req, res) => {
       return res.status(dlocalResponse.status).json({ success: false, error: data.message || 'Error en pasarela' });
     }
 
-    // Guardar en el historial de campañas de Marketing
+    // Guardar en el historial de links con datos del asesor y alumno
     const history = loadJsonFile(HISTORY_FILE, []);
     const newEntry = {
       id: linkId,
       date: new Date().toISOString(),
       program: programaNombre,
       campaign: campanaNombre,
+      asesor: asesor || '',
+      alumno: alumno || '',
       amount: paymentAmount,
       currency: paymentCurrency,
       country: country || 'ALL',
@@ -510,12 +519,15 @@ app.post('/api/webhook', (req, res) => {
   return res.status(200).send('OK');
 });
 
-// Rutas amigables para los dos diplomados
+// Rutas amigables para los dos diplomados y paneles de venta
 app.get('/gestion-minera', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'gestion-minera.html'));
 });
 app.get('/geometalurgia', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'geometalurgia.html'));
+});
+app.get(['/links-ventas', '/ventas', '/asesor', '/panel-ventas'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'links-ventas.html'));
 });
 
 // Iniciar servidor local o exportar para Vercel Serverless

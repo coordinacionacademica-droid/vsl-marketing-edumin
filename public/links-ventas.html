@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generador de Links de Pago - Asesores Comerciales | EDUMIN</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #090d16;
+      color: #f1f5f9;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      padding: 24px 16px;
+    }
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    /* HEADER */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .brand-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-logo {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
+    }
+    .brand-text h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+    }
+    .brand-text p {
+      font-size: 0.85rem;
+      color: #94a3b8;
+    }
+
+    /* SWITCH ENTORNO */
+    .env-switch {
+      display: flex;
+      background: #1e293b;
+      border: 1px solid #334155;
+      padding: 4px;
+      border-radius: 12px;
+      gap: 4px;
+    }
+    .env-btn {
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: #94a3b8;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .env-btn.active.real {
+      background: #10b981;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+    }
+    .env-btn.active.sbx {
+      background: #f59e0b;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+    }
+
+    /* MAIN CARD */
+    .card {
+      background: #131c2e;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+      margin-bottom: 24px;
+    }
+    .card-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-subtitle {
+      font-size: 0.84rem;
+      color: #94a3b8;
+      margin-bottom: 22px;
+    }
+
+    /* FORM GRID */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 720px) {
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+    label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #cbd5e1;
+      margin-bottom: 7px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    label span.hint {
+      color: #64748b;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: none;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #293548;
+      background: #0b1120;
+      color: #ffffff;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: #10b981;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+    }
+
+    /* QUICK PILLS FOR AMOUNTS */
+    .pills-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .amount-pill {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #e2e8f0;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .amount-pill:hover {
+      border-color: #10b981;
+      color: #10b981;
+      transform: translateY(-1px);
+    }
+    .amount-pill.active {
+      background: #10b981;
+      border-color: #10b981;
+      color: #ffffff;
+      box-shadow: 0 4px 10px rgba(16, 185, 129, 0.35);
+    }
+
+    /* SYSTEM BLINDADO BOX */
+    .rules-bar {
+      background: rgba(16, 185, 129, 0.06);
+      border: 1px dashed rgba(16, 185, 129, 0.4);
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 0.8rem;
+      color: #a7f3d0;
+    }
+    .rules-bar strong {
+      color: #34d399;
+    }
+
+    /* SUBMIT BUTTON */
+    .btn-generate {
+      width: 100%;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #ffffff;
+      border: none;
+      padding: 16px;
+      border-radius: 12px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+      transition: all 0.2s ease;
+    }
+    .btn-generate:hover {
+      filter: brightness(1.1);
+      transform: translateY(-2px);
+    }
+    .btn-generate:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* RESULT CARD */
+    .result-card {
+      display: none;
+      background: #0f172a;
+      border: 2px solid #10b981;
+      border-radius: 16px;
+      padding: 22px;
+      margin-top: 24px;
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .result-tag {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      font-weight: 800;
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 8px;
+      text-transform: uppercase;
+    }
+    .link-display {
+      background: #050811;
+      border: 1px solid #334155;
+      padding: 12px;
+      border-radius: 10px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: #38bdf8;
+      word-break: break-all;
+      margin-bottom: 14px;
+    }
+    .action-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    @media (max-width: 580px) {
+      .action-buttons { grid-template-columns: 1fr; }
+    }
+    .btn-action {
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.15s;
+    }
+    .btn-copy {
+      background: #3b82f6;
+      color: white;
+    }
+    .btn-copy:hover {
+      background: #2563eb;
+    }
+    .btn-whatsapp {
+      background: #25d366;
+      color: #0b2210;
+      font-weight: 800;
+    }
+    .btn-whatsapp:hover {
+      background: #20ba59;
+    }
+    .btn-open {
+      grid-column: span 2;
+      background: #334155;
+      color: #e2e8f0;
+      font-size: 0.85rem;
+      margin-top: 6px;
+    }
+    @media (max-width: 580px) {
+      .btn-open { grid-column: span 1; }
+    }
+    .btn-open:hover {
+      background: #475569;
+    }
+
+    /* WHATSAPP MESSAGE PREVIEW */
+    .wa-preview {
+      margin-top: 16px;
+      background: #064e3b;
+      background: linear-gradient(135deg, rgba(6, 78, 59, 0.3) 0%, rgba(6, 95, 70, 0.15) 100%);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 0.82rem;
+      line-height: 1.5;
+      color: #cbd5e1;
+    }
+    .wa-preview strong { color: #ffffff; }
+
+    /* HISTORY SECTION */
+    .history-card {
+      background: #131c2e;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 24px;
+    }
+    .history-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      font-size: 0.85rem;
+    }
+    .history-table th {
+      text-align: left;
+      padding: 10px 12px;
+      background: #0f172a;
+      color: #94a3b8;
+      font-weight: 700;
+      border-bottom: 1px solid #1e293b;
+    }
+    .history-table td {
+      padding: 12px;
+      border-bottom: 1px solid #1e293b;
+      color: #e2e8f0;
+    }
+    .history-table tr:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .badge-env {
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+    .badge-env.real { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    .badge-env.sbx { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+    .btn-sm-copy {
+      padding: 6px 10px;
+      border-radius: 6px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #38bdf8;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-sm-copy:hover {
+      background: #334155;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- HEADER -->
+    <header class="header">
+      <div class="brand-title">
+        <div class="brand-logo">💳</div>
+        <div class="brand-text">
+          <h1>Links de Pago Recurrente (USD)</h1>
+          <p>Herramienta Oficial para Asesores Comerciales — EDUMIN & Instituto Avanza</p>
+        </div>
+      </div>
+
+      <!-- SWITCH DE ENTORNO: POR DEFECTO REAL / PRODUCCIÓN -->
+      <div class="env-switch">
+        <button type="button" class="env-btn active real" id="btnEnvReal" onclick="setEnvironment('production')">
+          🟢 Cobro Real (PROD)
+        </button>
+        <button type="button" class="env-btn" id="btnEnvSbx" onclick="setEnvironment('sandbox')">
+          🟡 Pruebas (SBX)
+        </button>
+      </div>
+    </header>
+
+    <!-- FORMULARIO PRINCIPAL -->
+    <main class="card">
+      <div class="card-title">
+        <span>⚡ Generador Inmediato para Ventas</span>
+      </div>
+      <p class="card-subtitle">
+        Crea un link en <strong>Dólares Americanos ($ USD)</strong> válido para alumnos de <strong>cualquier país</strong> (Perú, Colombia, Chile, México, Bolivia, Ecuador, Argentina, etc.).
+      </p>
+
+      <!-- BARRA DE REGLAS BLINDADAS -->
+      <div class="rules-bar">
+        <div>🌍 <strong>Moneda:</strong> Dólares ($ USD) — Cobertura Internacional</div>
+        <div>🎓 <strong>Post-pago:</strong> Redirige a <strong>Campus Q10</strong></div>
+        <div>⚡ <strong>Webhook:</strong> Conectado a n8n</div>
+      </div>
+
+      <form id="formLinkVenta" onsubmit="generarLinkVenta(event)">
+        
+        <!-- DIPLOMADO / PROGRAMA -->
+        <div class="form-group">
+          <label for="selectDiplomado">
+            <span>Diplomado / Programa Oficial</span>
+            <span class="hint">Formato "Curso Especializado en..."</span>
+          </label>
+          <select id="selectDiplomado" onchange="toggleCustomPrograma(this.value)">
+            <option value="Curso Especializado en Gestión Minera">Curso Especializado en Gestión Minera</option>
+            <option value="Curso Especializado en Geometalurgia">Curso Especializado en Geometalurgia</option>
+            <option value="Curso Especializado en Seguridad y Salud Ocupacional en Minería">Curso Especializado en Seguridad y Salud Ocupacional en Minería</option>
+            <option value="Curso Especializado en Planeamiento y Diseño de Minado">Curso Especializado en Planeamiento y Diseño de Minado</option>
+            <option value="Curso Especializado en Metalurgia Extractiva y Procesamiento de Minerales">Curso Especializado en Metalurgia Extractiva y Procesamiento de Minerales</option>
+            <option value="Curso Especializado en Ventilación de Minas">Curso Especializado en Ventilación de Minas</option>
+            <option value="Curso Especializado en Mantenimiento de Maquinaria Pesada en Minería">Curso Especializado en Mantenimiento de Maquinaria Pesada en Minería</option>
+            <option value="Curso Especializado en Geología Económica y Exploración Minera">Curso Especializado en Geología Económica y Exploración Minera</option>
+            <option value="Curso Especializado en Geomecánica Aplicada a Minería">Curso Especializado en Geomecánica Aplicada a Minería</option>
+            <option value="Curso Especializado en Costos, Presupuestos y Valorización Minera">Curso Especializado en Costos, Presupuestos y Valorización Minera</option>
+            <option value="Curso Especializado en Gestión Ambiental y Cierre de Minas">Curso Especializado en Gestión Ambiental y Cierre de Minas</option>
+            <option value="Curso Especializado en Perforación y Voladura de Rocas">Curso Especializado en Perforación y Voladura de Rocas</option>
+            <option value="Curso Especializado en Relaves Mineros y Manejo de Aguas">Curso Especializado en Relaves Mineros y Manejo de Aguas</option>
+            <option value="Curso Especializado en Operaciones Mineras y Productividad">Curso Especializado en Operaciones Mineras y Productividad</option>
+            <option value="Curso Especializado en Legislación y Derecho Minero">Curso Especializado en Legislación y Derecho Minero</option>
+            <option value="Curso Especializado en Hidrogeología Aplicada a la Minería">Curso Especializado en Hidrogeología Aplicada a la Minería</option>
+            <option value="Curso Especializado en Topografía Minera y Fotogrametría con Drones">Curso Especializado en Topografía Minera y Fotogrametría con Drones</option>
+            <option value="Curso Especializado en Geoestadística y Estimación de Recursos">Curso Especializado en Geoestadística y Estimación de Recursos</option>
+            <option value="Curso Especializado en Supervisión y Liderazgo en Minería">Curso Especializado en Supervisión y Liderazgo en Minería</option>
+            <option value="Curso Especializado en Mineralogía y Petrología Aplicada">Curso Especializado en Mineralogía y Petrología Aplicada</option>
+            <option value="Curso Especializado en Logística y Cadena de Suministro en Minería">Curso Especializado en Logística y Cadena de Suministro en Minería</option>
+            <option value="Curso Especializado en Automatización y Minería Digital 4.0">Curso Especializado en Automatización y Minería Digital 4.0</option>
+            <option value="CUSTOM">✏️ Escribir otro nombre personalizado...</option>
+          </select>
+        </div>
+
+        <!-- CAMPO PERSONALIZADO (SI ELIGE CUSTOM) -->
+        <div class="form-group" id="groupCustomPrograma" style="display: none;">
+          <label for="customPrograma">
+            <span>Nombre Personalizado del Programa / Cobro</span>
+            <span class="hint">Ej: Curso Especializado en Lixiviación, 1ra Cuota, etc.</span>
+          </label>
+          <input type="text" id="customPrograma" placeholder="Escribe el nombre del curso o concepto...">
+        </div>
+
+        <!-- MONTO Y PAÍS -->
+        <div class="grid-2">
+          
+          <!-- MONTO EN USD -->
+          <div class="form-group">
+            <label for="inputMonto">
+              <span>Monto en Dólares ($ USD)</span>
+              <span class="hint">Editable</span>
+            </label>
+            <input type="number" id="inputMonto" value="149" min="1" step="0.5" required oninput="actualizarPreviewWA()">
+            
+            <!-- PILLS DE MONTOS FRECUENTES -->
+            <div class="pills-container">
+              <button type="button" class="amount-pill" onclick="setMonto(27)">$27</button>
+              <button type="button" class="amount-pill" onclick="setMonto(49)">$49</button>
+              <button type="button" class="amount-pill" onclick="setMonto(99)">$99</button>
+              <button type="button" class="amount-pill" onclick="setMonto(129)">$129</button>
+              <button type="button" class="amount-pill active" onclick="setMonto(149)">$149</button>
+              <button type="button" class="amount-pill" onclick="setMonto(199)">$199</button>
+            </div>
+          </div>
+
+          <!-- PAÍS DE VENTA -->
+          <div class="form-group">
+            <label for="selectPais">
+              <span>País del Comprador</span>
+              <span class="hint">O internacional</span>
+            </label>
+            <select id="selectPais">
+              <option value="ALL">🌍 Todos los países (Link Internacional)</option>
+              <option value="PE">🇵🇪 Perú</option>
+              <option value="CO">🇨🇴 Colombia</option>
+              <option value="CL">🇨🇱 Chile</option>
+              <option value="MX">🇲🇽 México</option>
+              <option value="BO">🇧🇴 Bolivia</option>
+              <option value="EC">🇪🇨 Ecuador</option>
+              <option value="AR">🇦🇷 Argentina</option>
+              <option value="PA">🇵🇦 Panamá</option>
+              <option value="CR">🇨🇷 Costa Rica</option>
+            </select>
+          </div>
+
+        </div>
+
+        <!-- DATOS DEL ASESOR Y ALUMNO (PARA SEGUIMIENTO Y MENSAJE DE WHATSAPP) -->
+        <div class="grid-2">
+          
+          <div class="form-group">
+            <label for="inputAsesor">
+              <span>Tu Nombre (Asesor Comercial)</span>
+              <span class="hint">Se recuerda en este navegador</span>
+            </label>
+            <input type="text" id="inputAsesor" placeholder="Ej: Roger Sanalea" oninput="saveAsesor(this.value); actualizarPreviewWA();">
+          </div>
+
+          <div class="form-group">
+            <label for="inputAlumno">
+              <span>Nombre del Alumno (Opcional)</span>
+              <span class="hint">Para personalizar el mensaje</span>
+            </label>
+            <input type="text" id="inputAlumno" placeholder="Ej: Carlos Mendoza" oninput="actualizarPreviewWA()">
+          </div>
+
+        </div>
+
+        <div class="form-group">
+          <label for="inputTelefono">
+            <span>WhatsApp del Alumno (Opcional)</span>
+            <span class="hint">Con código de país ej: 51987654321</span>
+          </label>
+          <input type="tel" id="inputTelefono" placeholder="Ej: 51987654321 (O deja vacío para elegir contacto)">
+        </div>
+
+        <!-- BOTÓN GENERAR -->
+        <button type="submit" class="btn-generate" id="btnSubmit">
+          <span>🚀 GENERAR LINK DE PAGO RECURRENTE (DÓLARES)</span>
+        </button>
+
+      </form>
+
+      <!-- RESULTADO GENERADO -->
+      <div class="result-card" id="resultCard">
+        <div class="result-header">
+          <span class="result-tag" id="resEnvTag">🟢 LINK REAL GENERADO</span>
+          <span style="font-size: 0.8rem; color: #94a3b8;" id="resFecha"></span>
+        </div>
+
+        <div class="link-display" id="resUrlDisplay">https://checkout.dlocalgo.com/...</div>
+
+        <!-- BOTONES DE ACCIÓN RÁPIDA -->
+        <div class="action-buttons">
+          <button type="button" class="btn-action btn-copy" onclick="copiarLinkGenerado()">
+            📋 Copiar Enlace
+          </button>
+          <button type="button" class="btn-action btn-whatsapp" onclick="abrirWhatsAppAlumno()">
+            🟢 Enviar por WhatsApp
+          </button>
+          <button type="button" class="btn-action btn-open" onclick="probarLinkGenerado()">
+            👁️ Abrir y Probar Link de Pago
+          </button>
+        </div>
+
+        <!-- VISTA PREVIA DEL MENSAJE DE WHATSAPP -->
+        <div class="wa-preview" id="waPreviewBox">
+          <strong>Vista previa del mensaje de WhatsApp:</strong><br>
+          <span id="waPreviewText">...</span>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- HISTORIAL DE LINKS RECIENTES -->
+    <section class="history-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h2 style="font-size: 1.1rem; font-family: 'Montserrat', sans-serif;">📜 Links Recientes de Asesores</h2>
+        <button type="button" class="btn-sm-copy" onclick="cargarHistorial()">🔄 Actualizar</button>
+      </div>
+      
+      <div style="overflow-x: auto;">
+        <table class="history-table">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Programa</th>
+              <th>Asesor / Alumno</th>
+              <th>Monto</th>
+              <th>Entorno</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody id="historyTableBody">
+            <tr>
+              <td colspan="6" style="text-align: center; color: #64748b; padding: 20px;">Cargando historial de ventas...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // Variables de Estado
+    let currentEnv = 'production'; // Por defecto PRODUCCIÓN REAL
+    let lastGeneratedUrl = '';
+    let lastProgramName = '';
+    let lastAmount = 149;
+
+    // Inicializar al cargar
+    document.addEventListener('DOMContentLoaded', () => {
+      // Cargar asesor guardado
+      const savedAsesor = localStorage.getItem('edumin_asesor_nombre');
+      if (savedAsesor) {
+        document.getElementById('inputAsesor').value = savedAsesor;
+      }
+      actualizarPreviewWA();
+      cargarHistorial();
+    });
+
+    function setEnvironment(env) {
+      currentEnv = env;
+      const btnReal = document.getElementById('btnEnvReal');
+      const btnSbx = document.getElementById('btnEnvSbx');
+      
+      if (env === 'production') {
+        btnReal.className = 'env-btn active real';
+        btnSbx.className = 'env-btn';
+      } else {
+        btnReal.className = 'env-btn';
+        btnSbx.className = 'env-btn active sbx';
+      }
+    }
+
+    function toggleCustomPrograma(val) {
+      const customGroup = document.getElementById('groupCustomPrograma');
+      if (val === 'CUSTOM') {
+        customGroup.style.display = 'block';
+        document.getElementById('customPrograma').focus();
+      } else {
+        customGroup.style.display = 'none';
+      }
+      actualizarPreviewWA();
+    }
+
+    function setMonto(val) {
+      document.getElementById('inputMonto').value = val;
+      // Actualizar estilo de pills
+      document.querySelectorAll('.amount-pill').forEach(btn => {
+        if (Number(btn.innerText.replace('$', '')) === val) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+      actualizarPreviewWA();
+    }
+
+    function saveAsesor(val) {
+      localStorage.setItem('edumin_asesor_nombre', val);
+    }
+
+    function getProgramaNombre() {
+      const select = document.getElementById('selectDiplomado');
+      if (select.value === 'CUSTOM') {
+        const custom = document.getElementById('customPrograma').value.trim();
+        return custom || 'Curso Especializado';
+      }
+      return select.value;
+    }
+
+    function buildWhatsAppMessage(linkUrl) {
+      const alumno = document.getElementById('inputAlumno').value.trim();
+      const asesor = document.getElementById('inputAsesor').value.trim();
+      const programa = getProgramaNombre();
+      const monto = document.getElementById('inputMonto').value || '149';
+      const url = linkUrl || (lastGeneratedUrl || '[LINK DE PAGO]');
+
+      const saludo = alumno ? `¡Hola ${alumno}! 👋` : `¡Hola! 👋`;
+      const firma = asesor ? `Te saluda ${asesor} del Instituto EDUMIN.` : `Te saluda el equipo de Admisiones de EDUMIN.`;
+
+      return `${saludo} ${firma}\n\nAquí tienes tu enlace oficial y seguro para matricularte en el:\n🎓 *${programa}*\n\n💳 *Monto Total:* $${monto} USD\n🌍 *Acceso Internacional:* Válido para tarjeta de crédito/débito y banca móvil de cualquier país.\n🔗 *Link de Pago Seguro:* ${url}\n\nUna vez realizado el pago, tu acceso al Campus Virtual Q10 queda habilitado de inmediato. Si tienes alguna duda para realizar el pago, ¡avísame por aquí! 🚀`;
+    }
+
+    function actualizarPreviewWA() {
+      const msg = buildWhatsAppMessage();
+      document.getElementById('waPreviewText').innerText = msg;
+    }
+
+    // GENERAR LINK VIA API
+    async function generarLinkVenta(e) {
+      e.preventDefault();
+
+      const btn = document.getElementById('btnSubmit');
+      btn.disabled = true;
+      btn.innerHTML = '<span>⏳ Generando link en dLocal Go...</span>';
+
+      const programa = getProgramaNombre();
+      const monto = Number(document.getElementById('inputMonto').value);
+      const pais = document.getElementById('selectPais').value;
+      const asesor = document.getElementById('inputAsesor').value.trim();
+      const alumno = document.getElementById('inputAlumno').value.trim();
+
+      try {
+        const payload = {
+          description: programa,
+          amount: monto,
+          currency: 'USD',
+          country: pais,
+          campaign: asesor ? `Asesor: ${asesor}` : 'Venta Asesor',
+          asesor: asesor,
+          alumno: alumno,
+          environment: currentEnv
+        };
+
+        const res = await fetch('/api/create-recurring-link', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+
+        if (data.success && data.url) {
+          lastGeneratedUrl = data.url;
+          lastProgramName = programa;
+          lastAmount = monto;
+
+          // Mostrar resultado
+          document.getElementById('resUrlDisplay').innerText = data.url;
+          document.getElementById('resFecha').innerText = new Date().toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' });
+          
+          const tag = document.getElementById('resEnvTag');
+          if (currentEnv === 'production') {
+            tag.innerText = '🟢 COBRO REAL (PRODUCCIÓN)';
+            tag.style.background = 'rgba(16, 185, 129, 0.2)';
+            tag.style.color = '#34d399';
+          } else {
+            tag.innerText = '🟡 MODO PRUEBA (SANDBOX)';
+            tag.style.background = 'rgba(245, 158, 11, 0.2)';
+            tag.style.color = '#fbbf24';
+          }
+
+          actualizarPreviewWA();
+          document.getElementById('resultCard').style.display = 'block';
+          document.getElementById('resultCard').scrollIntoView({ behavior: 'smooth' });
+
+          // Recargar historial
+          cargarHistorial();
+        } else {
+          alert('Error creando link: ' + (data.error || 'Respuesta inválida'));
+        }
+
+      } catch (err) {
+        console.error(err);
+        alert('Error de conexión al generar el link');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<span>🚀 GENERAR LINK DE PAGO RECURRENTE (DÓLARES)</span>';
+      }
+    }
+
+    function copiarLinkGenerado() {
+      if (!lastGeneratedUrl) return;
+      navigator.clipboard.writeText(lastGeneratedUrl).then(() => {
+        alert('✅ ¡Link de pago copiado al portapapeles!');
+      });
+    }
+
+    function abrirWhatsAppAlumno() {
+      if (!lastGeneratedUrl) return;
+      const phoneRaw = document.getElementById('inputTelefono').value.replace(/\D/g, '');
+      const msg = encodeURIComponent(buildWhatsAppMessage(lastGeneratedUrl));
+      
+      let waUrl = `https://wa.me/?text=${msg}`;
+      if (phoneRaw) {
+        waUrl = `https://wa.me/${phoneRaw}?text=${msg}`;
+      }
+      window.open(waUrl, '_blank');
+    }
+
+    function probarLinkGenerado() {
+      if (lastGeneratedUrl) {
+        window.open(lastGeneratedUrl, '_blank');
+      }
+    }
+
+    async function cargarHistorial() {
+      try {
+        const res = await fetch('/api/links-history');
+        const data = await res.json();
+        const tbody = document.getElementById('historyTableBody');
+        
+        if (data.success && data.links && data.links.length > 0) {
+          tbody.innerHTML = data.links.slice(0, 15).map(l => {
+            const fechaStr = new Date(l.date).toLocaleDateString('es-PE', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+            const isProd = l.environment === 'production' || l.envLabel?.includes('REAL');
+            const envBadge = isProd ? `<span class="badge-env real">🟢 Real</span>` : `<span class="badge-env sbx">🟡 Sbx</span>`;
+            const detalleAsesor = l.asesor ? `<strong>${l.asesor}</strong>` : (l.campaign || '-');
+            const detalleAlumno = l.alumno ? `<div style="font-size:0.75rem; color:#94a3b8;">Alu: ${l.alumno}</div>` : '';
+
+            return `
+              <tr>
+                <td>${fechaStr}</td>
+                <td style="font-weight: 600;">${l.program}</td>
+                <td>${detalleAsesor}${detalleAlumno}</td>
+                <td style="color: #34d399; font-weight: 700;">$${l.amount} ${l.currency || 'USD'}</td>
+                <td>${envBadge}</td>
+                <td>
+                  <button class="btn-sm-copy" onclick="copiarTexto('${l.url}')">Copiar Link</button>
+                </td>
+              </tr>
+            `;
+          }).join('');
+        } else {
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #64748b; padding: 20px;">Aún no hay links generados. ¡Crea el primero arriba!</td></tr>';
+        }
+      } catch (err) {
+        console.error('Error cargando historial:', err);
+      }
+    }
+
+    function copiarTexto(txt) {
+      navigator.clipboard.writeText(txt).then(() => {
+        alert('✅ Enlace copiado al portapapeles');
+      });
+    }
+  </script>
+
+</body>
+</html>
