@@ -1021,6 +1021,35 @@
       }
     }
 
+    const OLD_TOKENS_EXCLUDED = new Set([
+      'oxIKtFRVNlGbxSRqYYh2P6zBskEgncn2',
+      'T6MBPv9LdorjYYqsNfCpiqGc6gLrUTwo',
+      'u51qsUe8OLaKYJpG4b70YOjBt00ad82X',
+      'U7pZBjCqfmuSdo9vPDFHK9gRRokfylkm',
+      'wBMWyAZRG10ZqBMyVW8vKhC4FS3w1I6W',
+      'cUvol5cB7IzLUEGXJhxs5YY716LDtIiB',
+      'JlWJzyDqfArXmhH2tCf8JS4av3hLaJhQ',
+      'G92q7Fj1X1w40RiC0myJb5bg0FzV4DL6',
+      'bSGfNYPks1bfcx47wvtz6L8MPD5t6BWL',
+      'FZTktq4WqIVR1kfR3OJI1LGB0ZvoZqy6'
+    ]);
+
+    function esLinkValidoNov19(l) {
+      if (!l || !l.url) return false;
+      // 1. Debe estar ACTIVO (no inactivo)
+      if (l.enabled === false) return false;
+      // 2. Solo produccion real
+      if (l.environment === 'sandbox' || l.url.includes('-sbx')) return false;
+      // 3. Excluir tokens antiguos o de prueba anteriores al 19 nov
+      if (l.id && OLD_TOKENS_EXCLUDED.has(l.id)) return false;
+      // 4. Fecha a partir del 19 de noviembre de 2026 si tiene fecha registrada
+      if (l.date) {
+        const d = new Date(l.date);
+        if (d < new Date('2026-11-19T00:00:00')) return false;
+      }
+      return true;
+    }
+
     async function cargarHistorial() {
       try {
         let serverLinks = [];
@@ -1028,19 +1057,19 @@
           const res = await fetch('/api/links-history');
           const data = await res.json();
           if (data.success && data.links) {
-            serverLinks = data.links.filter(l => l && l.environment !== 'sandbox' && (!l.url || !l.url.includes('-sbx')));
+            serverLinks = data.links.filter(esLinkValidoNov19);
           }
         } catch (_) {}
 
         let localLinks = [];
         try {
           localLinks = JSON.parse(localStorage.getItem('edumin_links_history') || '[]');
-          // Limpiar links de sandbox si existían en el almacenamiento local del navegador
-          localLinks = localLinks.filter(l => l && l.environment !== 'sandbox' && (!l.url || !l.url.includes('-sbx')));
+          // Limpiar links antiguos, inactivos o sandbox del navegador
+          localLinks = localLinks.filter(esLinkValidoNov19);
           localStorage.setItem('edumin_links_history', JSON.stringify(localLinks));
         } catch (_) {}
 
-        // Fusionar por id y url sin duplicados (solo reales)
+        // Fusionar por id y url sin duplicados (solo activos desde el 19 de noviembre)
         const map = new Map();
         [...serverLinks, ...localLinks].forEach(item => {
           if (item && item.url && !map.has(item.url)) {
@@ -1057,10 +1086,10 @@
 
     function renderTablaHistorial(links) {
       const tbody = document.getElementById('historyTableBody');
-      const filteredLinks = (links || []).filter(l => l && l.environment !== 'sandbox' && (!l.url || !l.url.includes('-sbx')));
+      const filteredLinks = (links || []).filter(esLinkValidoNov19);
       
       if (!filteredLinks || filteredLinks.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #64748b; padding: 25px;">Aún no hay links reales en el registro. ¡Genera el primero arriba!</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #64748b; padding: 25px;">Aún no hay links activos creados desde el 19 de noviembre. ¡Genera el primero arriba!</td></tr>';
         return;
       }
 
@@ -1079,7 +1108,7 @@
             <td><span class="badge-pill badge-modalidad">${mod}</span></td>
             <td>${detalleAsesor}${detalleAlumno}</td>
             <td style="color: #34d399; font-weight: 800; white-space: nowrap;">$${l.amount} ${l.currency || 'USD'}</td>
-            <td style="white-space: nowrap;"><span class="badge-pill badge-real">🟢 Real</span> ${badgeTipo}</td>
+            <td style="white-space: nowrap;"><span class="badge-pill badge-real">🟢 Real Activo</span> ${badgeTipo}</td>
             <td style="white-space: nowrap;">
               <button class="btn-table-action" onclick="copiarTexto('${l.url}')" title="Copiar Link">📋 Copiar</button>
               <button class="btn-table-action btn-table-wa" onclick="reenviarWhatsAppHistorial('${encodeURIComponent(JSON.stringify(l))}')" title="Enviar WhatsApp">🟢 WA</button>

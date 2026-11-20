@@ -295,6 +295,7 @@ app.post('/api/create-recurring-link', async (req, res) => {
       country: country || 'ALL',
       environment: config.envName,
       envLabel: config.envLabel,
+      enabled: true,
       url: data.url
     };
     history.unshift(newEntry);
@@ -311,6 +312,20 @@ app.post('/api/create-recurring-link', async (req, res) => {
     return res.status(500).json({ success: false, error: 'Error interno del servidor' });
   }
 });
+
+// Tokens de links antiguos/de prueba creados antes del 19 de noviembre de 2026
+const OLD_TOKENS_BEFORE_NOV_19 = new Set([
+  'oxIKtFRVNlGbxSRqYYh2P6zBskEgncn2',
+  'T6MBPv9LdorjYYqsNfCpiqGc6gLrUTwo',
+  'u51qsUe8OLaKYJpG4b70YOjBt00ad82X',
+  'U7pZBjCqfmuSdo9vPDFHK9gRRokfylkm',
+  'wBMWyAZRG10ZqBMyVW8vKhC4FS3w1I6W',
+  'cUvol5cB7IzLUEGXJhxs5YY716LDtIiB',
+  'JlWJzyDqfArXmhH2tCf8JS4av3hLaJhQ',
+  'G92q7Fj1X1w40RiC0myJb5bg0FzV4DL6',
+  'bSGfNYPks1bfcx47wvtz6L8MPD5t6BWL',
+  'FZTktq4WqIVR1kfR3OJI1LGB0ZvoZqy6'
+]);
 
 // Helper para consultar links recurrentes directamente en la API oficial de dLocal Go
 async function fetchDLocalRecurringLinks(env = 'production') {
@@ -335,6 +350,10 @@ async function fetchDLocalRecurringLinks(env = 'production') {
       const data = await response.json();
       if (data && Array.isArray(data.data)) {
         for (const item of data.data) {
+          // FILTRO ESTRICTO: Solo activos (enabled === true) y creados desde el 19 de noviembre
+          if (item.enabled !== true) continue;
+          if (OLD_TOKENS_BEFORE_NOV_19.has(item.recurringLinkToken)) continue;
+
           results.push({
             id: item.recurringLinkToken,
             url: `${checkoutBase}${item.recurringLinkToken}`,
@@ -343,7 +362,7 @@ async function fetchDLocalRecurringLinks(env = 'production') {
             currency: item.currency || 'USD',
             environment: isProd ? 'production' : 'sandbox',
             country: item.country || 'ALL',
-            enabled: item.enabled,
+            enabled: true,
             date: new Date().toISOString()
           });
         }
@@ -357,11 +376,16 @@ async function fetchDLocalRecurringLinks(env = 'production') {
   return results;
 }
 
-// 2.1 Endpoint para obtener el historial de links de Marketing (EXCLUSIVAMENTE PRODUCCIÓN / COBRO REAL)
+// 2.1 Endpoint para obtener el historial de links de Marketing (SOLO ACTIVOS DESDE 19 NOVIEMBRE)
 app.get('/api/links-history', async (req, res) => {
-  // Filtramos la metadata local para conservar ÚNICAMENTE links reales de producción
+  // Filtramos la metadata local: solo activos, no sandbox, creados desde 19 nov
   const localHistory = loadJsonFile(HISTORY_FILE, []).filter(item => 
-    item && item.environment !== 'sandbox' && (!item.url || !item.url.includes('-sbx'))
+    item &&
+    item.enabled !== false &&
+    item.environment !== 'sandbox' &&
+    (!item.url || !item.url.includes('-sbx')) &&
+    !OLD_TOKENS_BEFORE_NOV_19.has(item.id) &&
+    (!item.date || new Date(item.date) >= new Date('2026-11-19T00:00:00.000Z'))
   );
 
   try {
@@ -385,13 +409,14 @@ app.get('/api/links-history', async (req, res) => {
           alumno: saved.alumno || link.alumno,
           tipoProducto: saved.tipoProducto || link.tipoProducto,
           tieneAutomatizacion: saved.tieneAutomatizacion !== undefined ? saved.tieneAutomatizacion : link.tieneAutomatizacion,
-          date: saved.date || link.date
+          date: saved.date || link.date,
+          enabled: true
         };
       }
       return link;
     });
 
-    // Agregar items locales que dLocal Go todavía no haya indexado (solo producción)
+    // Agregar items locales activos creados desde el 19 de noviembre
     const existingIds = new Set(combined.map(c => c.id));
     localHistory.forEach(localItem => {
       if (localItem && localItem.id && !existingIds.has(localItem.id)) {
