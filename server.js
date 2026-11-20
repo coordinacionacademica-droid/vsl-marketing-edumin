@@ -224,13 +224,16 @@ app.post('/api/create-payment', async (req, res) => {
 // 2. Endpoint para crear Links Reutilizables de Campaña y Venta de Asesores
 app.post('/api/create-recurring-link', async (req, res) => {
   try {
-    const { description, amount, currency, country, campaign, asesor, alumno, environment } = req.body;
+    const { description, amount, currency, country, campaign, asesor, alumno, modalidad, tipoProducto, environment } = req.body;
     const config = getDlocalConfig(environment);
 
     const paymentAmount = Number(amount) || 149.0;
     const paymentCurrency = (currency || 'USD').toUpperCase();
-    const programaNombre = (description || 'Curso Especializado en Gestión Minera').trim();
-    const campanaNombre = (campaign || (asesor ? `Asesor: ${asesor}` : 'Venta Directa')).trim();
+    const modalidadPago = (modalidad || 'PAGO TOTAL').trim();
+    const esCertificacion = tipoProducto === 'certificacion';
+    
+    let programaNombre = (description || 'Curso Especializado en Gestión Minera').trim();
+    const campanaNombre = (campaign || (asesor ? `Asesor: ${asesor}` : 'Venta Asesor')).trim();
 
     // Generar identificador de campaña
     const linkId = 'LNK-' + Date.now();
@@ -240,10 +243,9 @@ app.post('/api/create-recurring-link', async (req, res) => {
 
     // Construir descripción limpia para la pasarela (máximo 100 caracteres)
     let dlocalDesc = programaNombre;
-    if (campanaNombre && !programaNombre.toLowerCase().includes(campanaNombre.toLowerCase())) {
-      dlocalDesc = `${programaNombre} (${campanaNombre})`;
+    if (dlocalDesc.length > 100) {
+      dlocalDesc = dlocalDesc.slice(0, 97) + '...';
     }
-    dlocalDesc = dlocalDesc.slice(0, 100);
 
     const requestPayload = {
       currency: paymentCurrency,
@@ -257,7 +259,7 @@ app.post('/api/create-recurring-link', async (req, res) => {
       requestPayload.country = country.toUpperCase();
     }
 
-    console.log(`[dLocal Go - ${config.envLabel}] Creando Link Recurrente: "${dlocalDesc}" - ${paymentCurrency} ${paymentAmount} [Asesor: ${asesor || 'No especificado'}]`);
+    console.log(`[dLocal Go - ${config.envLabel}] Creando Link Recurrente: "${dlocalDesc}" - ${paymentCurrency} ${paymentAmount} [Modalidad: ${modalidadPago}] [Asesor: ${asesor || 'No especificado'}]`);
 
     const dlocalResponse = await fetch(`${config.apiUrl}/v1/recurring-payments/`, {
       method: 'POST',
@@ -276,12 +278,15 @@ app.post('/api/create-recurring-link', async (req, res) => {
       return res.status(dlocalResponse.status).json({ success: false, error: data.message || 'Error en pasarela' });
     }
 
-    // Guardar en el historial de links con datos del asesor y alumno
+    // Guardar en el historial de links con todos los datos detallados
     const history = loadJsonFile(HISTORY_FILE, []);
     const newEntry = {
       id: linkId,
       date: new Date().toISOString(),
       program: programaNombre,
+      modalidad: modalidadPago,
+      tipoProducto: esCertificacion ? 'certificacion' : 'curso',
+      tieneAutomatizacion: !esCertificacion,
       campaign: campanaNombre,
       asesor: asesor || '',
       alumno: alumno || '',

@@ -17,7 +17,7 @@
       padding: 24px 16px;
     }
     .container {
-      max-width: 980px;
+      max-width: 1040px;
       margin: 0 auto;
     }
 
@@ -39,18 +39,18 @@
     }
     .brand-logo {
       background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-      width: 44px;
-      height: 44px;
+      width: 46px;
+      height: 46px;
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
     }
     .brand-text h1 {
       font-family: 'Montserrat', sans-serif;
-      font-size: 1.4rem;
+      font-size: 1.45rem;
       font-weight: 800;
       color: #ffffff;
       letter-spacing: -0.5px;
@@ -103,23 +103,92 @@
       box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
       margin-bottom: 24px;
     }
-    .card-title {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.15rem;
-      font-weight: 800;
-      color: #ffffff;
-      margin-bottom: 6px;
+
+    /* REGLAS BAR */
+    .rules-bar {
+      background: rgba(16, 185, 129, 0.06);
+      border: 1px dashed rgba(16, 185, 129, 0.4);
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-bottom: 22px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 0.8rem;
+      color: #a7f3d0;
     }
-    .card-subtitle {
-      font-size: 0.84rem;
-      color: #94a3b8;
+    .rules-bar strong { color: #34d399; }
+
+    /* SELECTOR TIPO DE PRODUCTO (TABS) */
+    .product-type-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
       margin-bottom: 22px;
     }
+    @media (max-width: 640px) {
+      .product-type-grid { grid-template-columns: 1fr; }
+    }
+    .type-card {
+      border: 2px solid #293548;
+      background: #0b1120;
+      border-radius: 14px;
+      padding: 14px 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      transition: all 0.2s ease;
+    }
+    .type-card:hover {
+      border-color: #3b82f6;
+    }
+    .type-card.active-curso {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.08);
+    }
+    .type-card.active-cert {
+      border-color: #f59e0b;
+      background: rgba(245, 158, 11, 0.08);
+    }
+    .type-card input {
+      display: none;
+    }
+    .type-icon {
+      font-size: 1.5rem;
+    }
+    .type-title {
+      font-weight: 800;
+      font-size: 0.95rem;
+      margin-bottom: 3px;
+    }
+    .type-desc {
+      font-size: 0.76rem;
+      color: #94a3b8;
+      line-height: 1.35;
+    }
 
-    /* FORM GRID */
+    /* WARNING BOX (PARA CERTIFICACIONES SIN AUTOMATIZACIÓN) */
+    .warning-box {
+      display: none;
+      background: rgba(245, 158, 11, 0.12);
+      border: 2px solid #f59e0b;
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 22px;
+      font-size: 0.85rem;
+      color: #fef3c7;
+      line-height: 1.45;
+      animation: fadeIn 0.3s ease;
+    }
+    .warning-box strong {
+      color: #fbbf24;
+      font-size: 0.9rem;
+    }
+
+    /* FORM ELEMENTS */
     .grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -149,7 +218,7 @@
       font-weight: 500;
       text-transform: none;
     }
-    input, select, textarea {
+    input, select {
       width: 100%;
       padding: 12px 14px;
       border: 1px solid #293548;
@@ -161,58 +230,39 @@
       outline: none;
       transition: all 0.2s;
     }
-    input:focus, select:focus, textarea:focus {
+    input:focus, select:focus {
       border-color: #10b981;
       box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
     }
 
-    /* QUICK PILLS FOR AMOUNTS */
+    /* PILLS CONTAINER */
     .pills-container {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
       margin-top: 8px;
     }
-    .amount-pill {
+    .pill-btn {
       background: #1e293b;
       border: 1px solid #334155;
       color: #e2e8f0;
       padding: 6px 14px;
       border-radius: 20px;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.15s ease;
     }
-    .amount-pill:hover {
+    .pill-btn:hover {
       border-color: #10b981;
       color: #10b981;
       transform: translateY(-1px);
     }
-    .amount-pill.active {
+    .pill-btn.active {
       background: #10b981;
       border-color: #10b981;
       color: #ffffff;
       box-shadow: 0 4px 10px rgba(16, 185, 129, 0.35);
-    }
-
-    /* SYSTEM BLINDADO BOX */
-    .rules-bar {
-      background: rgba(16, 185, 129, 0.06);
-      border: 1px dashed rgba(16, 185, 129, 0.4);
-      border-radius: 12px;
-      padding: 12px 16px;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px;
-      font-size: 0.8rem;
-      color: #a7f3d0;
-    }
-    .rules-bar strong {
-      color: #34d399;
     }
 
     /* SUBMIT BUTTON */
@@ -233,6 +283,7 @@
       gap: 10px;
       box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
       transition: all 0.2s ease;
+      margin-top: 8px;
     }
     .btn-generate:hover {
       filter: brightness(1.1);
@@ -263,6 +314,8 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 8px;
     }
     .result-tag {
       background: rgba(16, 185, 129, 0.2);
@@ -305,21 +358,10 @@
       gap: 8px;
       transition: all 0.15s;
     }
-    .btn-copy {
-      background: #3b82f6;
-      color: white;
-    }
-    .btn-copy:hover {
-      background: #2563eb;
-    }
-    .btn-whatsapp {
-      background: #25d366;
-      color: #0b2210;
-      font-weight: 800;
-    }
-    .btn-whatsapp:hover {
-      background: #20ba59;
-    }
+    .btn-copy { background: #3b82f6; color: white; }
+    .btn-copy:hover { background: #2563eb; }
+    .btn-whatsapp { background: #25d366; color: #0b2210; font-weight: 800; }
+    .btn-whatsapp:hover { background: #20ba59; }
     .btn-open {
       grid-column: span 2;
       background: #334155;
@@ -327,17 +369,12 @@
       font-size: 0.85rem;
       margin-top: 6px;
     }
-    @media (max-width: 580px) {
-      .btn-open { grid-column: span 1; }
-    }
-    .btn-open:hover {
-      background: #475569;
-    }
+    @media (max-width: 580px) { .btn-open { grid-column: span 1; } }
+    .btn-open:hover { background: #475569; }
 
-    /* WHATSAPP MESSAGE PREVIEW */
+    /* WA PREVIEW */
     .wa-preview {
       margin-top: 16px;
-      background: #064e3b;
       background: linear-gradient(135deg, rgba(6, 78, 59, 0.3) 0%, rgba(6, 95, 70, 0.15) 100%);
       border: 1px solid rgba(16, 185, 129, 0.3);
       border-radius: 10px;
@@ -348,18 +385,42 @@
     }
     .wa-preview strong { color: #ffffff; }
 
-    /* HISTORY SECTION */
+    /* HISTORY SECTION (REGISTRO PERSISTENTE) */
     .history-card {
       background: #131c2e;
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 20px;
       padding: 24px;
     }
+    .history-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .search-box {
+      position: relative;
+      flex: 1;
+      min-width: 240px;
+    }
+    .search-box input {
+      padding: 8px 12px 8px 34px;
+      font-size: 0.85rem;
+    }
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #64748b;
+      font-size: 0.85rem;
+    }
     .history-table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 14px;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
     }
     .history-table th {
       text-align: left;
@@ -373,31 +434,35 @@
       padding: 12px;
       border-bottom: 1px solid #1e293b;
       color: #e2e8f0;
+      vertical-align: middle;
     }
-    .history-table tr:hover {
-      background: rgba(255, 255, 255, 0.02);
-    }
-    .badge-env {
+    .history-table tr:hover { background: rgba(255, 255, 255, 0.02); }
+    
+    .badge-pill {
       padding: 3px 8px;
       border-radius: 6px;
       font-size: 0.72rem;
       font-weight: 800;
+      display: inline-block;
     }
-    .badge-env.real { background: rgba(16, 185, 129, 0.2); color: #34d399; }
-    .badge-env.sbx { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
-    .btn-sm-copy {
+    .badge-modalidad { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+    .badge-auto { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+    .badge-manual { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+    
+    .btn-table-action {
       padding: 6px 10px;
       border-radius: 6px;
-      background: #1e293b;
       border: 1px solid #334155;
+      background: #1e293b;
       color: #38bdf8;
       font-size: 0.75rem;
       font-weight: 700;
       cursor: pointer;
+      margin-right: 4px;
     }
-    .btn-sm-copy:hover {
-      background: #334155;
-    }
+    .btn-table-action:hover { background: #334155; }
+    .btn-table-wa { color: #4ade80; border-color: rgba(74, 222, 128, 0.3); }
+    .btn-table-wa:hover { background: rgba(74, 222, 128, 0.15); }
   </style>
 </head>
 <body>
@@ -409,12 +474,12 @@
       <div class="brand-title">
         <div class="brand-logo">💳</div>
         <div class="brand-text">
-          <h1>Links de Pago Recurrente (USD)</h1>
-          <p>Herramienta Oficial para Asesores Comerciales — EDUMIN & Instituto Avanza</p>
+          <h1>Generador de Links de Pago - Asesores Comerciales</h1>
+          <p>EDUMIN & Instituto Avanza • Cobros Reales en Dólares ($ USD) para Todo el Mundo</p>
         </div>
       </div>
 
-      <!-- SWITCH DE ENTORNO: POR DEFECTO REAL / PRODUCCIÓN -->
+      <!-- SWITCH DE ENTORNO: REAL (PRODUCCIÓN) POR DEFECTO -->
       <div class="env-switch">
         <button type="button" class="env-btn active real" id="btnEnvReal" onclick="setEnvironment('production')">
           🟢 Cobro Real (PROD)
@@ -427,13 +492,7 @@
 
     <!-- FORMULARIO PRINCIPAL -->
     <main class="card">
-      <div class="card-title">
-        <span>⚡ Generador Inmediato para Ventas</span>
-      </div>
-      <p class="card-subtitle">
-        Crea un link en <strong>Dólares Americanos ($ USD)</strong> válido para alumnos de <strong>cualquier país</strong> (Perú, Colombia, Chile, México, Bolivia, Ecuador, Argentina, etc.).
-      </p>
-
+      
       <!-- BARRA DE REGLAS BLINDADAS -->
       <div class="rules-bar">
         <div>🌍 <strong>Moneda:</strong> Dólares ($ USD) — Cobertura Internacional</div>
@@ -441,10 +500,38 @@
         <div>⚡ <strong>Webhook Oficial:</strong> <code style="background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 4px; color: #6ee7b7;">https://n8n.gcg-corp.com/webhook/pagos-dlocalgo</code></div>
       </div>
 
+      <!-- 1. TIPO DE PRODUCTO: CURSO OFICIAL VS CERTIFICACIÓN/OTRO -->
+      <div class="product-type-grid">
+        <label class="type-card active-curso" id="cardTipoCurso" onclick="cambiarTipoProducto('curso')">
+          <input type="radio" name="tipoProducto" value="curso" checked>
+          <div class="type-icon">🎓</div>
+          <div>
+            <div class="type-title" style="color: #34d399;">Cursos Especializados (Los 22 Oficiales)</div>
+            <div class="type-desc">Incluye flujo automático con Q10, Campus Virtual y entrega de credenciales.</div>
+          </div>
+        </label>
+
+        <label class="type-card" id="cardTipoCert" onclick="cambiarTipoProducto('certificacion')">
+          <input type="radio" name="tipoProducto" value="certificacion">
+          <div class="type-icon">📜</div>
+          <div>
+            <div class="type-title" style="color: #fbbf24;">Certificación / Trámite Libre</div>
+            <div class="type-desc">Cobro libre de certificación física, duplicados u otros conceptos independientes.</div>
+          </div>
+        </label>
+      </div>
+
+      <!-- BANNER DE ADVERTENCIA PARA CERTIFICACIONES (SIN AUTOMATIZACIÓN) -->
+      <div class="warning-box" id="bannerCertificacionWarning">
+        ⚠️ <strong>AVISO IMPORTANTE PARA EL ASESOR COMERCIAL:</strong><br>
+        Este concepto (Certificación / Trámite Libre) <strong>NO TIENE FLUJO DE AUTOMATIZACIÓN NI MATRÍCULA AUTOMÁTICA EN Q10</strong>.<br>
+        El link procesará el cobro real en dLocal Go y registrará el pago, pero la emisión, entrega física o gestión de la certificación <strong>debe coordinarse manualmente con el área académica</strong>.
+      </div>
+
       <form id="formLinkVenta" onsubmit="generarLinkVenta(event)">
         
-        <!-- SELECTOR DE LOS 22 CURSOS ESPECIALIZADOS OFICIALES -->
-        <div class="form-group">
+        <!-- SELECCIÓN PARA CURSOS OFICIALES (SE OCULTA SI ES CERTIFICACIÓN) -->
+        <div class="form-group" id="groupCursoSelector">
           <label for="selectDiplomado">
             <span>Seleccionar de los 22 Cursos Oficiales</span>
             <span class="hint">Catálogo Oficial EDUMIN</span>
@@ -472,20 +559,43 @@
             <option value="Curso Especializado en Legislación Laboral y Elaboración de Planillas">📜 Curso Especializado en Legislación Laboral y Elaboración de Planillas</option>
             <option value="Curso Especializado en Gestión Estratégica para Empresas Utilizando Big Data y Análisis Predictivo">📊 Curso Especializado en Gestión Estratégica para Empresas Utilizando Big Data y Análisis Predictivo</option>
             <option value="Curso Especializado en Especialista en Comercio Internacional: Gestión Aduanera y Logística">🚢 Curso Especializado en Especialista en Comercio Internacional: Gestión Aduanera y Logística</option>
-            <option value="CUSTOM">✏️ Escribir otro nombre personalizado...</option>
           </select>
         </div>
 
-        <!-- CAMPO DEL NOMBRE DEL CURSO: 100% EDITABLE POR EL ASESOR -->
+        <!-- 2. PAGO COMPLETO O EN CUOTAS (SELECTOR DE CUOTA) -->
         <div class="form-group">
-          <label for="inputPrograma">
-            <span>Nombre del Curso a Cobrar</span>
-            <span class="hint">Editable por el asesor (puedes ajustar el texto libremente)</span>
+          <label for="selectCuota">
+            <span>PAGO COMPLETO O EN CUOTAS</span>
+            <span class="hint">Modalidad de cobro</span>
           </label>
-          <input type="text" id="inputPrograma" value="Curso Especializado en Gestión Minera" placeholder="Nombre que verá el alumno en dLocal Go..." required oninput="actualizarPreviewWA()">
+          <select id="selectCuota" onchange="actualizarNombreCompleto()">
+            <option value="PAGO TOTAL" selected>💳 PAGO TOTAL (Pago Completo)</option>
+            <option value="PRIMERA CUOTA">1️⃣ PRIMERA CUOTA</option>
+            <option value="SEGUNDA CUOTA">2️⃣ SEGUNDA CUOTA</option>
+            <option value="TERCERA CUOTA">3️⃣ TERCERA CUOTA</option>
+            <option value="CUARTA CUOTA">4️⃣ CUARTA CUOTA</option>
+          </select>
+
+          <!-- BOTONES RÁPIDOS DE CUOTA -->
+          <div class="pills-container" style="margin-top: 8px;">
+            <button type="button" class="pill-btn active" id="pillPagoTotal" onclick="setCuota('PAGO TOTAL')">Pago Total</button>
+            <button type="button" class="pill-btn" id="pillCuota1" onclick="setCuota('PRIMERA CUOTA')">1ra Cuota</button>
+            <button type="button" class="pill-btn" id="pillCuota2" onclick="setCuota('SEGUNDA CUOTA')">2da Cuota</button>
+            <button type="button" class="pill-btn" id="pillCuota3" onclick="setCuota('TERCERA CUOTA')">3ra Cuota</button>
+            <button type="button" class="pill-btn" id="pillCuota4" onclick="setCuota('CUARTA CUOTA')">4ta Cuota</button>
+          </div>
         </div>
 
-        <!-- MONTO Y PAÍS -->
+        <!-- 3. NOMBRE FINAL DEL CURSO O CONCEPTO A COBRAR (100% EDITABLE) -->
+        <div class="form-group">
+          <label for="inputPrograma">
+            <span id="labelNombreCobro">Nombre del Curso / Concepto a Cobrar</span>
+            <span class="hint">100% Editable por el Asesor</span>
+          </label>
+          <input type="text" id="inputPrograma" value="Curso Especializado en Gestión Minera - PAGO TOTAL" required oninput="actualizarPreviewWA()">
+        </div>
+
+        <!-- 4. MONTO Y PAÍS -->
         <div class="grid-2">
           
           <!-- MONTO EN USD -->
@@ -496,14 +606,13 @@
             </label>
             <input type="number" id="inputMonto" value="149" min="1" step="0.5" required oninput="actualizarPreviewWA()">
             
-            <!-- PILLS DE MONTOS FRECUENTES -->
             <div class="pills-container">
-              <button type="button" class="amount-pill" onclick="setMonto(27)">$27</button>
-              <button type="button" class="amount-pill" onclick="setMonto(49)">$49</button>
-              <button type="button" class="amount-pill" onclick="setMonto(99)">$99</button>
-              <button type="button" class="amount-pill" onclick="setMonto(129)">$129</button>
-              <button type="button" class="amount-pill active" onclick="setMonto(149)">$149</button>
-              <button type="button" class="amount-pill" onclick="setMonto(199)">$199</button>
+              <button type="button" class="pill-btn" onclick="setMonto(27)">$27</button>
+              <button type="button" class="pill-btn" onclick="setMonto(49)">$49</button>
+              <button type="button" class="pill-btn" onclick="setMonto(99)">$99</button>
+              <button type="button" class="pill-btn" onclick="setMonto(129)">$129</button>
+              <button type="button" class="pill-btn active" id="pillMonto149" onclick="setMonto(149)">$149</button>
+              <button type="button" class="pill-btn" onclick="setMonto(199)">$199</button>
             </div>
           </div>
 
@@ -511,7 +620,7 @@
           <div class="form-group">
             <label for="selectPais">
               <span>País del Comprador</span>
-              <span class="hint">O internacional</span>
+              <span class="hint">Internacional / Global</span>
             </label>
             <select id="selectPais">
               <option value="ALL">🌍 Todos los países (Link Internacional)</option>
@@ -529,13 +638,13 @@
 
         </div>
 
-        <!-- DATOS DEL ASESOR Y ALUMNO (PARA SEGUIMIENTO Y MENSAJE DE WHATSAPP) -->
+        <!-- 5. DATOS DEL ASESOR Y ALUMNO -->
         <div class="grid-2">
           
           <div class="form-group">
             <label for="inputAsesor">
               <span>Tu Nombre (Asesor Comercial)</span>
-              <span class="hint">Se recuerda en este navegador</span>
+              <span class="hint">Se guarda en este equipo</span>
             </label>
             <input type="text" id="inputAsesor" placeholder="Ej: Roger Sanalea" oninput="saveAsesor(this.value); actualizarPreviewWA();">
           </div>
@@ -543,7 +652,7 @@
           <div class="form-group">
             <label for="inputAlumno">
               <span>Nombre del Alumno (Opcional)</span>
-              <span class="hint">Para personalizar el mensaje</span>
+              <span class="hint">Personaliza WhatsApp</span>
             </label>
             <input type="text" id="inputAlumno" placeholder="Ej: Carlos Mendoza" oninput="actualizarPreviewWA()">
           </div>
@@ -568,7 +677,10 @@
       <!-- RESULTADO GENERADO -->
       <div class="result-card" id="resultCard">
         <div class="result-header">
-          <span class="result-tag" id="resEnvTag">🟢 LINK REAL GENERADO</span>
+          <div>
+            <span class="result-tag" id="resEnvTag">🟢 LINK REAL GENERADO</span>
+            <span class="badge-pill badge-modalidad" id="resModalidadTag" style="margin-left: 8px;">PAGO TOTAL</span>
+          </div>
           <span style="font-size: 0.8rem; color: #94a3b8;" id="resFecha"></span>
         </div>
 
@@ -596,11 +708,26 @@
 
     </main>
 
-    <!-- HISTORIAL DE LINKS RECIENTES -->
+    <!-- REGISTRO Y REPOSITORIO DE TODOS LOS LINKS CREADOS -->
     <section class="history-card">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-        <h2 style="font-size: 1.1rem; font-family: 'Montserrat', sans-serif;">📜 Links Recientes de Asesores</h2>
-        <button type="button" class="btn-sm-copy" onclick="cargarHistorial()">🔄 Actualizar</button>
+      <div class="history-controls">
+        <div>
+          <h2 style="font-size: 1.15rem; font-family: 'Montserrat', sans-serif; font-weight: 800;">
+            📜 Registro de Todos los Links Creados
+          </h2>
+          <p style="font-size: 0.78rem; color: #94a3b8;">
+            Guarda todos los enlaces para reutilizarlos en tus ventas y compartirlos más adelante.
+          </p>
+        </div>
+        
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="inputBuscarHistorial" placeholder="Buscar por curso, alumno o cuota..." oninput="filtrarHistorial(this.value)">
+          </div>
+          <button type="button" class="btn-table-action" onclick="exportarHistorialCSV()">📥 Exportar Excel</button>
+          <button type="button" class="btn-table-action" onclick="cargarHistorial()">🔄 Actualizar</button>
+        </div>
       </div>
       
       <div style="overflow-x: auto;">
@@ -608,16 +735,17 @@
           <thead>
             <tr>
               <th>Fecha</th>
-              <th>Programa</th>
+              <th>Concepto / Programa</th>
+              <th>Modalidad</th>
               <th>Asesor / Alumno</th>
               <th>Monto</th>
-              <th>Entorno</th>
-              <th>Acción</th>
+              <th>Tipo</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody id="historyTableBody">
             <tr>
-              <td colspan="6" style="text-align: center; color: #64748b; padding: 20px;">Cargando historial de ventas...</td>
+              <td colspan="7" style="text-align: center; color: #64748b; padding: 25px;">Cargando registro de links...</td>
             </tr>
           </tbody>
         </table>
@@ -629,18 +757,19 @@
   <script>
     // Variables de Estado
     let currentEnv = 'production'; // Por defecto PRODUCCIÓN REAL
+    let currentTipo = 'curso';     // 'curso' o 'certificacion'
     let lastGeneratedUrl = '';
     let lastProgramName = '';
     let lastAmount = 149;
+    let allLinksHistory = [];
 
     // Inicializar al cargar
     document.addEventListener('DOMContentLoaded', () => {
-      // Cargar asesor guardado
       const savedAsesor = localStorage.getItem('edumin_asesor_nombre');
       if (savedAsesor) {
         document.getElementById('inputAsesor').value = savedAsesor;
       }
-      actualizarPreviewWA();
+      actualizarNombreCompleto();
       cargarHistorial();
     });
 
@@ -658,12 +787,80 @@
       }
     }
 
+    function cambiarTipoProducto(tipo) {
+      currentTipo = tipo;
+      const cardCurso = document.getElementById('cardTipoCurso');
+      const cardCert = document.getElementById('cardTipoCert');
+      const groupCurso = document.getElementById('groupCursoSelector');
+      const bannerWarn = document.getElementById('bannerCertificacionWarning');
+      const labelNombre = document.getElementById('labelNombreCobro');
+      const input = document.getElementById('inputPrograma');
+
+      if (tipo === 'curso') {
+        cardCurso.className = 'type-card active-curso';
+        cardCert.className = 'type-card';
+        groupCurso.style.display = 'block';
+        bannerWarn.style.display = 'none';
+        labelNombre.innerText = 'Nombre del Curso a Cobrar';
+        actualizarNombreCompleto();
+      } else {
+        cardCurso.className = 'type-card';
+        cardCert.className = 'type-card active-cert';
+        groupCurso.style.display = 'none';
+        bannerWarn.style.display = 'block';
+        labelNombre.innerText = 'Nombre de la Certificación / Trámite a Cobrar';
+        const cuota = document.getElementById('selectCuota').value;
+        input.value = `Certificación Profesional Especializada - ${cuota}`;
+        actualizarPreviewWA();
+      }
+    }
+
+    function seleccionarCursoOficial(val) {
+      actualizarNombreCompleto();
+    }
+
+    function setCuota(cuotaVal) {
+      document.getElementById('selectCuota').value = cuotaVal;
+      
+      // Actualizar pills
+      const pills = {
+        'PAGO TOTAL': 'pillPagoTotal',
+        'PRIMERA CUOTA': 'pillCuota1',
+        'SEGUNDA CUOTA': 'pillCuota2',
+        'TERCERA CUOTA': 'pillCuota3',
+        'CUARTA CUOTA': 'pillCuota4'
+      };
+      Object.keys(pills).forEach(k => {
+        const el = document.getElementById(pills[k]);
+        if (el) {
+          if (k === cuotaVal) el.classList.add('active');
+          else el.classList.remove('active');
+        }
+      });
+
+      actualizarNombreCompleto();
+    }
+
+    function actualizarNombreCompleto() {
+      const input = document.getElementById('inputPrograma');
+      const cuota = document.getElementById('selectCuota').value;
+
+      if (currentTipo === 'curso') {
+        const cursoBase = document.getElementById('selectDiplomado').value;
+        input.value = `${cursoBase} - ${cuota}`;
+      } else {
+        let base = input.value.split(' - ')[0] || 'Certificación Profesional Especializada';
+        input.value = `${base} - ${cuota}`;
+      }
+      actualizarPreviewWA();
+    }
+
     function setMonto(val) {
       document.getElementById('inputMonto').value = val;
-      document.querySelectorAll('.amount-pill').forEach(btn => {
-        if (Number(btn.innerText.replace('$', '')) === val) {
+      document.querySelectorAll('.pills-container .pill-btn').forEach(btn => {
+        if (btn.innerText === `$${val}`) {
           btn.classList.add('active');
-        } else {
+        } else if (btn.innerText.startsWith('$')) {
           btn.classList.remove('active');
         }
       });
@@ -674,39 +871,22 @@
       localStorage.setItem('edumin_asesor_nombre', val);
     }
 
-    function seleccionarCursoOficial(val) {
-      const input = document.getElementById('inputPrograma');
-      if (val === 'CUSTOM') {
-        input.value = '';
-        input.placeholder = 'Escribe el nombre del curso personalizado...';
-        input.focus();
-      } else {
-        input.value = val;
-      }
-      actualizarPreviewWA();
-    }
-
-    function setPrograma(nombre) {
-      document.getElementById('inputPrograma').value = nombre;
-      actualizarPreviewWA();
-    }
-
-    function getProgramaNombre() {
-      const input = document.getElementById('inputPrograma');
-      return (input.value || 'Curso Especializado en Gestión Minera').trim();
-    }
-
     function buildWhatsAppMessage(linkUrl) {
       const alumno = document.getElementById('inputAlumno').value.trim();
       const asesor = document.getElementById('inputAsesor').value.trim();
-      const programa = getProgramaNombre();
+      const programa = document.getElementById('inputPrograma').value.trim();
+      const cuota = document.getElementById('selectCuota').value;
       const monto = document.getElementById('inputMonto').value || '149';
       const url = linkUrl || (lastGeneratedUrl || '[LINK DE PAGO]');
 
       const saludo = alumno ? `¡Hola ${alumno}! 👋` : `¡Hola! 👋`;
       const firma = asesor ? `Te saluda ${asesor} del Instituto EDUMIN.` : `Te saluda el equipo de Admisiones de EDUMIN.`;
 
-      return `${saludo} ${firma}\n\nAquí tienes tu enlace oficial y seguro para matricularte en el:\n🎓 *${programa}*\n\n💳 *Monto Total:* $${monto} USD\n🌍 *Acceso Internacional:* Válido para tarjeta de crédito/débito y banca móvil de cualquier país.\n🔗 *Link de Pago Seguro:* ${url}\n\nUna vez realizado el pago, tu acceso al Campus Virtual Q10 queda habilitado de inmediato. Si tienes alguna duda para realizar el pago, ¡avísame por aquí! 🚀`;
+      let notaAuto = currentTipo === 'curso' 
+        ? 'Una vez realizado el pago, tu acceso al Campus Virtual Q10 queda habilitado de inmediato.' 
+        : 'Una vez realizado el pago, envíame tu comprobante por este medio para proceder con la emisión de tu certificación.';
+
+      return `${saludo} ${firma}\n\nAquí tienes tu enlace oficial y seguro para realizar tu pago de:\n🎓 *${programa}*\n📋 *Modalidad:* ${cuota}\n\n💳 *Monto Total:* $${monto} USD\n🌍 *Acceso Internacional:* Válido para tarjeta de crédito/débito y banca móvil de cualquier país.\n🔗 *Link de Pago Seguro:* ${url}\n\n${notaAuto} ¡Cualquier consulta estoy aquí para apoyarte! 🚀`;
     }
 
     function actualizarPreviewWA() {
@@ -722,7 +902,8 @@
       btn.disabled = true;
       btn.innerHTML = '<span>⏳ Generando link en dLocal Go...</span>';
 
-      const programa = getProgramaNombre();
+      const programa = document.getElementById('inputPrograma').value.trim();
+      const modalidad = document.getElementById('selectCuota').value;
       const monto = Number(document.getElementById('inputMonto').value);
       const pais = document.getElementById('selectPais').value;
       const asesor = document.getElementById('inputAsesor').value.trim();
@@ -737,6 +918,8 @@
           campaign: asesor ? `Asesor: ${asesor}` : 'Venta Asesor',
           asesor: asesor,
           alumno: alumno,
+          modalidad: modalidad,
+          tipoProducto: currentTipo,
           environment: currentEnv
         };
 
@@ -753,9 +936,26 @@
           lastProgramName = programa;
           lastAmount = monto;
 
+          // Guardar también en localStorage para persistencia permanente del asesor
+          guardarEnLocalStorage(data.entry || {
+            id: 'LNK-' + Date.now(),
+            date: new Date().toISOString(),
+            program: programa,
+            modalidad: modalidad,
+            tipoProducto: currentTipo,
+            tieneAutomatizacion: currentTipo === 'curso',
+            asesor: asesor,
+            alumno: alumno,
+            amount: monto,
+            currency: 'USD',
+            environment: currentEnv,
+            url: data.url
+          });
+
           // Mostrar resultado
           document.getElementById('resUrlDisplay').innerText = data.url;
           document.getElementById('resFecha').innerText = new Date().toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' });
+          document.getElementById('resModalidadTag').innerText = modalidad;
           
           const tag = document.getElementById('resEnvTag');
           if (currentEnv === 'production') {
@@ -775,7 +975,7 @@
           // Recargar historial
           cargarHistorial();
         } else {
-          alert('Error creando link: ' + (data.error || 'Respuesta inválida'));
+          alert('Error creando link: ' + (data.error || 'Respuesta inválida de dLocal Go'));
         }
 
       } catch (err) {
@@ -812,39 +1012,129 @@
       }
     }
 
+    // GESTIÓN DEL HISTORIAL Y REGISTRO PERSISTENTE
+    function guardarEnLocalStorage(entry) {
+      try {
+        let local = JSON.parse(localStorage.getItem('edumin_links_history') || '[]');
+        local.unshift(entry);
+        localStorage.setItem('edumin_links_history', JSON.stringify(local.slice(0, 50)));
+      } catch (e) {
+        console.error('Error guardando en localStorage:', e);
+      }
+    }
+
     async function cargarHistorial() {
       try {
-        const res = await fetch('/api/links-history');
-        const data = await res.json();
-        const tbody = document.getElementById('historyTableBody');
-        
-        if (data.success && data.links && data.links.length > 0) {
-          tbody.innerHTML = data.links.slice(0, 15).map(l => {
-            const fechaStr = new Date(l.date).toLocaleDateString('es-PE', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
-            const isProd = l.environment === 'production' || l.envLabel?.includes('REAL');
-            const envBadge = isProd ? `<span class="badge-env real">🟢 Real</span>` : `<span class="badge-env sbx">🟡 Sbx</span>`;
-            const detalleAsesor = l.asesor ? `<strong>${l.asesor}</strong>` : (l.campaign || '-');
-            const detalleAlumno = l.alumno ? `<div style="font-size:0.75rem; color:#94a3b8;">Alu: ${l.alumno}</div>` : '';
+        let serverLinks = [];
+        try {
+          const res = await fetch('/api/links-history');
+          const data = await res.json();
+          if (data.success && data.links) serverLinks = data.links;
+        } catch (_) {}
 
-            return `
-              <tr>
-                <td>${fechaStr}</td>
-                <td style="font-weight: 600;">${l.program}</td>
-                <td>${detalleAsesor}${detalleAlumno}</td>
-                <td style="color: #34d399; font-weight: 700;">$${l.amount} ${l.currency || 'USD'}</td>
-                <td>${envBadge}</td>
-                <td>
-                  <button class="btn-sm-copy" onclick="copiarTexto('${l.url}')">Copiar Link</button>
-                </td>
-              </tr>
-            `;
-          }).join('');
-        } else {
-          tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #64748b; padding: 20px;">Aún no hay links generados. ¡Crea el primero arriba!</td></tr>';
-        }
+        let localLinks = [];
+        try {
+          localLinks = JSON.parse(localStorage.getItem('edumin_links_history') || '[]');
+        } catch (_) {}
+
+        // Fusionar por id y url sin duplicados
+        const map = new Map();
+        [...serverLinks, ...localLinks].forEach(item => {
+          if (item && item.url && !map.has(item.url)) {
+            map.set(item.url, item);
+          }
+        });
+        allLinksHistory = Array.from(map.values()).sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        renderTablaHistorial(allLinksHistory);
       } catch (err) {
         console.error('Error cargando historial:', err);
       }
+    }
+
+    function renderTablaHistorial(links) {
+      const tbody = document.getElementById('historyTableBody');
+      if (!links || links.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #64748b; padding: 25px;">Aún no hay links generados. ¡Crea el primero arriba!</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = links.map(l => {
+        const fechaStr = new Date(l.date).toLocaleDateString('es-PE', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+        const mod = l.modalidad || (l.program?.includes('CUOTA') ? l.program.split(' - ')[1] : 'PAGO TOTAL');
+        const detalleAsesor = l.asesor ? `<strong>${l.asesor}</strong>` : (l.campaign || '-');
+        const detalleAlumno = l.alumno ? `<div style="font-size:0.75rem; color:#94a3b8;">Alu: ${l.alumno}</div>` : '';
+        const isAuto = l.tieneAutomatizacion !== false && l.tipoProducto !== 'certificacion';
+        const badgeTipo = isAuto ? `<span class="badge-pill badge-auto">⚡ Auto Q10</span>` : `<span class="badge-pill badge-manual">⚠️ Manual</span>`;
+
+        return `
+          <tr>
+            <td style="white-space: nowrap;">${fechaStr}</td>
+            <td style="font-weight: 600; max-width: 260px;">${l.program}</td>
+            <td><span class="badge-pill badge-modalidad">${mod}</span></td>
+            <td>${detalleAsesor}${detalleAlumno}</td>
+            <td style="color: #34d399; font-weight: 800;">$${l.amount} ${l.currency || 'USD'}</td>
+            <td>${badgeTipo}</td>
+            <td style="white-space: nowrap;">
+              <button class="btn-table-action" onclick="copiarTexto('${l.url}')" title="Copiar Link">📋 Copiar</button>
+              <button class="btn-table-action btn-table-wa" onclick="reenviarWhatsAppHistorial('${encodeURIComponent(JSON.stringify(l))}')" title="Enviar WhatsApp">🟢 WA</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function filtrarHistorial(query) {
+      const q = query.toLowerCase().trim();
+      if (!q) {
+        renderTablaHistorial(allLinksHistory);
+        return;
+      }
+      const filtrados = allLinksHistory.filter(l => 
+        (l.program && l.program.toLowerCase().includes(q)) ||
+        (l.modalidad && l.modalidad.toLowerCase().includes(q)) ||
+        (l.asesor && l.asesor.toLowerCase().includes(q)) ||
+        (l.alumno && l.alumno.toLowerCase().includes(q))
+      );
+      renderTablaHistorial(filtrados);
+    }
+
+    function reenviarWhatsAppHistorial(itemJsonStr) {
+      try {
+        const item = JSON.parse(decodeURIComponent(itemJsonStr));
+        const alumno = item.alumno || '';
+        const asesor = item.asesor || '';
+        const programa = item.program || 'Curso Especializado';
+        const monto = item.amount || 149;
+        const cuota = item.modalidad || 'PAGO TOTAL';
+        const url = item.url;
+
+        const saludo = alumno ? `¡Hola ${alumno}! 👋` : `¡Hola! 👋`;
+        const firma = asesor ? `Te saluda ${asesor} del Instituto EDUMIN.` : `Te saluda el equipo de Admisiones de EDUMIN.`;
+
+        const msg = `${saludo} ${firma}\n\nAquí tienes tu enlace oficial para realizar tu pago de:\n🎓 *${programa}*\n📋 *Modalidad:* ${cuota}\n\n💳 *Monto:* $${monto} USD\n🔗 *Link de Pago Seguro:* ${url}\n\n¡Cualquier consulta estoy a tu disposición! 🚀`;
+        window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function exportarHistorialCSV() {
+      if (!allLinksHistory || allLinksHistory.length === 0) {
+        alert('No hay links en el registro para exportar.');
+        return;
+      }
+      let csv = 'Fecha,Programa,Modalidad,Asesor,Alumno,Monto,Moneda,Automatizacion,URL\n';
+      allLinksHistory.forEach(l => {
+        const isAuto = l.tieneAutomatizacion !== false && l.tipoProducto !== 'certificacion' ? 'SI' : 'NO';
+        csv += `"${l.date}","${(l.program || '').replace(/"/g, '""')}","${l.modalidad || 'PAGO TOTAL'}","${(l.asesor || '').replace(/"/g, '""')}","${(l.alumno || '').replace(/"/g, '""')}","${l.amount}","${l.currency || 'USD'}","${isAuto}","${l.url}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `registro_links_edumin_${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click();
     }
 
     function copiarTexto(txt) {
