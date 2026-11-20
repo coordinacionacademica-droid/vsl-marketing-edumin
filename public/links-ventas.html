@@ -437,52 +437,36 @@
       <!-- BARRA DE REGLAS BLINDADAS -->
       <div class="rules-bar">
         <div>🌍 <strong>Moneda:</strong> Dólares ($ USD) — Cobertura Internacional</div>
-        <div>🎓 <strong>Post-pago:</strong> Redirige a <strong>Campus Q10</strong></div>
-        <div>⚡ <strong>Webhook:</strong> Conectado a n8n</div>
+        <div>🎓 <strong>Post-pago:</strong> Redirige a <strong>Campus Q10 (https://edumin.q10.com/)</strong></div>
+        <div>⚡ <strong>Webhook Oficial:</strong> <code style="background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 4px; color: #6ee7b7;">https://n8n.gcg-corp.com/webhook/pagos-dlocalgo</code></div>
       </div>
 
       <form id="formLinkVenta" onsubmit="generarLinkVenta(event)">
         
-        <!-- DIPLOMADO / PROGRAMA -->
+        <!-- NOMBRE DEL PROGRAMA (DIRECTO Y 100% EDITABLE POR EL ASESOR) -->
         <div class="form-group">
-          <label for="selectDiplomado">
-            <span>Diplomado / Programa Oficial</span>
-            <span class="hint">Formato "Curso Especializado en..."</span>
+          <label for="inputPrograma">
+            <span>Nombre del Curso / Diplomado / Concepto de Cobro</span>
+            <span class="hint">100% Editable por el Asesor</span>
           </label>
-          <select id="selectDiplomado" onchange="toggleCustomPrograma(this.value)">
-            <option value="Curso Especializado en Gestión Minera">Curso Especializado en Gestión Minera</option>
-            <option value="Curso Especializado en Geometalurgia">Curso Especializado en Geometalurgia</option>
-            <option value="Curso Especializado en Seguridad y Salud Ocupacional en Minería">Curso Especializado en Seguridad y Salud Ocupacional en Minería</option>
-            <option value="Curso Especializado en Planeamiento y Diseño de Minado">Curso Especializado en Planeamiento y Diseño de Minado</option>
-            <option value="Curso Especializado en Metalurgia Extractiva y Procesamiento de Minerales">Curso Especializado en Metalurgia Extractiva y Procesamiento de Minerales</option>
-            <option value="Curso Especializado en Ventilación de Minas">Curso Especializado en Ventilación de Minas</option>
-            <option value="Curso Especializado en Mantenimiento de Maquinaria Pesada en Minería">Curso Especializado en Mantenimiento de Maquinaria Pesada en Minería</option>
-            <option value="Curso Especializado en Geología Económica y Exploración Minera">Curso Especializado en Geología Económica y Exploración Minera</option>
-            <option value="Curso Especializado en Geomecánica Aplicada a Minería">Curso Especializado en Geomecánica Aplicada a Minería</option>
-            <option value="Curso Especializado en Costos, Presupuestos y Valorización Minera">Curso Especializado en Costos, Presupuestos y Valorización Minera</option>
-            <option value="Curso Especializado en Gestión Ambiental y Cierre de Minas">Curso Especializado en Gestión Ambiental y Cierre de Minas</option>
-            <option value="Curso Especializado en Perforación y Voladura de Rocas">Curso Especializado en Perforación y Voladura de Rocas</option>
-            <option value="Curso Especializado en Relaves Mineros y Manejo de Aguas">Curso Especializado en Relaves Mineros y Manejo de Aguas</option>
-            <option value="Curso Especializado en Operaciones Mineras y Productividad">Curso Especializado en Operaciones Mineras y Productividad</option>
-            <option value="Curso Especializado en Legislación y Derecho Minero">Curso Especializado en Legislación y Derecho Minero</option>
-            <option value="Curso Especializado en Hidrogeología Aplicada a la Minería">Curso Especializado en Hidrogeología Aplicada a la Minería</option>
-            <option value="Curso Especializado en Topografía Minera y Fotogrametría con Drones">Curso Especializado en Topografía Minera y Fotogrametría con Drones</option>
-            <option value="Curso Especializado en Geoestadística y Estimación de Recursos">Curso Especializado en Geoestadística y Estimación de Recursos</option>
-            <option value="Curso Especializado en Supervisión y Liderazgo en Minería">Curso Especializado en Supervisión y Liderazgo en Minería</option>
-            <option value="Curso Especializado en Mineralogía y Petrología Aplicada">Curso Especializado en Mineralogía y Petrología Aplicada</option>
-            <option value="Curso Especializado en Logística y Cadena de Suministro en Minería">Curso Especializado en Logística y Cadena de Suministro en Minería</option>
-            <option value="Curso Especializado en Automatización y Minería Digital 4.0">Curso Especializado en Automatización y Minería Digital 4.0</option>
-            <option value="CUSTOM">✏️ Escribir otro nombre personalizado...</option>
-          </select>
-        </div>
+          <input type="text" id="inputPrograma" list="listaSugerencias" value="Curso Especializado en Gestión Minera" placeholder="Escribe el nombre del curso, diplomado o cuota..." required oninput="actualizarPreviewWA()">
+          
+          <datalist id="listaSugerencias">
+            <option value="Curso Especializado en Gestión Minera">
+            <option value="Curso Especializado en Geometalurgia">
+            <option value="Curso Especializado en Seguridad y Salud Ocupacional en la Industria y Minería">
+            <option value="Curso Especializado en Geología Minera">
+            <option value="Curso Especializado en Geotecnia Minera">
+            <option value="Curso Especializado en Derecho Minero">
+            <option value="Curso Especializado en Gestión Ambiental para el Sector Minero e Industrial">
+          </datalist>
 
-        <!-- CAMPO PERSONALIZADO (SI ELIGE CUSTOM) -->
-        <div class="form-group" id="groupCustomPrograma" style="display: none;">
-          <label for="customPrograma">
-            <span>Nombre Personalizado del Programa / Cobro</span>
-            <span class="hint">Ej: Curso Especializado en Lixiviación, 1ra Cuota, etc.</span>
-          </label>
-          <input type="text" id="customPrograma" placeholder="Escribe el nombre del curso o concepto...">
+          <!-- ACCESOS RÁPIDOS POPULARES -->
+          <div class="pills-container" style="margin-top: 8px;">
+            <button type="button" class="amount-pill" onclick="setPrograma('Curso Especializado en Gestión Minera')">⛏️ Gestión Minera</button>
+            <button type="button" class="amount-pill" onclick="setPrograma('Curso Especializado en Geometalurgia')">🔬 Geometalurgia</button>
+            <button type="button" class="amount-pill" onclick="setPrograma('Curso Especializado en Seguridad y Salud Ocupacional en la Industria y Minería')">🦺 SSOMA</button>
+          </div>
         </div>
 
         <!-- MONTO Y PAÍS -->
@@ -658,20 +642,8 @@
       }
     }
 
-    function toggleCustomPrograma(val) {
-      const customGroup = document.getElementById('groupCustomPrograma');
-      if (val === 'CUSTOM') {
-        customGroup.style.display = 'block';
-        document.getElementById('customPrograma').focus();
-      } else {
-        customGroup.style.display = 'none';
-      }
-      actualizarPreviewWA();
-    }
-
     function setMonto(val) {
       document.getElementById('inputMonto').value = val;
-      // Actualizar estilo de pills
       document.querySelectorAll('.amount-pill').forEach(btn => {
         if (Number(btn.innerText.replace('$', '')) === val) {
           btn.classList.add('active');
@@ -686,13 +658,14 @@
       localStorage.setItem('edumin_asesor_nombre', val);
     }
 
+    function setPrograma(nombre) {
+      document.getElementById('inputPrograma').value = nombre;
+      actualizarPreviewWA();
+    }
+
     function getProgramaNombre() {
-      const select = document.getElementById('selectDiplomado');
-      if (select.value === 'CUSTOM') {
-        const custom = document.getElementById('customPrograma').value.trim();
-        return custom || 'Curso Especializado';
-      }
-      return select.value;
+      const input = document.getElementById('inputPrograma');
+      return (input.value || 'Curso Especializado en Gestión Minera').trim();
     }
 
     function buildWhatsAppMessage(linkUrl) {

@@ -45,8 +45,8 @@ const API_KEY = process.env.DLOCALGO_API_KEY || DLOCAL_CONFIGS.sandbox.apiKey;
 const SECRET_KEY = process.env.DLOCALGO_SECRET_KEY || DLOCAL_CONFIGS.sandbox.secretKey;
 const API_URL = process.env.DLOCALGO_API_URL || DLOCAL_CONFIGS.sandbox.apiUrl;
 
-// URL FIJA Y BLINDADA DE N8N PARA PAGOS (Marketing no puede tocarla)
-const N8N_NOTIFICATION_URL = process.env.DLOCALGO_NOTIFICATION_URL || 'https://n8n.gcg-corp.com/webhook/matricula-vsl-dlocalgo';
+// URL FIJA Y BLINDADA DE N8N PARA PAGOS (Oficial de n8n)
+const N8N_NOTIFICATION_URL = process.env.DLOCALGO_NOTIFICATION_URL || 'https://n8n.gcg-corp.com/webhook/pagos-dlocalgo';
 // Webhook activo del Workflow "PAGOS PASARELA" en n8n (Registra en Q10, Sheets y envía correo Gmail con accesos)
 const N8N_PASARELA_Q10_URL = 'https://n8n.gcg-corp.com/webhook/c592d97d-78d1-4ead-8bed-673be3464658';
 const N8N_MATRICULA_URL = 'https://n8n.gcg-corp.com/webhook/matricula-q10';
