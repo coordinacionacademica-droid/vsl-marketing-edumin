@@ -1,891 +1,622 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal de Pagos - Asesores Comerciales | EDUMIN</title>
+  <title>Portal Comercial de Pagos | EDUMIN</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Montserrat:wght@700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
   <style>
-    :root, [data-theme="emerald"] {
-      --bg-dark: #060911;
-      --bg-grad-1: rgba(16, 185, 129, 0.16);
-      --bg-grad-2: rgba(59, 130, 246, 0.1);
-      --card-bg: rgba(13, 20, 36, 0.88);
-      --card-border: rgba(255, 255, 255, 0.08);
-      --accent: #10b981;
-      --accent-light: #34d399;
-      --accent-glow: rgba(16, 185, 129, 0.4);
-      --accent-gradient: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
-      --brand-grad: linear-gradient(135deg, #34d399 0%, #60a5fa 100%);
-      --logo-grad: linear-gradient(135deg, #10b981 0%, #047857 100%);
-      --pill-active: #10b981;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --input-bg: rgba(8, 13, 26, 0.85);
-      --input-border: rgba(255, 255, 255, 0.1);
-      --step-color: #38bdf8;
-      --history-header-bg: rgba(15, 23, 42, 0.95);
-    }
-
-    [data-theme="sapphire"] {
-      --bg-dark: #070c18;
-      --bg-grad-1: rgba(59, 130, 246, 0.22);
-      --bg-grad-2: rgba(14, 165, 233, 0.15);
-      --card-bg: rgba(11, 19, 38, 0.9);
-      --card-border: rgba(59, 130, 246, 0.2);
-      --accent: #3b82f6;
-      --accent-light: #60a5fa;
-      --accent-glow: rgba(59, 130, 246, 0.45);
-      --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%);
-      --brand-grad: linear-gradient(135deg, #60a5fa 0%, #38bdf8 100%);
-      --logo-grad: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-      --pill-active: #3b82f6;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --input-bg: rgba(7, 13, 28, 0.85);
-      --input-border: rgba(59, 130, 246, 0.25);
-      --step-color: #60a5fa;
-      --history-header-bg: rgba(14, 25, 48, 0.95);
-    }
-
-    [data-theme="amethyst"] {
-      --bg-dark: #0d0718;
-      --bg-grad-1: rgba(168, 85, 247, 0.22);
-      --bg-grad-2: rgba(236, 72, 153, 0.15);
-      --card-bg: rgba(22, 13, 38, 0.9);
-      --card-border: rgba(168, 85, 247, 0.22);
-      --accent: #a855f7;
-      --accent-light: #c084fc;
-      --accent-glow: rgba(168, 85, 247, 0.45);
-      --accent-gradient: linear-gradient(135deg, #a855f7 0%, #9333ea 50%, #7e22ce 100%);
-      --brand-grad: linear-gradient(135deg, #c084fc 0%, #f472b6 100%);
-      --logo-grad: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
-      --pill-active: #a855f7;
-      --text-main: #fdf4ff;
-      --text-muted: #d8b4fe;
-      --input-bg: rgba(15, 8, 28, 0.85);
-      --input-border: rgba(168, 85, 247, 0.25);
-      --step-color: #c084fc;
-      --history-header-bg: rgba(28, 16, 48, 0.95);
-    }
-
-    [data-theme="gold"] {
-      --bg-dark: #0c0a06;
-      --bg-grad-1: rgba(245, 158, 11, 0.22);
-      --bg-grad-2: rgba(217, 119, 6, 0.14);
-      --card-bg: rgba(24, 19, 12, 0.92);
-      --card-border: rgba(245, 158, 11, 0.25);
-      --accent: #f59e0b;
-      --accent-light: #fbbf24;
-      --accent-glow: rgba(245, 158, 11, 0.45);
-      --accent-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
-      --brand-grad: linear-gradient(135deg, #fbbf24 0%, #fde047 100%);
-      --logo-grad: linear-gradient(135deg, #f59e0b 0%, #b45309 100%);
-      --pill-active: #f59e0b;
-      --text-main: #fffbeb;
-      --text-muted: #fcd34d;
-      --input-bg: rgba(18, 14, 8, 0.85);
-      --input-border: rgba(245, 158, 11, 0.25);
-      --step-color: #fbbf24;
-      --history-header-bg: rgba(32, 24, 14, 0.95);
-    }
-
-    [data-theme="light"] {
-      --bg-dark: #f8fafc;
-      --bg-grad-1: rgba(59, 130, 246, 0.08);
-      --bg-grad-2: rgba(16, 185, 129, 0.08);
+    :root, [data-theme="light"] {
+      --bg: #f8fafc;
       --card-bg: #ffffff;
-      --card-border: rgba(0, 0, 0, 0.09);
-      --accent: #059669;
-      --accent-light: #10b981;
-      --accent-glow: rgba(5, 150, 105, 0.25);
-      --accent-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
-      --brand-grad: linear-gradient(135deg, #059669 0%, #2563eb 100%);
-      --logo-grad: linear-gradient(135deg, #10b981 0%, #047857 100%);
-      --pill-active: #059669;
+      --card-border: #e2e8f0;
+      --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.04);
       --text-main: #0f172a;
       --text-muted: #64748b;
-      --input-bg: #f8fafc;
-      --input-border: rgba(0, 0, 0, 0.15);
-      --step-color: #0284c7;
-      --history-header-bg: #f1f5f9;
+      --text-light: #94a3b8;
+      --primary: #0284c7;
+      --primary-hover: #0369a1;
+      --primary-light: #e0f2fe;
+      --accent-green: #059669;
+      --accent-green-light: #d1fae5;
+      --accent-amber: #d97706;
+      --accent-amber-light: #fef3c7;
+      --input-bg: #ffffff;
+      --input-border: #cbd5e1;
+      --input-focus: #0284c7;
+      --table-head: #f1f5f9;
+      --table-row-hover: #f8fafc;
+      --wa-bg: #f0fdf4;
+      --wa-border: #bbf7d0;
+      --wa-bubble: #ffffff;
+      --wa-text: #166534;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease; }
-    
+    [data-theme="dark"] {
+      --bg: #0b1120;
+      --card-bg: #131c31;
+      --card-border: #1e293b;
+      --card-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-light: #64748b;
+      --primary: #38bdf8;
+      --primary-hover: #0ea5e9;
+      --primary-light: rgba(56, 189, 248, 0.12);
+      --accent-green: #10b981;
+      --accent-green-light: rgba(16, 185, 129, 0.15);
+      --accent-amber: #f59e0b;
+      --accent-amber-light: rgba(245, 158, 11, 0.15);
+      --input-bg: #0f172a;
+      --input-border: #334155;
+      --input-focus: #38bdf8;
+      --table-head: #0f172a;
+      --table-row-hover: #1e293b;
+      --wa-bg: #0b141a;
+      --wa-border: #1f2c34;
+      --wa-bubble: #005c4b;
+      --wa-text: #e9edef;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      background-color: var(--bg-dark);
-      background-image: 
-        radial-gradient(ellipse at 15% 0%, var(--bg-grad-1) 0%, transparent 50%),
-        radial-gradient(ellipse at 85% 15%, var(--bg-grad-2) 0%, transparent 45%),
-        radial-gradient(ellipse at 50% 90%, var(--bg-grad-1) 0%, transparent 60%);
-      background-attachment: fixed;
+      background-color: var(--bg);
       color: var(--text-main);
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       min-height: 100vh;
-      padding: 32px 18px;
+      padding: 24px 16px;
       -webkit-font-smoothing: antialiased;
     }
 
     .container {
-      max-width: 1060px;
+      max-width: 960px;
       margin: 0 auto;
     }
 
-    /* TOP LIVE BAR CON SELECTOR DE TONOS */
-    .top-live-bar {
+    /* TOP NAVBAR CORPORATIVO */
+    .navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 14px;
       margin-bottom: 24px;
-      padding: 10px 18px;
+      padding: 16px 20px;
       background: var(--card-bg);
-      backdrop-filter: blur(14px);
       border: 1px solid var(--card-border);
-      border-radius: 50px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
     }
-    .live-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.78rem;
-      font-weight: 800;
-      letter-spacing: 0.5px;
-      color: var(--accent-light);
-      text-transform: uppercase;
-    }
-    .pulse-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 10px var(--accent);
-      animation: pulseAnim 2s infinite;
-    }
-    @keyframes pulseAnim {
-      0% { transform: scale(0.95); box-shadow: 0 0 0 0 var(--accent-glow); }
-      70% { transform: scale(1.1); box-shadow: 0 0 0 8px transparent; }
-      100% { transform: scale(0.95); box-shadow: 0 0 0 0 var(--accent-glow); }
-    }
-
-    /* BOTONES DE CAMBIO DE TONOS */
-    .theme-switch-container {
+    .nav-brand {
       display: flex;
       align-items: center;
-      gap: 6px;
-      background: rgba(0, 0, 0, 0.25);
-      padding: 4px 8px;
-      border-radius: 30px;
-      border: 1px solid var(--card-border);
+      gap: 12px;
     }
-    .theme-switch-title {
-      font-size: 0.74rem;
+    .brand-badge {
+      background: #0284c7;
+      color: #ffffff;
       font-weight: 800;
-      color: var(--text-muted);
-      text-transform: uppercase;
+      font-size: 0.85rem;
+      padding: 6px 10px;
+      border-radius: 8px;
       letter-spacing: 0.5px;
-      margin-right: 2px;
     }
-    .theme-pill {
-      background: transparent;
-      border: 1px solid transparent;
+    .brand-title h1 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.2;
+    }
+    .brand-title p {
+      font-size: 0.78rem;
       color: var(--text-muted);
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-size: 0.76rem;
+      margin-top: 2px;
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
       font-weight: 700;
+      padding: 6px 12px;
+      background: var(--accent-green-light);
+      color: var(--accent-green);
+      border-radius: 20px;
+      border: 1px solid rgba(5, 150, 105, 0.2);
+    }
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-green);
+    }
+    .theme-toggle-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      transition: all 0.2s;
     }
-    .theme-pill:hover {
+    .theme-toggle-btn:hover {
+      background: var(--table-head);
       color: var(--text-main);
-      background: rgba(255, 255, 255, 0.08);
     }
-    .theme-pill.active {
+
+    /* CARDS */
+    .card {
       background: var(--card-bg);
-      color: var(--text-main);
-      border-color: var(--accent);
-      box-shadow: 0 2px 8px var(--accent-glow);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: var(--card-shadow);
     }
-    .dot-swatch {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      display: inline-block;
-    }
-
-    .top-stats {
-      display: flex;
-      gap: 16px;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-    .top-stats span strong {
-      color: var(--text-main);
-    }
-
-    /* HEADER */
-    .header {
+    .card-header {
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--card-border);
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 20px;
-      margin-bottom: 28px;
+      gap: 10px;
     }
-    .brand-title {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    .brand-logo {
-      background: var(--logo-grad);
-      width: 54px;
-      height: 54px;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.7rem;
-      box-shadow: 0 10px 25px var(--accent-glow);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    .brand-text h1 {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.65rem;
-      font-weight: 900;
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 800;
       color: var(--text-main);
-      letter-spacing: -0.6px;
-      line-height: 1.2;
-    }
-    .brand-text h1 span {
-      background: var(--brand-grad);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .brand-text p {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      margin-top: 3px;
-    }
-    
-    .env-badge-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: rgba(16, 185, 129, 0.12);
-      border: 1px solid var(--accent);
-      padding: 10px 18px;
-      border-radius: 50px;
-      font-weight: 800;
-      color: var(--accent-light);
-      font-size: 0.82rem;
-      letter-spacing: 0.5px;
-      box-shadow: 0 4px 15px var(--accent-glow);
-    }
-
-    /* MAIN GLASS CARD */
-    .card {
-      background: var(--card-bg);
-      backdrop-filter: blur(24px);
-      border: 1px solid var(--card-border);
-      border-radius: 24px;
-      padding: 34px;
-      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-      margin-bottom: 30px;
-      position: relative;
-      overflow: hidden;
-    }
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent), var(--step-color), transparent);
-    }
-
-    /* SECTION STEP LABELS */
-    .section-step {
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 0.78rem;
-      font-weight: 800;
-      color: var(--step-color);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 14px;
+      gap: 8px;
     }
-    .section-step .step-num {
-      background: rgba(56, 189, 248, 0.12);
-      border: 1px solid var(--step-color);
-      color: var(--step-color);
-      padding: 2px 8px;
-      border-radius: 6px;
+    .card-subtitle {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 2px;
     }
 
-    /* PRODUCT TYPE SELECTOR (2 CARDS) */
-    .product-type-grid {
+    /* SECCIÓN DE TIPO DE CONCEPTO */
+    .type-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 28px;
+      gap: 14px;
+      margin-bottom: 20px;
     }
-    @media (max-width: 680px) {
-      .product-type-grid { grid-template-columns: 1fr; }
+    @media (max-width: 640px) {
+      .type-grid { grid-template-columns: 1fr; }
     }
-    .type-card {
-      border: 2px solid var(--card-border);
-      background: var(--card-bg);
-      border-radius: 18px;
-      padding: 18px 20px;
+    .type-option {
+      border: 1.5px solid var(--card-border);
+      border-radius: 10px;
+      padding: 14px 16px;
       cursor: pointer;
       display: flex;
       align-items: flex-start;
-      gap: 16px;
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-      position: relative;
+      gap: 12px;
+      background: var(--card-bg);
+      transition: all 0.15s ease-in-out;
     }
-    .type-card:hover {
-      border-color: var(--step-color);
-      transform: translateY(-2px);
+    .type-option input[type="radio"] {
+      margin-top: 4px;
+      accent-color: var(--primary);
     }
-    .type-card.active-curso {
-      border-color: var(--accent);
-      background: linear-gradient(135deg, var(--bg-grad-1) 0%, var(--card-bg) 100%);
-      box-shadow: 0 10px 30px -10px var(--accent-glow);
+    .type-option:hover {
+      border-color: var(--primary);
+      background: var(--primary-light);
     }
-    .type-card.active-cert {
-      border-color: #f59e0b;
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, var(--card-bg) 100%);
-      box-shadow: 0 10px 30px -10px rgba(245, 158, 11, 0.3);
+    .type-option.active {
+      border-color: var(--primary);
+      background: var(--primary-light);
     }
-    .type-card input { display: none; }
-    .type-icon {
-      font-size: 2rem;
-      background: rgba(255, 255, 255, 0.05);
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
+    .type-option-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-main);
       display: flex;
       align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+      gap: 6px;
     }
-    .type-title {
-      font-weight: 800;
-      font-size: 1.02rem;
-      margin-bottom: 4px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .type-desc {
-      font-size: 0.8rem;
+    .type-option-desc {
+      font-size: 0.78rem;
       color: var(--text-muted);
-      line-height: 1.4;
+      margin-top: 4px;
+      line-height: 1.35;
     }
 
-    /* WARNING BOX */
-    .warning-box {
+    /* AVISO CERTIFICACIÓN */
+    .notice-box {
+      background: var(--accent-amber-light);
+      border: 1px solid rgba(217, 119, 6, 0.3);
+      color: var(--accent-amber);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 0.82rem;
+      margin-bottom: 20px;
+      line-height: 1.45;
       display: none;
-      background: rgba(245, 158, 11, 0.1);
-      border: 1px solid rgba(245, 158, 11, 0.4);
-      border-left: 5px solid #f59e0b;
-      border-radius: 14px;
-      padding: 16px 20px;
-      margin-bottom: 24px;
-      font-size: 0.88rem;
-      color: #fef3c7;
-      line-height: 1.5;
-      animation: fadeIn 0.3s ease;
     }
 
-    /* FORM ELEMENTS */
-    .grid-2 {
+    /* FORMULARIO */
+    .form-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      gap: 16px;
+      margin-bottom: 16px;
     }
-    @media (max-width: 768px) {
-      .grid-2 { grid-template-columns: 1fr; }
+    @media (max-width: 640px) {
+      .form-row { grid-template-columns: 1fr; }
     }
-
     .form-group {
-      margin-bottom: 22px;
+      margin-bottom: 16px;
     }
-    label {
+    .form-label {
       display: flex;
       justify-content: space-between;
-      align-items: center;
       font-size: 0.82rem;
       font-weight: 700;
       color: var(--text-main);
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      margin-bottom: 6px;
     }
-    label span.hint {
+    .form-hint {
+      font-weight: 500;
       color: var(--text-muted);
       font-size: 0.75rem;
-      font-weight: 500;
-      text-transform: none;
     }
-    input, select {
+    input[type="text"], input[type="number"], select {
       width: 100%;
-      padding: 14px 16px;
+      padding: 10px 14px;
+      font-size: 0.88rem;
+      font-family: inherit;
       border: 1px solid var(--input-border);
+      border-radius: 8px;
       background: var(--input-bg);
       color: var(--text-main);
-      border-radius: 12px;
-      font-size: 0.95rem;
-      font-family: inherit;
       outline: none;
-      transition: all 0.2s ease;
+      transition: border-color 0.15s;
     }
-    input:focus, select:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-glow);
+    input[type="text"]:focus, input[type="number"]:focus, select:focus {
+      border-color: var(--input-focus);
+      box-shadow: 0 0 0 3px var(--primary-light);
     }
-    select optgroup {
-      background: #0f172a;
-      color: #94a3b8;
-      font-weight: 700;
-    }
-    select option {
-      background: #0f172a;
-      color: #ffffff;
-      padding: 8px;
+    select {
+      cursor: pointer;
     }
 
-    /* PILLS (CUOTAS & MONTOS) */
-    .pills-container {
+    /* PILLS DE CUOTA Y MONTO */
+    .pills-bar {
       display: flex;
+      gap: 6px;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 10px;
+      margin-top: 8px;
     }
     .pill-btn {
-      background: rgba(30, 41, 59, 0.7);
-      border: 1px solid var(--card-border);
-      color: var(--text-main);
-      padding: 8px 16px;
-      border-radius: 30px;
-      font-size: 0.82rem;
-      font-weight: 700;
+      background: var(--card-bg);
+      border: 1px solid var(--input-border);
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 6px;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.15s;
     }
     .pill-btn:hover {
-      border-color: var(--accent-light);
-      color: var(--accent-light);
-      transform: translateY(-1px);
+      border-color: var(--primary);
+      color: var(--text-main);
+      background: var(--primary-light);
     }
     .pill-btn.active {
-      background: var(--accent);
-      border-color: var(--accent);
+      background: var(--primary);
+      border-color: var(--primary);
       color: #ffffff;
-      box-shadow: 0 4px 14px var(--accent-glow);
+      font-weight: 700;
     }
 
-    /* SUBMIT BUTTON */
-    .btn-generate {
+    /* BOTÓN PRINCIPAL */
+    .btn-submit {
       width: 100%;
-      background: var(--accent-gradient);
+      background: #0284c7;
       color: #ffffff;
       border: none;
-      padding: 18px 24px;
-      border-radius: 14px;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.08rem;
-      font-weight: 900;
-      letter-spacing: 0.4px;
+      border-radius: 8px;
+      padding: 13px 20px;
+      font-size: 0.95rem;
+      font-weight: 700;
       cursor: pointer;
       display: flex;
-      align-items: center;
       justify-content: center;
-      gap: 12px;
-      box-shadow: 0 12px 30px var(--accent-glow);
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-      margin-top: 12px;
+      align-items: center;
+      gap: 8px;
+      transition: background-color 0.15s ease-in-out;
+      margin-top: 8px;
     }
-    .btn-generate:hover {
-      filter: brightness(1.12);
-      transform: translateY(-2px);
-      box-shadow: 0 16px 36px var(--accent-glow);
+    .btn-submit:hover {
+      background: #0369a1;
     }
-    .btn-generate:active {
-      transform: translateY(0);
-    }
-    .btn-generate:disabled {
-      opacity: 0.6;
+    .btn-submit:disabled {
+      background: #94a3b8;
       cursor: not-allowed;
-      transform: none;
     }
 
-    /* RESULT CARD (DIGITAL RECEIPT / REVEAL) */
-    .result-card {
+    /* TARJETA RESULTADO GENERADO */
+    .result-box {
+      margin-top: 20px;
+      padding: 20px;
+      border: 1.5px solid var(--accent-green);
+      background: var(--accent-green-light);
+      border-radius: 10px;
       display: none;
-      background: linear-gradient(135deg, var(--bg-grad-1) 0%, var(--card-bg) 100%);
-      border: 2px solid var(--accent);
-      border-radius: 20px;
-      padding: 26px;
-      margin-top: 28px;
-      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 25px var(--accent-glow);
-      animation: fadeIn 0.35s ease;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .result-header {
+    .result-header-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
-      gap: 10px;
+      margin-bottom: 12px;
     }
-    .result-tag {
-      background: rgba(16, 185, 129, 0.25);
-      color: var(--accent-light);
+    .result-status {
+      font-size: 0.8rem;
       font-weight: 800;
-      font-size: 0.78rem;
-      padding: 6px 12px;
-      border-radius: 8px;
-      letter-spacing: 0.5px;
+      color: var(--accent-green);
       text-transform: uppercase;
-      border: 1px solid var(--accent);
+      letter-spacing: 0.5px;
     }
-    .link-display {
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid var(--card-border);
-      padding: 14px 16px;
-      border-radius: 12px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.92rem;
-      color: var(--step-color);
-      word-break: break-all;
-      margin-bottom: 18px;
+    .link-row {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
       gap: 10px;
+      margin-bottom: 14px;
     }
-    .action-buttons {
+    .link-input {
+      flex: 1;
+      padding: 10px 14px;
+      background: var(--card-bg);
+      border: 1px solid var(--input-border);
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--text-main);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .actions-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
     }
-    @media (max-width: 600px) {
-      .action-buttons { grid-template-columns: 1fr; }
+    @media (max-width: 640px) {
+      .actions-grid { grid-template-columns: 1fr; }
     }
     .btn-action {
-      padding: 14px 18px;
-      border-radius: 12px;
-      font-weight: 800;
-      font-size: 0.92rem;
-      border: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 700;
       cursor: pointer;
+      border: 1px solid transparent;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      transition: all 0.2s ease;
+      gap: 6px;
+      transition: all 0.15s;
     }
-    .btn-copy {
-      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-      color: white;
-      box-shadow: 0 6px 18px rgba(59, 130, 246, 0.35);
-    }
-    .btn-copy:hover { transform: translateY(-2px); filter: brightness(1.1); }
-    .btn-whatsapp {
-      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    .btn-action-copy {
+      background: #0284c7;
       color: #ffffff;
-      box-shadow: 0 6px 18px rgba(34, 197, 94, 0.35);
     }
-    .btn-whatsapp:hover { transform: translateY(-2px); filter: brightness(1.1); }
-    .btn-open {
-      grid-column: span 2;
-      background: rgba(30, 41, 59, 0.8);
-      border: 1px solid var(--card-border);
+    .btn-action-copy:hover { background: #0369a1; }
+    .btn-action-wa {
+      background: #16a34a;
+      color: #ffffff;
+    }
+    .btn-action-wa:hover { background: #15803d; }
+    .btn-action-test {
+      background: var(--card-bg);
+      border-color: var(--card-border);
       color: var(--text-main);
-      font-size: 0.88rem;
-      margin-top: 4px;
     }
-    @media (max-width: 600px) { .btn-open { grid-column: span 1; } }
-    .btn-open:hover { background: #334155; color: #ffffff; }
+    .btn-action-test:hover { background: var(--table-head); }
 
-    /* REALISTIC WHATSAPP CHAT PREVIEW BUBBLE */
-    .wa-preview-container {
-      margin-top: 20px;
-      background: #0b141a;
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 16px;
-      position: relative;
+    /* WHATSAPP MESSAGE PREVIEW */
+    .wa-preview-box {
+      background: var(--wa-bg);
+      border: 1px solid var(--wa-border);
+      border-radius: 8px;
+      padding: 14px;
     }
-    .wa-preview-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 0.78rem;
+    .wa-preview-label {
+      font-size: 0.74rem;
       font-weight: 700;
-      color: var(--text-muted);
-      margin-bottom: 12px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--wa-text);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
     }
-    .wa-bubble {
-      background: #005c4b;
-      color: #e9edef;
-      border-radius: 12px 12px 2px 12px;
-      padding: 14px 16px;
-      font-size: 0.85rem;
-      line-height: 1.55;
-      max-width: 95%;
-      margin-left: auto;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-      position: relative;
+    .wa-text-bubble {
+      background: var(--wa-bubble);
+      border: 1px solid var(--wa-border);
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 0.82rem;
+      line-height: 1.5;
+      color: var(--text-main);
       white-space: pre-wrap;
     }
-    .wa-bubble-time {
-      font-size: 0.68rem;
-      color: rgba(255, 255, 255, 0.6);
-      text-align: right;
-      margin-top: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 4px;
-    }
 
-    /* HISTORY CARD (REGISTRO PERSISTENTE) */
-    .history-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(24px);
-      border: 1px solid var(--card-border);
-      border-radius: 24px;
-      padding: 30px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-    }
-    .history-controls {
+    /* HISTORIAL CORPORATIVO */
+    .history-toolbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 16px;
       flex-wrap: wrap;
-      margin-bottom: 18px;
+      gap: 12px;
+      margin-bottom: 16px;
     }
-    .search-box {
-      position: relative;
-      flex: 1;
+    .search-input {
+      padding: 8px 12px;
+      font-size: 0.82rem;
+      border: 1px solid var(--input-border);
+      border-radius: 6px;
+      background: var(--input-bg);
+      color: var(--text-main);
       min-width: 240px;
     }
-    .search-box input {
-      padding: 10px 14px 10px 38px;
-      font-size: 0.88rem;
-      border-radius: 30px;
-    }
-    .search-icon {
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #64748b;
-      font-size: 0.9rem;
-    }
-    
-    .history-table-wrapper {
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid var(--card-border);
+    .btn-secondary {
       background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
     }
-    .history-table {
+    .btn-secondary:hover {
+      background: var(--table-head);
+    }
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+    }
+    table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.86rem;
-    }
-    .history-table th {
+      font-size: 0.82rem;
       text-align: left;
-      padding: 14px 16px;
-      background: var(--history-header-bg);
+    }
+    th {
+      background: var(--table-head);
       color: var(--text-muted);
-      font-weight: 800;
+      font-weight: 700;
+      padding: 10px 14px;
       text-transform: uppercase;
-      font-size: 0.74rem;
+      font-size: 0.72rem;
       letter-spacing: 0.5px;
       border-bottom: 1px solid var(--card-border);
     }
-    .history-table td {
-      padding: 14px 16px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--card-border);
       color: var(--text-main);
       vertical-align: middle;
     }
-    .history-table tr:hover {
-      background: rgba(255, 255, 255, 0.03);
+    tr:hover td {
+      background: var(--table-row-hover);
     }
-
-    .badge-pill {
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-size: 0.74rem;
-      font-weight: 800;
+    .badge {
       display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
     }
-    .badge-modalidad { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
-    .badge-auto { background: rgba(16, 185, 129, 0.15); color: #34d399; }
-    .badge-manual { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
-    .badge-real { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
-    
-    .btn-table-action {
-      padding: 8px 12px;
-      border-radius: 8px;
-      border: 1px solid var(--card-border);
-      background: rgba(30, 41, 59, 0.8);
-      color: #38bdf8;
-      font-size: 0.78rem;
-      font-weight: 800;
+    .badge-cuota { background: var(--primary-light); color: var(--primary); }
+    .badge-active { background: var(--accent-green-light); color: var(--accent-green); }
+    .badge-manual { background: var(--accent-amber-light); color: var(--accent-amber); }
+    .btn-mini {
+      padding: 5px 9px;
+      border-radius: 5px;
+      font-size: 0.75rem;
+      font-weight: 600;
       cursor: pointer;
-      margin-right: 6px;
-      transition: all 0.15s ease;
+      border: 1px solid var(--card-border);
+      background: var(--card-bg);
+      color: var(--text-main);
+      margin-right: 4px;
     }
-    .btn-table-action:hover {
-      background: #334155;
-      color: #ffffff;
-      transform: translateY(-1px);
-    }
-    .btn-table-wa {
-      color: #4ade80;
-      border-color: rgba(74, 222, 128, 0.35);
-      background: rgba(34, 197, 94, 0.12);
-    }
-    .btn-table-wa:hover {
-      background: rgba(34, 197, 94, 0.25);
-    }
+    .btn-mini:hover { background: var(--table-head); }
+    .btn-mini-wa { color: #16a34a; border-color: #bbf7d0; background: #f0fdf4; }
+    .btn-mini-wa:hover { background: #dcfce7; }
   </style>
 </head>
 <body>
 
   <div class="container">
 
-    <!-- TOP STATUS STRIP CON SELECTOR DE TONOS -->
-    <div class="top-live-bar">
-      <div class="live-pill">
-        <span class="pulse-dot"></span>
-        <span>Pasarela Oficial dLocal Go • Producción Real</span>
-      </div>
-      
-      <!-- BOTONES DE CAMBIO DE TONOS DINÁMICOS -->
-      <div class="theme-switch-container">
-        <span class="theme-switch-title">🎨 Tonos:</span>
-        <button type="button" class="theme-pill active" id="btnThemeEmerald" onclick="cambiarTema('emerald')">
-          <span class="dot-swatch" style="background:#10b981;"></span> Esmeralda
-        </button>
-        <button type="button" class="theme-pill" id="btnThemeSapphire" onclick="cambiarTema('sapphire')">
-          <span class="dot-swatch" style="background:#3b82f6;"></span> Zafiro
-        </button>
-        <button type="button" class="theme-pill" id="btnThemeAmethyst" onclick="cambiarTema('amethyst')">
-          <span class="dot-swatch" style="background:#a855f7;"></span> Amatista
-        </button>
-        <button type="button" class="theme-pill" id="btnThemeGold" onclick="cambiarTema('gold')">
-          <span class="dot-swatch" style="background:#f59e0b;"></span> Oro
-        </button>
-        <button type="button" class="theme-pill" id="btnThemeLight" onclick="cambiarTema('light')">
-          <span class="dot-swatch" style="background:#94a3b8;"></span> Claro
-        </button>
-      </div>
-
-      <div class="top-stats">
-        <span>🌍 Cobertura: <strong>Internacional</strong></span>
-        <span>💵 Moneda: <strong>USD ($)</strong></span>
-      </div>
-    </div>
-    
-    <!-- HEADER -->
-    <header class="header">
-      <div class="brand-title">
-        <div class="brand-logo">💳</div>
-        <div class="brand-text">
-          <h1>Portal Comercial <span>EDUMIN</span></h1>
-          <p>Generador Oficial de Enlaces de Cobro Recurrente para Ventas Internacionales</p>
+    <!-- NAVBAR CORPORATIVO -->
+    <header class="navbar">
+      <div class="nav-brand">
+        <span class="brand-badge">EDUMIN</span>
+        <div class="brand-title">
+          <h1>Portal de Pagos de Ventas</h1>
+          <p>Pasarela dLocal Go Oficial • Enlaces de Cobro Internacional</p>
         </div>
       </div>
-
-      <div class="env-badge-pill">
-        <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#10b981; box-shadow:0 0 8px #10b981;"></span>
-        ENTORNO EN VIVO (PRODUCCIÓN)
+      <div class="nav-actions">
+        <span class="status-badge">
+          <span class="status-dot"></span>
+          Producción Real (En Vivo)
+        </span>
+        <button type="button" class="theme-toggle-btn" id="btnThemeToggle" onclick="toggleTema()" title="Cambiar a Modo Oscuro / Claro">
+          <span id="themeToggleIcon">🌙</span> <span id="themeToggleText">Oscuro</span>
+        </button>
       </div>
     </header>
 
-    <!-- FORMULARIO PRINCIPAL -->
+    <!-- FORMULARIO GENERADOR -->
     <main class="card">
-      
-      <!-- PASO 1 -->
-      <div class="section-step">
-        <span class="step-num">PASO 01</span>
-        <span>Selecciona el Tipo de Concepto a Cobrar</span>
-      </div>
-
-      <div class="product-type-grid">
-        <label class="type-card active-curso" id="cardTipoCurso" onclick="cambiarTipoProducto('curso')">
-          <input type="radio" name="tipoProducto" value="curso" checked>
-          <div class="type-icon">🎓</div>
-          <div>
-            <div class="type-title" style="color: #34d399;">
-              Cursos Especializados
-              <span class="badge-pill badge-auto" style="font-size:0.68rem;">⚡ Auto Q10</span>
-            </div>
-            <div class="type-desc">Catálogo de Diplomados Oficiales con matrícula y acceso automático a Q10.</div>
-          </div>
-        </label>
-
-        <label class="type-card" id="cardTipoCert" onclick="cambiarTipoProducto('certificacion')">
-          <input type="radio" name="tipoProducto" value="certificacion">
-          <div class="type-icon">📜</div>
-          <div>
-            <div class="type-title" style="color: #fbbf24;">
-              Certificación / Trámite Libre
-              <span class="badge-pill badge-manual" style="font-size:0.68rem;">⚠️ Manual</span>
-            </div>
-            <div class="type-desc">Cobro libre de certificaciones físicas, trámites administrativos o cuotas especiales.</div>
-          </div>
-        </label>
-      </div>
-
-      <!-- BANNER DE ADVERTENCIA PARA CERTIFICACIONES -->
-      <div class="warning-box" id="bannerCertificacionWarning">
-        ⚠️ <strong>AVISO PARA EL ASESOR COMERCIAL:</strong><br>
-        Este concepto (Certificación / Trámite Libre) <strong>NO CUENTA CON MATRÍCULA AUTOMÁTICA EN Q10</strong>.<br>
-        El cobro se procesará con éxito en dLocal Go, pero la emisión física o trámite <strong>debe coordinarse directamente con el área académica</strong>.
-      </div>
-
-      <form id="formLinkVenta" onsubmit="generarLinkVenta(event)">
-        
-        <!-- PASO 2 -->
-        <div class="section-step" style="margin-top: 10px;">
-          <span class="step-num">PASO 02</span>
-          <span>Configura el Programa y Modalidad de Cuota</span>
+      <div class="card-header">
+        <div>
+          <h2 class="card-title">1. Generar Nuevo Enlace de Cobro</h2>
+          <p class="card-subtitle">Configura los datos del pago recurrente o cuota que se enviará al alumno.</p>
         </div>
+      </div>
 
-        <!-- SELECCIÓN PARA CURSOS OFICIALES -->
-        <div class="form-group" id="groupCursoSelector">
-          <label for="selectDiplomado">
-            <span>Curso Oficial EDUMIN</span>
-            <span class="hint">Organizado alfabéticamente</span>
+      <!-- TIPO DE PRODUCTO -->
+      <div class="type-grid">
+        <label class="type-option active" id="optTipoCurso" onclick="setTipoProducto('curso')">
+          <input type="radio" name="radioTipo" value="curso" checked>
+          <div>
+            <div class="type-option-title">
+              🎓 Curso Especializado Oficial
+              <span class="badge badge-active" style="font-size: 0.68rem;">Automático Q10</span>
+            </div>
+            <div class="type-option-desc">Cursos del catálogo académico con matrícula automática en el Campus Virtual Q10 al pagar.</div>
+          </div>
+        </label>
+
+        <label class="type-option" id="optTipoCert" onclick="setTipoProducto('certificacion')">
+          <input type="radio" name="radioTipo" value="certificacion">
+          <div>
+            <div class="type-option-title">
+              📜 Certificación o Trámite Libre
+              <span class="badge badge-manual" style="font-size: 0.68rem;">Gestión Manual</span>
+            </div>
+            <div class="type-option-desc">Certificaciones físicas, trámites documentarios o cuotas especiales no vinculadas al flujo Q10.</div>
+          </div>
+        </label>
+      </div>
+
+      <!-- AVISO DE CERTIFICACIÓN -->
+      <div class="notice-box" id="boxCertNotice">
+        ⚠️ <strong>AVISO PARA EL ASESOR COMERCIAL:</strong> Este concepto no cuenta con automatización de matrícula en Campus Virtual Q10. El pago se procesará normalmente en dLocal Go, pero la entrega del certificado o trámite debe coordinarse directamente con Coordinación Académica.
+      </div>
+
+      <!-- FORMULARIO DIRECTO -->
+      <form id="formGenerador" onsubmit="generarLink(event)">
+
+        <!-- SELECTOR DE CURSO (SOLO PARA CURSOS OFICIALES) -->
+        <div class="form-group" id="grpCursoSelector">
+          <label class="form-label" for="selectCurso">
+            <span>Curso Especializado</span>
+            <span class="form-hint">Orden alfabético</span>
           </label>
-          <select id="selectDiplomado" onchange="seleccionarCursoOficial(this.value)">
+          <select id="selectCurso" onchange="actualizarConceptoFinal()">
             <optgroup label="✅ Cursos Disponibles para Venta Inmediata">
               <option value="Curso Especializado en Geometalurgia" selected>🔬 Curso Especializado en Geometalurgia</option>
               <option value="Curso Especializado en Gestión Minera">⛏️ Curso Especializado en Gestión Minera</option>
@@ -915,73 +646,62 @@
           </select>
         </div>
 
-        <!-- SELECTOR DE CUOTA -->
+        <!-- MODALIDAD DE PAGO (CUOTAS) -->
         <div class="form-group">
-          <label for="selectCuota">
-            <span>Modalidad: Pago Completo o Cuotas</span>
-            <span class="hint">Selección rápida con botones</span>
+          <label class="form-label" for="selectModalidad">
+            <span>Modalidad de Pago</span>
+            <span class="form-hint">Selecciona pago total o número de cuota</span>
           </label>
-          <select id="selectCuota" onchange="actualizarNombreCompleto()">
+          <select id="selectModalidad" onchange="onModalidadChange(this.value)">
             <option value="PAGO TOTAL" selected>💳 PAGO TOTAL (Pago Completo)</option>
             <option value="PRIMERA CUOTA">1️⃣ PRIMERA CUOTA</option>
             <option value="SEGUNDA CUOTA">2️⃣ SEGUNDA CUOTA</option>
             <option value="TERCERA CUOTA">3️⃣ TERCERA CUOTA</option>
             <option value="CUARTA CUOTA">4️⃣ CUARTA CUOTA</option>
           </select>
-
-          <!-- BOTONES RÁPIDOS DE CUOTA -->
-          <div class="pills-container">
-            <button type="button" class="pill-btn active" id="pillPagoTotal" onclick="setCuota('PAGO TOTAL')">Pago Total</button>
-            <button type="button" class="pill-btn" id="pillCuota1" onclick="setCuota('PRIMERA CUOTA')">1ra Cuota</button>
-            <button type="button" class="pill-btn" id="pillCuota2" onclick="setCuota('SEGUNDA CUOTA')">2da Cuota</button>
-            <button type="button" class="pill-btn" id="pillCuota3" onclick="setCuota('TERCERA CUOTA')">3ra Cuota</button>
-            <button type="button" class="pill-btn" id="pillCuota4" onclick="setCuota('CUARTA CUOTA')">4ta Cuota</button>
+          <div class="pills-bar">
+            <button type="button" class="pill-btn active" id="btnModTotal" onclick="setModalidad('PAGO TOTAL')">Pago Total</button>
+            <button type="button" class="pill-btn" id="btnMod1" onclick="setModalidad('PRIMERA CUOTA')">1ra Cuota</button>
+            <button type="button" class="pill-btn" id="btnMod2" onclick="setModalidad('SEGUNDA CUOTA')">2da Cuota</button>
+            <button type="button" class="pill-btn" id="btnMod3" onclick="setModalidad('TERCERA CUOTA')">3ra Cuota</button>
+            <button type="button" class="pill-btn" id="btnMod4" onclick="setModalidad('CUARTA CUOTA')">4ta Cuota</button>
           </div>
         </div>
 
-        <!-- NOMBRE FINAL EDITABLE -->
+        <!-- CONCEPTO FINAL EDITABLE -->
         <div class="form-group">
-          <label for="inputPrograma">
-            <span id="labelNombreCobro">Concepto del Cobro que verá el Alumno</span>
-            <span class="hint" style="color: #38bdf8;">✏️ 100% Editable libremente</span>
+          <label class="form-label" for="inputConcepto">
+            <span id="labelConcepto">Concepto del Cobro que verá el Alumno</span>
+            <span class="form-hint">Editable libremente</span>
           </label>
-          <input type="text" id="inputPrograma" value="Curso Especializado en Geometalurgia - PAGO TOTAL" required oninput="actualizarPreviewWA()">
+          <input type="text" id="inputConcepto" value="Curso Especializado en Geometalurgia - PAGO TOTAL" required oninput="actualizarPreviewWA()">
         </div>
 
-        <!-- PASO 3 -->
-        <div class="section-step" style="margin-top: 10px;">
-          <span class="step-num">PASO 03</span>
-          <span>Importe en Dólares ($ USD) y Cobertura</span>
-        </div>
-
-        <div class="grid-2">
-          
-          <!-- MONTO EN USD -->
-          <div class="form-group">
-            <label for="inputMonto">
+        <!-- MONTO Y PAÍS -->
+        <div class="form-row">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" for="inputMonto">
               <span>Monto en Dólares ($ USD)</span>
-              <span class="hint">Clic en un atajo o escribe el monto</span>
+              <span class="form-hint">Atajos rápidos abajo</span>
             </label>
             <input type="number" id="inputMonto" value="149" min="1" step="0.5" required oninput="actualizarPreviewWA()">
-            
-            <div class="pills-container">
+            <div class="pills-bar">
               <button type="button" class="pill-btn" onclick="setMonto(27)">$27</button>
               <button type="button" class="pill-btn" onclick="setMonto(49)">$49</button>
               <button type="button" class="pill-btn" onclick="setMonto(99)">$99</button>
               <button type="button" class="pill-btn" onclick="setMonto(129)">$129</button>
-              <button type="button" class="pill-btn active" id="pillMonto149" onclick="setMonto(149)">$149</button>
+              <button type="button" class="pill-btn active" id="btnMonto149" onclick="setMonto(149)">$149</button>
               <button type="button" class="pill-btn" onclick="setMonto(199)">$199</button>
             </div>
           </div>
 
-          <!-- PAÍS DE VENTA -->
-          <div class="form-group">
-            <label for="selectPais">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" for="selectPais">
               <span>País del Comprador</span>
-              <span class="hint">Cobertura global</span>
+              <span class="form-hint">Cobertura global</span>
             </label>
             <select id="selectPais">
-              <option value="ALL">🌍 Todos los países (Link Internacional)</option>
+              <option value="ALL" selected>🌍 Internacional (Todos los países)</option>
               <option value="PE">🇵🇪 Perú</option>
               <option value="CO">🇨🇴 Colombia</option>
               <option value="CL">🇨🇱 Chile</option>
@@ -993,85 +713,64 @@
               <option value="CR">🇨🇷 Costa Rica</option>
             </select>
           </div>
-
         </div>
 
-        <!-- BOTÓN GENERAR -->
-        <button type="submit" class="btn-generate" id="btnSubmit">
-          <span>🚀 GENERAR LINK DE PAGO RECURRENTE (DÓLARES)</span>
+        <button type="submit" class="btn-submit" id="btnGenerar">
+          <span>Generar Enlace de Cobro ($ USD)</span>
         </button>
-
       </form>
 
       <!-- RESULTADO GENERADO -->
-      <div class="result-card" id="resultCard">
-        <div class="result-header">
-          <div>
-            <span class="result-tag" id="resEnvTag">🟢 LINK REAL GENERADO CON ÉXITO</span>
-            <span class="badge-pill badge-modalidad" id="resModalidadTag" style="margin-left: 8px;">PAGO TOTAL</span>
-          </div>
-          <span style="font-size: 0.82rem; color: #94a3b8;" id="resFecha"></span>
+      <div class="result-box" id="boxResultado">
+        <div class="result-header-row">
+          <span class="result-status">✅ Enlace Oficial dLocal Go Creado con Éxito</span>
+          <span class="badge badge-cuota" id="resBadgeCuota">PAGO TOTAL</span>
         </div>
 
-        <div class="link-display">
-          <span id="resUrlDisplay">https://checkout.dlocalgo.com/...</span>
-          <button type="button" class="btn-table-action" onclick="copiarLinkGenerado()" style="margin: 0;">📋 Copiar</button>
+        <div class="link-row">
+          <input type="text" class="link-input" id="resInputUrl" readonly value="">
         </div>
 
-        <!-- BOTONES DE ACCIÓN RÁPIDA -->
-        <div class="action-buttons">
-          <button type="button" class="btn-action btn-copy" onclick="copiarLinkGenerado()">
-            📋 Copiar Enlace Directo
+        <div class="actions-grid">
+          <button type="button" class="btn-action btn-action-copy" onclick="copiarLinkGenerado()">
+            📋 Copiar Enlace
           </button>
-          <button type="button" class="btn-action btn-whatsapp" onclick="abrirWhatsAppAlumno()">
-            🟢 Enviar Mensaje por WhatsApp
+          <button type="button" class="btn-action btn-action-wa" onclick="abrirWhatsApp()">
+            🟢 Enviar por WhatsApp
           </button>
-          <button type="button" class="btn-action btn-open" onclick="probarLinkGenerado()">
-            👁️ Abrir y Probar Pasarela de Pago
+          <button type="button" class="btn-action btn-action-test" onclick="probarCheckout()">
+            👁️ Probar Checkout
           </button>
         </div>
 
-        <!-- SIMULADOR CHAT WHATSAPP -->
-        <div class="wa-preview-container" id="waPreviewBox">
-          <div class="wa-preview-header">
-            <span>💬 Vista previa del mensaje que recibirá el alumno:</span>
-          </div>
-          <div class="wa-bubble">
-            <div id="waPreviewText">...</div>
-            <div class="wa-bubble-time">
-              <span>Justo ahora</span>
-              <span style="color:#53bdeb; font-weight:bold;">✓✓</span>
-            </div>
-          </div>
+        <!-- VISTA PREVIA MENSAJE DE WHATSAPP -->
+        <div class="wa-preview-box">
+          <div class="wa-preview-label">💬 Mensaje listo para enviar al alumno:</div>
+          <div class="wa-text-bubble" id="resWaTexto">...</div>
         </div>
       </div>
-
     </main>
 
-    <!-- REGISTRO Y REPOSITORIO DE TODOS LOS LINKS CREADOS -->
-    <section class="history-card">
-      <div class="history-controls">
+    <!-- HISTORIAL Y REGISTRO DE LINKS ACTIVOS -->
+    <section class="card">
+      <div class="card-header">
         <div>
-          <h2 style="font-size: 1.25rem; font-family: 'Montserrat', sans-serif; font-weight: 800; display:flex; align-items:center; gap:10px;">
-            📜 Registro de Enlaces Activos
-          </h2>
-          <p style="font-size: 0.82rem; color: #94a3b8; margin-top: 3px;">
-            Historial de cobros reales listos para usar generados a partir del 19 de Noviembre.
-          </p>
+          <h2 class="card-title">2. Registro de Enlaces Activos</h2>
+          <p class="card-subtitle">Enlaces reales de producción generados desde el 19 de Noviembre en dLocal Go.</p>
         </div>
-        
-        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-          <div class="search-box">
-            <span class="search-icon">🔍</span>
-            <input type="text" id="inputBuscarHistorial" placeholder="Buscar por curso o cuota..." oninput="filtrarHistorial(this.value)">
-          </div>
-          <button type="button" class="btn-table-action" onclick="exportarHistorialCSV()">📥 Exportar CSV</button>
-          <button type="button" class="btn-table-action" onclick="cargarHistorial()">🔄 Actualizar</button>
+        <div style="display: flex; gap: 8px;">
+          <button type="button" class="btn-secondary" onclick="exportarCSV()">📥 Exportar CSV</button>
+          <button type="button" class="btn-secondary" onclick="cargarHistorial()">🔄 Actualizar</button>
         </div>
       </div>
-      
-      <div class="history-table-wrapper">
-        <table class="history-table">
+
+      <div class="history-toolbar">
+        <input type="text" class="search-input" id="inputFiltro" placeholder="Buscar por nombre de curso o cuota..." oninput="filtrarHistorial(this.value)">
+        <span style="font-size: 0.78rem; color: var(--text-muted);" id="txtTotalLinks">Cargando enlaces...</span>
+      </div>
+
+      <div class="table-container">
+        <table>
           <thead>
             <tr>
               <th>Fecha</th>
@@ -1082,9 +781,9 @@
               <th>Acciones</th>
             </tr>
           </thead>
-          <tbody id="historyTableBody">
+          <tbody id="tablaHistorial">
             <tr>
-              <td colspan="6" style="text-align: center; color: #64748b; padding: 28px;">Cargando registro de links en vivo...</td>
+              <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 24px;">Cargando historial de enlaces...</td>
             </tr>
           </tbody>
         </table>
@@ -1095,177 +794,171 @@
 
   <script>
     // Variables de Estado
-    let currentEnv = 'production'; // Por defecto PRODUCCIÓN REAL
-    let currentTipo = 'curso';     // 'curso' o 'certificacion'
-    let lastGeneratedUrl = '';
-    let lastProgramName = '';
-    let lastAmount = 149;
-    let allLinksHistory = [];
+    let currentTipo = 'curso';
+    let lastUrl = '';
+    let allLinks = [];
 
-    // GESTIÓN DINÁMICA DE TONOS Y TEMAS DE COLOR
-    function cambiarTema(theme) {
-      document.documentElement.setAttribute('data-theme', theme);
+    // GESTIÓN DE TEMA (POR DEFECTO BLANCO CORPORATIVO / LIGHT)
+    function aplicarTema(tema) {
+      document.documentElement.setAttribute('data-theme', tema);
       try {
-        localStorage.setItem('edumin_theme_tone', theme);
+        localStorage.setItem('edumin_theme_pref', tema);
       } catch (e) {}
 
-      const buttons = {
-        emerald: 'btnThemeEmerald',
-        sapphire: 'btnThemeSapphire',
-        amethyst: 'btnThemeAmethyst',
-        gold: 'btnThemeGold',
-        light: 'btnThemeLight'
-      };
-
-      Object.keys(buttons).forEach(key => {
-        const btn = document.getElementById(buttons[key]);
-        if (btn) {
-          if (key === theme) {
-            btn.classList.add('active');
-          } else {
-            btn.classList.remove('active');
-          }
-        }
-      });
+      const icon = document.getElementById('themeToggleIcon');
+      const text = document.getElementById('themeToggleText');
+      if (tema === 'dark') {
+        if (icon) icon.innerText = '☀️';
+        if (text) text.innerText = 'Claro';
+      } else {
+        if (icon) icon.innerText = '🌙';
+        if (text) text.innerText = 'Oscuro';
+      }
     }
 
-    // Inicializar al cargar
-    document.addEventListener('DOMContentLoaded', () => {
-      let savedTheme = 'emerald';
-      try {
-        savedTheme = localStorage.getItem('edumin_theme_tone') || 'emerald';
-      } catch (e) {}
-      cambiarTema(savedTheme);
+    function toggleTema() {
+      const actual = document.documentElement.getAttribute('data-theme') || 'light';
+      const nuevo = (actual === 'dark') ? 'light' : 'dark';
+      aplicarTema(nuevo);
+    }
 
-      actualizarNombreCompleto();
+    // Inicialización: Blanco corporativo por defecto
+    document.addEventListener('DOMContentLoaded', () => {
+      let temaInicial = 'light'; // Por defecto BLANCO CORPORATIVO
+      try {
+        const guardado = localStorage.getItem('edumin_theme_pref');
+        if (guardado === 'dark' || guardado === 'light') {
+          temaInicial = guardado;
+        }
+      } catch (e) {}
+
+      aplicarTema(temaInicial);
+      actualizarConceptoFinal();
       cargarHistorial();
     });
 
-    function setEnvironment(env) {
-      currentEnv = env;
-    }
-
-    function cambiarTipoProducto(tipo) {
+    // CAMBIO DE TIPO DE PRODUCTO
+    function setTipoProducto(tipo) {
       currentTipo = tipo;
-      const cardCurso = document.getElementById('cardTipoCurso');
-      const cardCert = document.getElementById('cardTipoCert');
-      const groupCurso = document.getElementById('groupCursoSelector');
-      const bannerWarn = document.getElementById('bannerCertificacionWarning');
-      const labelNombre = document.getElementById('labelNombreCobro');
-      const input = document.getElementById('inputPrograma');
+      const optCurso = document.getElementById('optTipoCurso');
+      const optCert = document.getElementById('optTipoCert');
+      const grpCurso = document.getElementById('grpCursoSelector');
+      const boxNotice = document.getElementById('boxCertNotice');
+      const labelConcepto = document.getElementById('labelConcepto');
+      const input = document.getElementById('inputConcepto');
 
       if (tipo === 'curso') {
-        cardCurso.className = 'type-card active-curso';
-        cardCert.className = 'type-card';
-        groupCurso.style.display = 'block';
-        bannerWarn.style.display = 'none';
-        labelNombre.innerText = 'Nombre del Curso a Cobrar';
-        actualizarNombreCompleto();
+        optCurso.classList.add('active');
+        optCert.classList.remove('active');
+        grpCurso.style.display = 'block';
+        boxNotice.style.display = 'none';
+        labelConcepto.innerText = 'Concepto del Curso que verá el Alumno';
+        actualizarConceptoFinal();
       } else {
-        cardCurso.className = 'type-card';
-        cardCert.className = 'type-card active-cert';
-        groupCurso.style.display = 'none';
-        bannerWarn.style.display = 'block';
-        labelNombre.innerText = 'Nombre de la Certificación / Trámite a Cobrar';
-        const cuota = document.getElementById('selectCuota').value;
-        input.value = `Certificación Profesional Especializada - ${cuota}`;
+        optCurso.classList.remove('active');
+        optCert.classList.add('active');
+        grpCurso.style.display = 'none';
+        boxNotice.style.display = 'block';
+        labelConcepto.innerText = 'Concepto de la Certificación / Trámite';
+        const mod = document.getElementById('selectModalidad').value;
+        input.value = `Certificación Profesional Especializada - ${mod}`;
         actualizarPreviewWA();
       }
     }
 
-    function seleccionarCursoOficial(val) {
-      actualizarNombreCompleto();
+    // GESTIÓN DE MODALIDAD (CUOTAS)
+    function onModalidadChange(val) {
+      setModalidad(val);
     }
 
-    function setCuota(cuotaVal) {
-      document.getElementById('selectCuota').value = cuotaVal;
-      
-      // Actualizar pills
-      const pills = {
-        'PAGO TOTAL': 'pillPagoTotal',
-        'PRIMERA CUOTA': 'pillCuota1',
-        'SEGUNDA CUOTA': 'pillCuota2',
-        'TERCERA CUOTA': 'pillCuota3',
-        'CUARTA CUOTA': 'pillCuota4'
+    function setModalidad(mod) {
+      document.getElementById('selectModalidad').value = mod;
+
+      const map = {
+        'PAGO TOTAL': 'btnModTotal',
+        'PRIMERA CUOTA': 'btnMod1',
+        'SEGUNDA CUOTA': 'btnMod2',
+        'TERCERA CUOTA': 'btnMod3',
+        'CUARTA CUOTA': 'btnMod4'
       };
-      Object.keys(pills).forEach(k => {
-        const el = document.getElementById(pills[k]);
-        if (el) {
-          if (k === cuotaVal) el.classList.add('active');
-          else el.classList.remove('active');
+
+      Object.keys(map).forEach(k => {
+        const btn = document.getElementById(map[k]);
+        if (btn) {
+          if (k === mod) btn.classList.add('active');
+          else btn.classList.remove('active');
         }
       });
 
-      actualizarNombreCompleto();
+      actualizarConceptoFinal();
     }
 
-    function actualizarNombreCompleto() {
-      const input = document.getElementById('inputPrograma');
-      const cuota = document.getElementById('selectCuota').value;
+    function actualizarConceptoFinal() {
+      const input = document.getElementById('inputConcepto');
+      const mod = document.getElementById('selectModalidad').value;
 
       if (currentTipo === 'curso') {
-        const cursoBase = document.getElementById('selectDiplomado').value;
-        input.value = `${cursoBase} - ${cuota}`;
+        const cursoBase = document.getElementById('selectCurso').value;
+        input.value = `${cursoBase} - ${mod}`;
       } else {
         let base = input.value.split(' - ')[0] || 'Certificación Profesional Especializada';
-        input.value = `${base} - ${cuota}`;
+        input.value = `${base} - ${mod}`;
       }
       actualizarPreviewWA();
     }
 
-    function setMonto(val) {
-      document.getElementById('inputMonto').value = val;
-      document.querySelectorAll('.pills-container .pill-btn').forEach(btn => {
-        if (btn.innerText === `$${val}`) {
-          btn.classList.add('active');
-        } else if (btn.innerText.startsWith('$')) {
-          btn.classList.remove('active');
-        }
+    function setMonto(monto) {
+      document.getElementById('inputMonto').value = monto;
+      const btns = document.querySelectorAll('.pills-bar .pill-btn');
+      btns.forEach(b => {
+        if (b.innerText === `$${monto}`) b.classList.add('active');
+        else if (b.innerText.startsWith('$')) b.classList.remove('active');
       });
       actualizarPreviewWA();
     }
 
-    function buildWhatsAppMessage(linkUrl) {
-      const programa = document.getElementById('inputPrograma').value.trim();
-      const cuota = document.getElementById('selectCuota').value;
+    function buildWhatsAppTexto(url) {
+      const concepto = document.getElementById('inputConcepto').value.trim();
+      const mod = document.getElementById('selectModalidad').value;
       const monto = document.getElementById('inputMonto').value || '149';
-      const url = linkUrl || (lastGeneratedUrl || '[LINK DE PAGO]');
+      const link = url || lastUrl || '[ENLACE DE PAGO]';
 
-      let notaAuto = currentTipo === 'curso' 
-        ? 'Una vez realizado el pago, tu acceso al Campus Virtual Q10 queda habilitado de inmediato.' 
-        : 'Una vez realizado el pago, envíame tu comprobante por este medio para proceder con la emisión de tu certificación.';
+      let postPago = currentTipo === 'curso'
+        ? 'Una vez realizado el pago, tu acceso al Campus Virtual Q10 queda habilitado de inmediato.'
+        : 'Una vez realizado el pago, envíame tu comprobante por este medio para proceder con la emisión correspondiente.';
 
-      return `¡Hola! 👋 Te saluda el equipo de Admisiones de EDUMIN.\n\nAquí tienes tu enlace oficial y seguro para realizar tu pago de:\n🎓 *${programa}*\n📋 *Modalidad:* ${cuota}\n\n💳 *Monto Total:* $${monto} USD\n🌍 *Acceso Internacional:* Válido para tarjeta de crédito/débito y banca móvil de cualquier país.\n🔗 *Link de Pago Seguro:* ${url}\n\n${notaAuto} ¡Cualquier consulta estamos aquí para apoyarte! 🚀`;
+      return `¡Hola! 👋 Te saluda el equipo de Admisiones de EDUMIN.\n\nAquí tienes tu enlace oficial y seguro para realizar tu pago de:\n🎓 *${concepto}*\n📋 *Modalidad:* ${mod}\n\n💳 *Monto:* $${monto} USD\n🌍 *Acceso Internacional:* Válido para tarjeta de crédito/débito y banca local en tu país.\n🔗 *Link de Pago Oficial:* ${link}\n\n${postPago} ¡Cualquier consulta estamos a tu disposición! 🚀`;
     }
 
     function actualizarPreviewWA() {
-      const msg = buildWhatsAppMessage();
-      document.getElementById('waPreviewText').innerText = msg;
+      const txt = buildWhatsAppTexto();
+      const el = document.getElementById('resWaTexto');
+      if (el) el.innerText = txt;
     }
 
-    // GENERAR LINK VIA API
-    async function generarLinkVenta(e) {
+    // GENERAR LINK EN DLOCAL GO
+    async function generarLink(e) {
       e.preventDefault();
 
-      const btn = document.getElementById('btnSubmit');
+      const btn = document.getElementById('btnGenerar');
       btn.disabled = true;
-      btn.innerHTML = '<span>⏳ Generando link en dLocal Go...</span>';
+      btn.innerHTML = '<span>⏳ Generando enlace en dLocal Go...</span>';
 
-      const programa = document.getElementById('inputPrograma').value.trim();
-      const modalidad = document.getElementById('selectCuota').value;
+      const concepto = document.getElementById('inputConcepto').value.trim();
+      const modalidad = document.getElementById('selectModalidad').value;
       const monto = Number(document.getElementById('inputMonto').value);
       const pais = document.getElementById('selectPais').value;
 
       try {
         const payload = {
-          description: programa,
+          description: concepto,
           amount: monto,
           currency: 'USD',
           country: pais,
           campaign: 'Venta Asesor EDUMIN',
           modalidad: modalidad,
           tipoProducto: currentTipo,
-          environment: currentEnv
+          environment: 'production'
         };
 
         const res = await fetch('/api/create-recurring-link', {
@@ -1277,95 +970,71 @@
         const data = await res.json();
 
         if (data.success && data.url) {
-          lastGeneratedUrl = data.url;
-          lastProgramName = programa;
-          lastAmount = monto;
+          lastUrl = data.url;
 
-          // Guardar también en localStorage para persistencia permanente
-          guardarEnLocalStorage(data.entry || {
+          // Guardar en localStorage
+          guardarEnStorage({
             id: 'LNK-' + Date.now(),
             date: new Date().toISOString(),
-            program: programa,
+            program: concepto,
             modalidad: modalidad,
             tipoProducto: currentTipo,
             tieneAutomatizacion: currentTipo === 'curso',
             amount: monto,
             currency: 'USD',
-            environment: currentEnv,
-            url: data.url
-          });
-            amount: monto,
-            currency: 'USD',
-            environment: currentEnv,
+            environment: 'production',
             url: data.url
           });
 
           // Mostrar resultado
-          document.getElementById('resUrlDisplay').innerText = data.url;
-          document.getElementById('resFecha').innerText = new Date().toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' });
-          document.getElementById('resModalidadTag').innerText = modalidad;
-          
-          const tag = document.getElementById('resEnvTag');
-          if (currentEnv === 'production') {
-            tag.innerText = '🟢 COBRO REAL (PRODUCCIÓN)';
-            tag.style.background = 'rgba(16, 185, 129, 0.2)';
-            tag.style.color = '#34d399';
-          } else {
-            tag.innerText = '🟡 MODO PRUEBA (SANDBOX)';
-            tag.style.background = 'rgba(245, 158, 11, 0.2)';
-            tag.style.color = '#fbbf24';
-          }
-
+          document.getElementById('resInputUrl').value = data.url;
+          document.getElementById('resBadgeCuota').innerText = modalidad;
           actualizarPreviewWA();
-          document.getElementById('resultCard').style.display = 'block';
-          document.getElementById('resultCard').scrollIntoView({ behavior: 'smooth' });
 
-          // Recargar historial
+          const box = document.getElementById('boxResultado');
+          box.style.display = 'block';
+          box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
           cargarHistorial();
         } else {
-          alert('Error creando link: ' + (data.error || 'Respuesta inválida de dLocal Go'));
+          alert('Error: ' + (data.error || 'No se pudo generar el enlace en dLocal Go'));
         }
-
       } catch (err) {
         console.error(err);
-        alert('Error de conexión al generar el link');
+        alert('Error de conexión con el servidor.');
       } finally {
         btn.disabled = false;
-        btn.innerHTML = '<span>🚀 GENERAR LINK DE PAGO RECURRENTE (DÓLARES)</span>';
+        btn.innerHTML = '<span>Generar Enlace de Cobro ($ USD)</span>';
       }
     }
 
     function copiarLinkGenerado() {
-      if (!lastGeneratedUrl) return;
-      navigator.clipboard.writeText(lastGeneratedUrl).then(() => {
-        alert('✅ ¡Link de pago copiado al portapapeles!');
+      if (!lastUrl) return;
+      navigator.clipboard.writeText(lastUrl).then(() => {
+        alert('✅ Enlace copiado al portapapeles');
       });
     }
 
-    function abrirWhatsAppAlumno() {
-      if (!lastGeneratedUrl) return;
-      const msg = encodeURIComponent(buildWhatsAppMessage(lastGeneratedUrl));
+    function abrirWhatsApp() {
+      if (!lastUrl) return;
+      const msg = encodeURIComponent(buildWhatsAppTexto(lastUrl));
       window.open(`https://wa.me/?text=${msg}`, '_blank');
     }
 
-    function probarLinkGenerado() {
-      if (lastGeneratedUrl) {
-        window.open(lastGeneratedUrl, '_blank');
-      }
+    function probarCheckout() {
+      if (lastUrl) window.open(lastUrl, '_blank');
     }
 
-    // GESTIÓN DEL HISTORIAL Y REGISTRO PERSISTENTE
-    function guardarEnLocalStorage(entry) {
+    function guardarEnStorage(item) {
       try {
-        let local = JSON.parse(localStorage.getItem('edumin_links_history') || '[]');
-        local.unshift(entry);
-        localStorage.setItem('edumin_links_history', JSON.stringify(local.slice(0, 50)));
-      } catch (e) {
-        console.error('Error guardando en localStorage:', e);
-      }
+        let lista = JSON.parse(localStorage.getItem('edumin_links_history') || '[]');
+        lista.unshift(item);
+        localStorage.setItem('edumin_links_history', JSON.stringify(lista.slice(0, 50)));
+      } catch (e) {}
     }
 
-    const OLD_TOKENS_EXCLUDED = new Set([
+    // HISTORIAL: SOLO LINKS ACTIVOS DE PRODUCCIÓN CREADOS DESDE EL 19 DE NOVIEMBRE
+    const EXCLUDED_IDS = new Set([
       'oxIKtFRVNlGbxSRqYYh2P6zBskEgncn2',
       'T6MBPv9LdorjYYqsNfCpiqGc6gLrUTwo',
       'u51qsUe8OLaKYJpG4b70YOjBt00ad82X',
@@ -1378,15 +1047,11 @@
       'FZTktq4WqIVR1kfR3OJI1LGB0ZvoZqy6'
     ]);
 
-    function esLinkValidoNov19(l) {
+    function esLinkActivoNov19(l) {
       if (!l || !l.url) return false;
-      // 1. Debe estar ACTIVO (no inactivo)
       if (l.enabled === false) return false;
-      // 2. Solo produccion real
       if (l.environment === 'sandbox' || l.url.includes('-sbx')) return false;
-      // 3. Excluir tokens antiguos o de prueba anteriores al 19 nov
-      if (l.id && OLD_TOKENS_EXCLUDED.has(l.id)) return false;
-      // 4. Fecha a partir del 19 de noviembre de 2026 si tiene fecha registrada
+      if (l.id && EXCLUDED_IDS.has(l.id)) return false;
       if (l.date) {
         const d = new Date(l.date);
         if (d < new Date('2026-11-19T00:00:00')) return false;
@@ -1396,63 +1061,64 @@
 
     async function cargarHistorial() {
       try {
-        let serverLinks = [];
+        let server = [];
         try {
           const res = await fetch('/api/links-history');
           const data = await res.json();
           if (data.success && data.links) {
-            serverLinks = data.links.filter(esLinkValidoNov19);
+            server = data.links.filter(esLinkActivoNov19);
           }
         } catch (_) {}
 
-        let localLinks = [];
+        let local = [];
         try {
-          localLinks = JSON.parse(localStorage.getItem('edumin_links_history') || '[]');
-          // Limpiar links antiguos, inactivos o sandbox del navegador
-          localLinks = localLinks.filter(esLinkValidoNov19);
-          localStorage.setItem('edumin_links_history', JSON.stringify(localLinks));
+          local = JSON.parse(localStorage.getItem('edumin_links_history') || '[]');
+          local = local.filter(esLinkActivoNov19);
+          localStorage.setItem('edumin_links_history', JSON.stringify(local));
         } catch (_) {}
 
-        // Fusionar por id y url sin duplicados (solo activos desde el 19 de noviembre)
         const map = new Map();
-        [...serverLinks, ...localLinks].forEach(item => {
+        [...server, ...local].forEach(item => {
           if (item && item.url && !map.has(item.url)) {
             map.set(item.url, item);
           }
         });
-        allLinksHistory = Array.from(map.values()).sort((a, b) => new Date(b.date) - new Date(a.date));
 
-        renderTablaHistorial(allLinksHistory);
+        allLinks = Array.from(map.values()).sort((a, b) => new Date(b.date) - new Date(a.date));
+        renderTabla(allLinks);
       } catch (err) {
         console.error('Error cargando historial:', err);
       }
     }
 
-    function renderTablaHistorial(links) {
-      const tbody = document.getElementById('historyTableBody');
-      const filteredLinks = (links || []).filter(esLinkValidoNov19);
-      
-      if (!filteredLinks || filteredLinks.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #64748b; padding: 25px;">Aún no hay links activos creados desde el 19 de noviembre. ¡Genera el primero arriba!</td></tr>';
+    function renderTabla(lista) {
+      const tbody = document.getElementById('tablaHistorial');
+      const txtCount = document.getElementById('txtTotalLinks');
+      const validos = (lista || []).filter(esLinkActivoNov19);
+
+      if (txtCount) txtCount.innerText = `${validos.length} enlaces activos registrados`;
+
+      if (!validos || validos.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 24px;">No hay enlaces activos registrados a partir del 19 de Noviembre.</td></tr>';
         return;
       }
 
-      tbody.innerHTML = filteredLinks.map(l => {
-        const fechaStr = new Date(l.date).toLocaleDateString('es-PE', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+      tbody.innerHTML = validos.map(l => {
+        const fStr = new Date(l.date).toLocaleDateString('es-PE', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
         const mod = l.modalidad || (l.program?.includes('CUOTA') ? l.program.split(' - ')[1] : 'PAGO TOTAL');
         const isAuto = l.tieneAutomatizacion !== false && l.tipoProducto !== 'certificacion';
-        const badgeTipo = isAuto ? `<span class="badge-pill badge-auto">⚡ Auto Q10</span>` : `<span class="badge-pill badge-manual">⚠️ Manual</span>`;
+        const badgeTipo = isAuto ? `<span class="badge badge-active">Auto Q10</span>` : `<span class="badge badge-manual">Manual</span>`;
 
         return `
           <tr>
-            <td style="white-space: nowrap;">${fechaStr}</td>
-            <td style="font-weight: 600; max-width: 300px;">${l.program}</td>
-            <td><span class="badge-pill badge-modalidad">${mod}</span></td>
-            <td style="color: #34d399; font-weight: 800; white-space: nowrap;">$${l.amount} ${l.currency || 'USD'}</td>
-            <td style="white-space: nowrap;"><span class="badge-pill badge-real">🟢 Real Activo</span> ${badgeTipo}</td>
+            <td style="white-space: nowrap; color: var(--text-muted);">${fStr}</td>
+            <td style="font-weight: 700; max-width: 280px;">${l.program}</td>
+            <td><span class="badge badge-cuota">${mod}</span></td>
+            <td style="font-weight: 800; color: var(--accent-green); white-space: nowrap;">$${l.amount} ${l.currency || 'USD'}</td>
+            <td style="white-space: nowrap;"><span class="badge badge-active">🟢 Activo</span> ${badgeTipo}</td>
             <td style="white-space: nowrap;">
-              <button class="btn-table-action" onclick="copiarTexto('${l.url}')" title="Copiar Link">📋 Copiar</button>
-              <button class="btn-table-action btn-table-wa" onclick="reenviarWhatsAppHistorial('${encodeURIComponent(JSON.stringify(l))}')" title="Enviar WhatsApp">🟢 WA</button>
+              <button class="btn-mini" onclick="copiarTexto('${l.url}')" title="Copiar Link">📋 Copiar</button>
+              <button class="btn-mini btn-mini-wa" onclick="reenviarWA('${encodeURIComponent(JSON.stringify(l))}')" title="Enviar WhatsApp">🟢 WhatsApp</button>
             </td>
           </tr>
         `;
@@ -1462,49 +1128,25 @@
     function filtrarHistorial(query) {
       const q = query.toLowerCase().trim();
       if (!q) {
-        renderTablaHistorial(allLinksHistory);
+        renderTabla(allLinks);
         return;
       }
-      const filtrados = allLinksHistory.filter(l => 
+      const filtrados = allLinks.filter(l => 
         (l.program && l.program.toLowerCase().includes(q)) ||
         (l.modalidad && l.modalidad.toLowerCase().includes(q))
       );
-      renderTablaHistorial(filtrados);
+      renderTabla(filtrados);
     }
 
-    function reenviarWhatsAppHistorial(itemJsonStr) {
+    function reenviarWA(jsonStr) {
       try {
-        const item = JSON.parse(decodeURIComponent(itemJsonStr));
-        const programa = item.program || 'Curso Especializado';
-        const monto = item.amount || 149;
-        const cuota = item.modalidad || 'PAGO TOTAL';
-        const url = item.url;
-
-        const msg = `¡Hola! 👋 Te saluda el equipo de Admisiones de EDUMIN.\n\nAquí tienes tu enlace oficial para realizar tu pago de:\n🎓 *${programa}*\n📋 *Modalidad:* ${cuota}\n\n💳 *Monto:* $${monto} USD\n🔗 *Link de Pago Seguro:* ${url}\n\n¡Cualquier consulta estamos a tu disposición! 🚀`;
+        const l = JSON.parse(decodeURIComponent(jsonStr));
+        const concepto = l.program || 'Curso Especializado';
+        const monto = l.amount || 149;
+        const mod = l.modalidad || 'PAGO TOTAL';
+        const msg = `¡Hola! 👋 Te saluda el equipo de Admisiones de EDUMIN.\n\nAquí tienes tu enlace oficial para realizar tu pago de:\n🎓 *${concepto}*\n📋 *Modalidad:* ${mod}\n\n💳 *Monto:* $${monto} USD\n🔗 *Link de Pago Oficial:* ${l.url}\n\n¡Cualquier consulta estamos a tu disposición! 🚀`;
         window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
-      } catch (e) {
-        console.error(e);
-      }
-    }
-
-    function exportarHistorialCSV() {
-      if (!allLinksHistory || allLinksHistory.length === 0) {
-        alert('No hay links en el registro para exportar.');
-        return;
-      }
-      let csv = 'Fecha,Programa,Modalidad,Monto,Moneda,Automatizacion,URL\n';
-      allLinksHistory.forEach(l => {
-        const isAuto = l.tieneAutomatizacion !== false && l.tipoProducto !== 'certificacion' ? 'SI' : 'NO';
-        csv += `"${l.date}","${(l.program || '').replace(/"/g, '""')}","${l.modalidad || 'PAGO TOTAL'}","${l.amount}","${l.currency || 'USD'}","${isAuto}","${l.url}"\n`;
-      });
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `registro_links_edumin_${new Date().toISOString().slice(0, 10)}.csv`;
-      a.click();
-    }
-      a.click();
+      } catch (e) {}
     }
 
     function copiarTexto(txt) {
@@ -1512,7 +1154,24 @@
         alert('✅ Enlace copiado al portapapeles');
       });
     }
-  </script>
 
+    function exportarCSV() {
+      if (!allLinks || allLinks.length === 0) {
+        alert('No hay registros para exportar.');
+        return;
+      }
+      let csv = 'Fecha,Programa,Modalidad,Monto,Moneda,Automatizacion,URL\n';
+      allLinks.forEach(l => {
+        const isAuto = l.tieneAutomatizacion !== false && l.tipoProducto !== 'certificacion' ? 'SI' : 'NO';
+        csv += `"${l.date}","${(l.program || '').replace(/"/g, '""')}","${l.modalidad || 'PAGO TOTAL'}","${l.amount}","${l.currency || 'USD'}","${isAuto}","${l.url}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `enlaces_edumin_${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click();
+    }
+  </script>
 </body>
 </html>
