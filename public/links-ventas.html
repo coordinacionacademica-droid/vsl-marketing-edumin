@@ -448,6 +448,8 @@
     .badge-modalidad { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
     .badge-auto { background: rgba(16, 185, 129, 0.15); color: #34d399; }
     .badge-manual { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+    .badge-real { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+    .badge-sbx { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
     
     .btn-table-action {
       padding: 6px 10px;
@@ -1027,7 +1029,7 @@
       try {
         let serverLinks = [];
         try {
-          const res = await fetch('/api/links-history');
+          const res = await fetch('/api/links-history?environment=all');
           const data = await res.json();
           if (data.success && data.links) serverLinks = data.links;
         } catch (_) {}
@@ -1055,7 +1057,7 @@
     function renderTablaHistorial(links) {
       const tbody = document.getElementById('historyTableBody');
       if (!links || links.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #64748b; padding: 25px;">Aún no hay links generados. ¡Crea el primero arriba!</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #64748b; padding: 25px;">Aún no hay links en el registro. ¡Genera el primero arriba!</td></tr>';
         return;
       }
 
@@ -1065,6 +1067,8 @@
         const detalleAsesor = l.asesor ? `<strong>${l.asesor}</strong>` : (l.campaign || '-');
         const detalleAlumno = l.alumno ? `<div style="font-size:0.75rem; color:#94a3b8;">Alu: ${l.alumno}</div>` : '';
         const isAuto = l.tieneAutomatizacion !== false && l.tipoProducto !== 'certificacion';
+        const isProd = l.environment === 'production' || (l.url && !l.url.includes('-sbx'));
+        const badgeEnv = isProd ? `<span class="badge-pill badge-real">🟢 Real</span>` : `<span class="badge-pill badge-sbx">🟡 Pruebas</span>`;
         const badgeTipo = isAuto ? `<span class="badge-pill badge-auto">⚡ Auto Q10</span>` : `<span class="badge-pill badge-manual">⚠️ Manual</span>`;
 
         return `
@@ -1073,8 +1077,8 @@
             <td style="font-weight: 600; max-width: 260px;">${l.program}</td>
             <td><span class="badge-pill badge-modalidad">${mod}</span></td>
             <td>${detalleAsesor}${detalleAlumno}</td>
-            <td style="color: #34d399; font-weight: 800;">$${l.amount} ${l.currency || 'USD'}</td>
-            <td>${badgeTipo}</td>
+            <td style="color: #34d399; font-weight: 800; white-space: nowrap;">$${l.amount} ${l.currency || 'USD'}</td>
+            <td style="white-space: nowrap;">${badgeEnv} ${badgeTipo}</td>
             <td style="white-space: nowrap;">
               <button class="btn-table-action" onclick="copiarTexto('${l.url}')" title="Copiar Link">📋 Copiar</button>
               <button class="btn-table-action btn-table-wa" onclick="reenviarWhatsAppHistorial('${encodeURIComponent(JSON.stringify(l))}')" title="Enviar WhatsApp">🟢 WA</button>

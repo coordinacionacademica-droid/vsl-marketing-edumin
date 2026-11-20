@@ -312,10 +312,104 @@ app.post('/api/create-recurring-link', async (req, res) => {
   }
 });
 
-// 2.1 Endpoint para obtener el historial de links de Marketing
-app.get('/api/links-history', (req, res) => {
-  const history = loadJsonFile(HISTORY_FILE, []);
-  return res.json({ success: true, links: history });
+// Helper para consultar links recurrentes directamente en la API oficial de dLocal Go
+async function fetchDLocalRecurringLinks(env = 'production') {
+  const config = DLOCAL_CONFIGS[env] || DLOCAL_CONFIGS.production;
+  const isProd = (env === 'production' || env === 'prod' || env === 'live');
+  const checkoutBase = isProd
+    ? 'https://checkout.dlocalgo.com/validate/recurring/'
+    : 'https://checkout-sbx.dlocalgo.com/validate/recurring/';
+
+  const results = [];
+  try {
+    let page = 0;
+    let totalPages = 1;
+    while (page < totalPages && page < 5) {
+      const response = await fetch(`${config.apiUrl}/v1/recurring-payments/?page=${page}&size=10`, {
+        headers: {
+          'Authorization': `Bearer ${config.apiKey}:${config.secretKey}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      if (!response.ok) break;
+      const data = await response.json();
+      if (data && Array.isArray(data.data)) {
+        for (const item of data.data) {
+          results.push({
+            id: item.recurringLinkToken,
+            url: `${checkoutBase}${item.recurringLinkToken}`,
+            program: item.description,
+            amount: item.amount,
+            currency: item.currency || 'USD',
+            environment: isProd ? 'production' : 'sandbox',
+            country: item.country || 'ALL',
+            enabled: item.enabled,
+            date: new Date().toISOString()
+          });
+        }
+      }
+      totalPages = data.totalPages || 1;
+      page++;
+    }
+  } catch (err) {
+    console.error(`[dLocal Go] Error fetching recurring links (${env}):`, err.message);
+  }
+  return results;
+}
+
+// 2.1 Endpoint para obtener el historial de links de Marketing (Conexión Directa a dLocal Go API)
+app.get('/api/links-history', async (req, res) => {
+  const env = req.query.environment || req.query.env;
+  const localHistory = loadJsonFile(HISTORY_FILE, []);
+
+  try {
+    let dlocalLinks = [];
+    if (!env || env === 'all') {
+      const [prodLinks, sbxLinks] = await Promise.all([
+        fetchDLocalRecurringLinks('production'),
+        fetchDLocalRecurringLinks('sandbox')
+      ]);
+      dlocalLinks = [...prodLinks, ...sbxLinks];
+    } else {
+      dlocalLinks = await fetchDLocalRecurringLinks(env === 'sandbox' ? 'sandbox' : 'production');
+    }
+
+    // Indexar metadata local para enriquecer con datos del asesor y alumno
+    const localMap = new Map();
+    localHistory.forEach(item => {
+      if (item && item.id) localMap.set(item.id, item);
+      if (item && item.url) localMap.set(item.url, item);
+    });
+
+    const combined = dlocalLinks.map(link => {
+      const saved = localMap.get(link.id) || localMap.get(link.url);
+      if (saved) {
+        return {
+          ...link,
+          modalidad: saved.modalidad || link.modalidad,
+          asesor: saved.asesor || link.asesor,
+          alumno: saved.alumno || link.alumno,
+          tipoProducto: saved.tipoProducto || link.tipoProducto,
+          tieneAutomatizacion: saved.tieneAutomatizacion !== undefined ? saved.tieneAutomatizacion : link.tieneAutomatizacion,
+          date: saved.date || link.date
+        };
+      }
+      return link;
+    });
+
+    // Agregar items locales que dLocal Go todavía no haya indexado
+    const existingIds = new Set(combined.map(c => c.id));
+    localHistory.forEach(localItem => {
+      if (localItem && localItem.id && !existingIds.has(localItem.id)) {
+        combined.unshift(localItem);
+      }
+    });
+
+    return res.json({ success: true, links: combined });
+  } catch (error) {
+    console.error('Error fetching links history:', error);
+    return res.json({ success: true, links: localHistory });
+  }
 });
 
 // 2.2 Endpoint para validar pago y verificar si ya fue matriculado (Anti-Duplicidad)
