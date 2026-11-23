@@ -431,6 +431,69 @@ app.get('/api/links-history', async (req, res) => {
   }
 });
 
+// 2.15 Endpoint para consultar transacciones y pagos reales en vivo desde dLocal Go
+app.get('/api/payments-history', async (req, res) => {
+  try {
+    const config = DLOCAL_CONFIGS.production;
+    let allPayments = [];
+    let page = 0;
+    let totalPages = 1;
+
+    while (page < totalPages && page < 5) {
+      const response = await fetch(`${config.apiUrl}/v1/payments/?page=${page}&size=20`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${config.apiKey}:${config.secretKey}`,
+          'Content-Type': 'application/json',
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
+        }
+      });
+
+      if (!response.ok) {
+        break;
+      }
+
+      const data = await response.json();
+      if (data && Array.isArray(data.data)) {
+        allPayments.push(...data.data);
+      }
+      totalPages = data.totalPages || 1;
+      page++;
+    }
+
+    const formatted = allPayments.map(p => {
+      const payer = p.payer || {};
+      const fullName = `${payer.first_name || ''} ${payer.last_name || ''}`.trim() || 'Alumno dLocal Go';
+      const doc = `${payer.document_type || ''}: ${payer.document || ''}`.replace(/^:\s*/, '').trim() || '-';
+
+      return {
+        id: p.id,
+        order_id: p.order_id || p.id,
+        status: p.status || 'UNKNOWN',
+        amount: p.amount,
+        currency: p.currency || 'USD',
+        description: p.description || 'Curso Especializado',
+        country: p.country || payer.document_country || 'ALL',
+        payment_method_type: p.payment_method_type || 'CARD',
+        created_date: p.created_date,
+        approved_date: p.approved_date,
+        payer: {
+          name: fullName,
+          email: payer.email || '',
+          phone: payer.mobile_phone || '',
+          document: doc,
+          country: payer.document_country || p.country || ''
+        }
+      };
+    });
+
+    return res.json({ success: true, count: formatted.length, payments: formatted });
+  } catch (error) {
+    console.error('Error fetching payments history:', error);
+    return res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 // 2.2 Endpoint para validar pago y verificar si ya fue matriculado (Anti-Duplicidad)
 app.get('/api/validar-pago', (req, res) => {
   const { order_id, email } = req.query;

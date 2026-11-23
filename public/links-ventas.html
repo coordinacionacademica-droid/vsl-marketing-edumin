@@ -610,6 +610,9 @@
     .badge-cuota { background: var(--primary-light); color: var(--primary); }
     .badge-active { background: var(--accent-green-light); color: var(--accent-green); }
     .badge-manual { background: var(--accent-amber-light); color: var(--accent-amber); }
+    .badge-paid { background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; }
+    .badge-pending { background: #fffbeb; color: #d97706; border: 1px solid #fde68a; }
+    .badge-cancelled { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
     .btn-mini {
       padding: 5px 9px;
       border-radius: 5px;
@@ -891,6 +894,55 @@
       </div>
     </section>
 
+    <!-- SECCIÓN INFERIOR 2: PAGOS Y VENTAS EN TIEMPO REAL DIRECTO DESDE DLOCAL GO -->
+    <section class="history-card" style="margin-top: 24px;">
+      <div class="card-header">
+        <div>
+          <h2 class="card-title">💰 Ventas & Pagos en Tiempo Real</h2>
+          <p class="card-subtitle">Transacciones reales de alumnos registradas directamente en dLocal Go (Producción Oficial).</p>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button type="button" class="btn-secondary" onclick="exportarPagosCSV()">📥 Exportar CSV</button>
+          <button type="button" class="btn-secondary" onclick="cargarPagos()">🔄 Actualizar Pagos</button>
+        </div>
+      </div>
+
+      <div class="history-toolbar">
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; flex: 1;">
+          <input type="text" class="search-input" id="inputFiltroPagos" placeholder="Buscar por alumno, correo o concepto..." oninput="filtrarPagos()" style="flex: 1; min-width: 260px;">
+          <select id="selectFiltroEstado" onchange="filtrarPagos()" style="max-width: 200px; padding: 8px 12px; font-size: 0.82rem;">
+            <option value="ALL">Todos los Estados</option>
+            <option value="PAID">🟢 Pagados (PAID)</option>
+            <option value="PENDING">🟡 Pendientes (PENDING)</option>
+            <option value="CANCELLED">🔴 Cancelados / Rechazados</option>
+          </select>
+        </div>
+        <span style="font-size: 0.78rem; color: var(--text-muted);" id="txtTotalPagos">Cargando transacciones...</span>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Alumno</th>
+              <th>Contacto</th>
+              <th>Concepto / Curso</th>
+              <th>Monto</th>
+              <th>Método</th>
+              <th>Estado</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody id="tablaPagos">
+            <tr>
+              <td colspan="8" style="text-align: center; color: var(--text-muted); padding: 24px;">Cargando pagos desde dLocal Go...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
   </div>
 
   <script>
@@ -936,6 +988,7 @@
       aplicarTema(temaInicial);
       setTipoProducto('curso');
       cargarHistorial();
+      cargarPagos();
     });
 
     // CAMBIO DE TIPO DE PRODUCTO
@@ -1280,6 +1333,126 @@
       const a = document.createElement('a');
       a.href = url;
       a.download = `enlaces_edumin_${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click();
+    }
+
+    // ==========================================
+    // GESTIÓN DE VENTAS Y PAGOS REALES DLOCAL GO
+    // ==========================================
+    let allPayments = [];
+
+    async function cargarPagos() {
+      try {
+        const tbody = document.getElementById('tablaPagos');
+        const txtTotal = document.getElementById('txtTotalPagos');
+        if (txtTotal) txtTotal.innerText = 'Consultando dLocal Go...';
+
+        const res = await fetch('/api/payments-history');
+        const data = await res.json();
+
+        if (data.success && Array.isArray(data.payments)) {
+          allPayments = data.payments;
+          renderTablaPagos(allPayments);
+        } else {
+          tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 24px;">No se pudieron cargar los pagos de dLocal Go.</td></tr>';
+        }
+      } catch (err) {
+        console.error('Error cargando pagos:', err);
+      }
+    }
+
+    function renderTablaPagos(lista) {
+      const tbody = document.getElementById('tablaPagos');
+      const txtTotal = document.getElementById('txtTotalPagos');
+      if (txtTotal) txtTotal.innerText = `${lista.length} transacciones registradas`;
+
+      if (!lista || lista.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 24px;">No hay pagos registrados con los filtros seleccionados.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = lista.map(p => {
+        const fechaStr = p.created_date 
+          ? new Date(p.created_date).toLocaleDateString('es-PE', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }) 
+          : '-';
+
+        let badgeClass = 'badge-pending';
+        let badgeText = '🟡 ' + p.status;
+        if (p.status === 'PAID') {
+          badgeClass = 'badge-paid';
+          badgeText = '🟢 PAGADO';
+        } else if (p.status === 'CANCELLED' || p.status === 'REJECTED') {
+          badgeClass = 'badge-cancelled';
+          badgeText = '🔴 ' + p.status;
+        } else if (p.status === 'PENDING') {
+          badgeClass = 'badge-pending';
+          badgeText = '🟡 PENDIENTE';
+        }
+
+        const cleanPhone = (p.payer.phone || '').replace(/[^0-9+]/g, '');
+        const waMsg = encodeURIComponent(`¡Hola ${p.payer.name}! 👋 Te saluda el Área Comercial de EDUMIN con respecto a tu orden de ${p.description}.`);
+        const waBtn = cleanPhone 
+          ? `<a href="https://wa.me/${cleanPhone.replace('+', '')}?text=${waMsg}" target="_blank" class="btn-mini btn-mini-wa" style="text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="Chat WhatsApp Alumno">🟢 WA</a>`
+          : '-';
+
+        return `
+          <tr>
+            <td style="white-space: nowrap; color: var(--text-muted); font-size: 0.78rem;">${fechaStr}</td>
+            <td>
+              <div style="font-weight: 700; color: var(--text-main);">${p.payer.name}</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted);">${p.payer.email || '-'}</div>
+            </td>
+            <td>
+              <div style="font-weight: 600; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;">${p.payer.phone || '-'}</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted);">${p.payer.document} (${p.payer.country || p.country})</div>
+            </td>
+            <td style="font-weight: 600; max-width: 220px; font-size: 0.78rem;">${p.description}</td>
+            <td style="font-weight: 800; color: var(--accent-green); white-space: nowrap;">$${p.amount} ${p.currency}</td>
+            <td style="white-space: nowrap; font-size: 0.74rem; color: var(--text-muted);">${p.payment_method_type}</td>
+            <td style="white-space: nowrap;"><span class="badge ${badgeClass}">${badgeText}</span></td>
+            <td style="white-space: nowrap;">${waBtn}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function filtrarPagos() {
+      const q = (document.getElementById('inputFiltroPagos')?.value || '').toLowerCase().trim();
+      const statusFilter = document.getElementById('selectFiltroEstado')?.value || 'ALL';
+
+      let filtrados = allPayments;
+
+      if (statusFilter !== 'ALL') {
+        filtrados = filtrados.filter(p => p.status === statusFilter);
+      }
+
+      if (q) {
+        filtrados = filtrados.filter(p => 
+          (p.payer.name && p.payer.name.toLowerCase().includes(q)) ||
+          (p.payer.email && p.payer.email.toLowerCase().includes(q)) ||
+          (p.payer.phone && p.payer.phone.includes(q)) ||
+          (p.description && p.description.toLowerCase().includes(q)) ||
+          (p.id && p.id.toLowerCase().includes(q))
+        );
+      }
+
+      renderTablaPagos(filtrados);
+    }
+
+    function exportarPagosCSV() {
+      if (!allPayments || allPayments.length === 0) {
+        alert('No hay transacciones para exportar.');
+        return;
+      }
+      let csv = 'ID,Fecha,Alumno,Email,Telefono,Documento,Pais,Concepto,Monto,Moneda,Metodo,Estado\n';
+      allPayments.forEach(p => {
+        csv += `"${p.id}","${p.created_date}","${(p.payer.name || '').replace(/"/g, '""')}","${p.payer.email}","${p.payer.phone}","${p.payer.document}","${p.country}","${(p.description || '').replace(/"/g, '""')}","${p.amount}","${p.currency}","${p.payment_method_type}","${p.status}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `pagos_dlocalgo_${new Date().toISOString().slice(0, 10)}.csv`;
       a.click();
     }
   </script>
