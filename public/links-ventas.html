@@ -911,8 +911,8 @@
         <div style="display: flex; gap: 10px; flex-wrap: wrap; flex: 1;">
           <input type="text" class="search-input" id="inputFiltroPagos" placeholder="Buscar por alumno, correo o concepto..." oninput="filtrarPagos()" style="flex: 1; min-width: 260px;">
           <select id="selectFiltroEstado" onchange="filtrarPagos()" style="max-width: 200px; padding: 8px 12px; font-size: 0.82rem;">
+            <option value="PAID" selected>🟢 Pagados (PAID)</option>
             <option value="ALL">Todos los Estados</option>
-            <option value="PAID">🟢 Pagados (PAID)</option>
             <option value="PENDING">🟡 Pendientes (PENDING)</option>
             <option value="CANCELLED">🔴 Cancelados / Rechazados</option>
           </select>
@@ -1352,7 +1352,7 @@
 
         if (data.success && Array.isArray(data.payments)) {
           allPayments = data.payments;
-          renderTablaPagos(allPayments);
+          filtrarPagos();
         } else {
           tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 24px;">No se pudieron cargar los pagos de dLocal Go.</td></tr>';
         }
@@ -1364,7 +1364,11 @@
     function renderTablaPagos(lista) {
       const tbody = document.getElementById('tablaPagos');
       const txtTotal = document.getElementById('txtTotalPagos');
-      if (txtTotal) txtTotal.innerText = `${lista.length} transacciones registradas`;
+      if (txtTotal) {
+        const estadoSel = document.getElementById('selectFiltroEstado')?.value;
+        const etiqueta = estadoSel === 'PAID' ? 'pagos confirmados' : 'transacciones';
+        txtTotal.innerText = `${lista.length} ${etiqueta} (${allPayments.length} en total)`;
+      }
 
       if (!lista || lista.length === 0) {
         tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 24px;">No hay pagos registrados con los filtros seleccionados.</td></tr>';
@@ -1423,7 +1427,7 @@
       let filtrados = allPayments;
 
       if (statusFilter !== 'ALL') {
-        filtrados = filtrados.filter(p => p.status === statusFilter);
+        filtrados = filtrados.filter(p => (p.status || '').toUpperCase() === statusFilter.toUpperCase());
       }
 
       if (q) {
