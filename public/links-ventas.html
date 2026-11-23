@@ -729,10 +729,10 @@
             </select>
           </div>
 
-          <!-- MODALIDAD DE PAGO (CUOTAS) -->
+          <!-- CONDICIÓN DE PAGO (CUOTAS) -->
           <div class="form-group">
             <label class="form-label" for="selectModalidad">
-              <span>Modalidad: Pago Completo o en Cuotas</span>
+              <span>Condición de Pago: Total o en Cuotas</span>
               <span class="form-hint">Selección rápida con botones</span>
             </label>
             <select id="selectModalidad" onchange="onModalidadChange(this.value)">
@@ -1016,7 +1016,7 @@
         ? 'Una vez realizado el pago, tu acceso al Campus Virtual Q10 queda habilitado de inmediato.'
         : 'Una vez realizado el pago, envíame tu comprobante por este medio para proceder con la emisión correspondiente.';
 
-      return `¡Hola! 👋 Te saluda el equipo de Admisiones de EDUMIN.\n\nAquí tienes tu enlace oficial y seguro para realizar tu pago de:\n🎓 *${concepto}*\n📋 *Modalidad:* ${mod}\n\n💳 *Monto:* $${monto} USD\n🌍 *Acceso Internacional:* Válido para tarjeta de crédito/débito y banca local en tu país.\n🔗 *Link de Pago Oficial:* ${link}\n\n${postPago} ¡Cualquier consulta estamos a tu disposición! 🚀`;
+      return `¡Hola! 👋 Te saluda el Área Comercial de EDUMIN.\n\nDe acuerdo a lo conversado, aquí tienes tu enlace oficial y seguro para realizar tu pago de:\n🎓 *${concepto}*\n📋 *Modalidad:* Asincrónica\n\n💳 *Monto:* $${monto} USD\n🌍 *Acceso Internacional:* Válido para tarjeta de crédito/débito y banca local en tu país.\n🔗 *Link de Pago Oficial:* ${link}\n\n${postPago} ¡Cualquier consulta estamos a tu disposición! 🚀`;
     }
 
     // PREVISUALIZAR CUALQUIER LINK EN EL IFRAME
@@ -1240,7 +1240,7 @@
         const concepto = l.program || 'Curso Especializado';
         const monto = l.amount || 149;
         const mod = l.modalidad || 'PAGO TOTAL';
-        const msg = `¡Hola! 👋 Te saluda el equipo de Admisiones de EDUMIN.\n\nAquí tienes tu enlace oficial para realizar tu pago de:\n🎓 *${concepto}*\n📋 *Modalidad:* ${mod}\n\n💳 *Monto:* $${monto} USD\n🔗 *Link de Pago Oficial:* ${l.url}\n\n¡Cualquier consulta estamos a tu disposición! 🚀`;
+        const msg = `¡Hola! 👋 Te saluda el Área Comercial de EDUMIN.\n\nDe acuerdo a lo conversado, aquí tienes tu enlace oficial para realizar tu pago de:\n🎓 *${concepto}*\n📋 *Modalidad:* Asincrónica\n\n💳 *Monto:* $${monto} USD\n🔗 *Link de Pago Oficial:* ${l.url}\n\n¡Cualquier consulta estamos a tu disposición! 🚀`;
         window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
       } catch (e) {}
     }
