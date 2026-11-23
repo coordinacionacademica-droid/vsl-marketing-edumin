@@ -185,6 +185,26 @@
       box-shadow: var(--card-shadow);
       margin-bottom: 24px;
     }
+    .card.form-card {
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 30px;
+    }
+    .card.form-card .card-header {
+      text-align: center;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .card.form-card .card-title {
+      justify-content: center;
+      text-align: center;
+    }
+    .card.form-card .card-subtitle {
+      text-align: center;
+    }
     .card-header {
       margin-bottom: 18px;
       padding-bottom: 14px;
@@ -556,10 +576,10 @@
     </header>
 
     <!-- FORMULARIO GENERADOR DEL PAGO -->
-    <main class="card">
+    <main class="card form-card">
       <div class="card-header">
-        <div>
-          <h2 class="card-title">Configuración del Cobro</h2>
+        <div style="width: 100%; text-align: center;">
+          <h2 class="card-title" style="justify-content: center;">Configuración del Cobro</h2>
           <p class="card-subtitle">Completa el concepto y el monto para generar el enlace recurrente.</p>
         </div>
       </div>
