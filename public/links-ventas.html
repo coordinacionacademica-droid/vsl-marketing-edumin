@@ -20,8 +20,6 @@
       --primary-hover: #0369a1;
       --primary-light: #f0f9ff;
       --primary-border: #bae6fd;
-      --dlocal-blue: #0050ff;
-      --dlocal-dark: #0a1128;
       --accent-green: #059669;
       --accent-green-light: #ecfdf5;
       --accent-green-border: #a7f3d0;
@@ -35,7 +33,6 @@
       --table-row-hover: #f1f5f9;
       --mockup-bg: #ffffff;
       --mockup-border: #e2e8f0;
-      --mockup-header: #0f172a;
     }
 
     [data-theme="dark"] {
@@ -50,8 +47,6 @@
       --primary-hover: #0ea5e9;
       --primary-light: rgba(56, 189, 248, 0.1);
       --primary-border: rgba(56, 189, 248, 0.25);
-      --dlocal-blue: #3b82f6;
-      --dlocal-dark: #0f172a;
       --accent-green: #10b981;
       --accent-green-light: rgba(16, 185, 129, 0.12);
       --accent-green-border: rgba(16, 185, 129, 0.3);
@@ -65,7 +60,6 @@
       --table-row-hover: #1e293b;
       --mockup-bg: #131c31;
       --mockup-border: #1e293b;
-      --mockup-header: #070c18;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -80,7 +74,7 @@
     }
 
     .container {
-      max-width: 1180px;
+      max-width: 1200px;
       margin: 0 auto;
     }
 
@@ -186,15 +180,15 @@
       color: var(--text-main);
     }
 
-    /* GRID PRINCIPAL DE 2 COLUMNAS (FORMATO DLOCAL GO) */
+    /* GRID PRINCIPAL DE 2 COLUMNAS (CONFIGURADOR vs PREVISUALIZADOR) */
     .portal-grid {
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
+      grid-template-columns: 1fr 1fr;
       gap: 24px;
       margin-bottom: 24px;
       align-items: start;
     }
-    @media (max-width: 900px) {
+    @media (max-width: 960px) {
       .portal-grid {
         grid-template-columns: 1fr;
       }
@@ -386,144 +380,122 @@
       box-shadow: none;
     }
 
-    /* COLUMNA DERECHA: FORMATO MOCKUP DLOCAL GO CHECKOUT */
-    .mockup-card {
+    /* COLUMNA DERECHA: PREVISUALIZADOR OFICIAL DEL ENLACE DLOCAL GO */
+    .preview-card {
       background: var(--mockup-bg);
       border: 1px solid var(--mockup-border);
       border-radius: 18px;
       box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
       overflow: hidden;
-      position: sticky;
-      top: 20px;
+      display: flex;
+      flex-direction: column;
     }
-    .mockup-top-bar {
+    .preview-top-header {
       background: #0f172a;
       color: #ffffff;
-      padding: 14px 18px;
+      padding: 12px 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .mockup-brand {
+    .preview-brand-tag {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .btn-external-link {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: background 0.15s;
+    }
+    .btn-external-link:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    /* BARRA DE DIRECCIÓN TIPO NAVEGADOR */
+    .browser-address-bar {
+      background: var(--table-head);
+      border-bottom: 1px solid var(--card-border);
+      padding: 8px 14px;
       display: flex;
       align-items: center;
       gap: 10px;
     }
-    .mockup-logo-mini {
-      height: 24px;
-      width: auto;
-      background: #ffffff;
-      padding: 2px 6px;
-      border-radius: 4px;
+    .browser-dots {
+      display: flex;
+      gap: 5px;
     }
-    .mockup-body {
-      padding: 22px 20px;
+    .b-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
     }
-    .mockup-pill-status {
-      display: inline-flex;
+    .b-dot.red { background: #ef4444; }
+    .b-dot.yellow { background: #f59e0b; }
+    .b-dot.green { background: #10b981; }
+    .browser-url-pill {
+      flex: 1;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-size: 0.73rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-muted);
+      display: flex;
       align-items: center;
       gap: 6px;
-      font-size: 0.72rem;
-      font-weight: 800;
-      color: #059669;
-      background: #ecfdf5;
-      border: 1px solid #a7f3d0;
-      padding: 4px 10px;
-      border-radius: 20px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 14px;
+      overflow: hidden;
+      white-space: nowrap;
     }
-    .mockup-amount-display {
-      font-size: 2.2rem;
-      font-weight: 900;
+    .url-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
       color: var(--text-main);
-      line-height: 1.1;
-      margin-bottom: 6px;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-    .mockup-amount-currency {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      margin-left: 4px;
-    }
-    .mockup-concept-box {
-      background: var(--primary-light);
-      border: 1px solid var(--primary-border);
-      border-radius: 10px;
-      padding: 12px 14px;
-      margin-bottom: 16px;
-    }
-    .mockup-concept-title {
-      font-size: 0.88rem;
-      font-weight: 800;
-      color: var(--text-main);
-      line-height: 1.35;
-    }
-    .mockup-concept-cuota {
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: #0284c7;
-      margin-top: 4px;
-      display: inline-block;
-    }
-    .mockup-payment-methods {
-      margin-bottom: 18px;
-      padding-top: 12px;
-      border-top: 1px solid var(--card-border);
-    }
-    .methods-label {
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 8px;
-    }
-    .methods-icons {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-    .method-badge {
-      background: #ffffff;
-      border: 1px solid #cbd5e1;
-      border-radius: 6px;
-      padding: 3px 8px;
-      font-size: 0.72rem;
-      font-weight: 800;
-      color: #334155;
+      font-weight: 600;
     }
 
-    /* RESULTADO CON BOTONES */
-    .mockup-result-area {
-      margin-top: 16px;
-      padding-top: 16px;
+    /* CONTENEDOR DEL IFRAME */
+    .iframe-container {
+      width: 100%;
+      height: 520px;
+      background: #ffffff;
+      position: relative;
+    }
+    .iframe-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* CONTROLES INFERIORES DE LA PREVISUALIZACIÓN */
+    .preview-bottom-panel {
+      padding: 16px 18px;
+      background: var(--card-bg);
       border-top: 1px solid var(--card-border);
     }
-    .link-output-box {
-      background: var(--table-head);
-      border: 1px solid var(--card-border);
-      border-radius: 8px;
-      padding: 8px 12px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.78rem;
-      color: var(--text-main);
-      word-break: break-all;
-      margin-bottom: 12px;
-    }
-    .mockup-actions-grid {
+    .preview-actions-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 10px;
+      gap: 10px;
+      margin-bottom: 12px;
     }
-    .btn-mock-action {
+    .btn-preview-action {
       padding: 10px;
       border-radius: 8px;
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       font-weight: 700;
       cursor: pointer;
       border: none;
@@ -533,33 +505,24 @@
       gap: 6px;
       transition: all 0.15s;
     }
-    .btn-mock-copy {
+    .btn-preview-copy {
       background: #0284c7;
       color: #ffffff;
     }
-    .btn-mock-copy:hover { background: #0369a1; }
-    .btn-mock-wa {
+    .btn-preview-copy:hover { background: #0369a1; }
+    .btn-preview-wa {
       background: #16a34a;
       color: #ffffff;
     }
-    .btn-mock-wa:hover { background: #15803d; }
-    .btn-mock-test {
-      grid-column: span 2;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      color: var(--text-main);
-      padding: 8px;
-    }
-    .btn-mock-test:hover { background: var(--table-head); }
+    .btn-preview-wa:hover { background: #15803d; }
 
-    /* WHATSAPP BUBBLE */
+    /* MENSAJE DE WHATSAPP */
     .wa-card {
-      margin-top: 14px;
       background: var(--accent-green-light);
       border: 1px solid var(--accent-green-border);
       border-radius: 8px;
       padding: 12px;
-      font-size: 0.76rem;
+      font-size: 0.77rem;
       line-height: 1.45;
       color: #166534;
       white-space: pre-wrap;
@@ -654,6 +617,8 @@
     .btn-mini:hover { background: var(--table-head); }
     .btn-mini-wa { color: #16a34a; border-color: #bbf7d0; background: #f0fdf4; }
     .btn-mini-wa:hover { background: #dcfce7; }
+    .btn-mini-view { color: #0284c7; border-color: #bae6fd; background: #f0f9ff; }
+    .btn-mini-view:hover { background: #e0f2fe; }
   </style>
 </head>
 <body>
@@ -684,7 +649,7 @@
       </div>
     </header>
 
-    <!-- GRID DE 2 COLUMNAS (FORMATO DLOCAL GO) -->
+    <!-- GRID DE 2 COLUMNAS (CONFIGURADOR vs PREVISUALIZADOR) -->
     <div class="portal-grid">
 
       <!-- COLUMNA 1: CONFIGURADOR DEL PAGO -->
@@ -792,25 +757,17 @@
               <span id="labelConcepto">Concepto del Cobro que verá el Alumno</span>
               <span class="form-hint">Editable libremente</span>
             </label>
-            <input type="text" id="inputConcepto" value="Curso Especializado en Geometalurgia - PAGO TOTAL" required oninput="onInputConceptoChange()">
+            <input type="text" id="inputConcepto" value="Curso Especializado en Geometalurgia - PAGO TOTAL" required oninput="actualizarPreviewWA()">
           </div>
 
-          <!-- MONTO EN DÓLARES Y PAÍS -->
+          <!-- MONTO EN DÓLARES Y PAÍS (SIN PILLS DE MONTO) -->
           <div class="form-row">
             <div class="form-group" style="margin-bottom: 0;">
               <label class="form-label" for="inputMonto">
                 <span>Monto en Dólares ($ USD)</span>
-                <span class="form-hint">Clic en atajo o escribe</span>
+                <span class="form-hint">Escribe el importe</span>
               </label>
-              <input type="number" id="inputMonto" value="149" min="1" step="0.5" required oninput="onInputMontoChange()">
-              <div class="pills-bar">
-                <button type="button" class="pill-btn" onclick="setMonto(27)">$27</button>
-                <button type="button" class="pill-btn" onclick="setMonto(49)">$49</button>
-                <button type="button" class="pill-btn" onclick="setMonto(99)">$99</button>
-                <button type="button" class="pill-btn" onclick="setMonto(129)">$129</button>
-                <button type="button" class="pill-btn active" id="btnMonto149" onclick="setMonto(149)">$149</button>
-                <button type="button" class="pill-btn" onclick="setMonto(199)">$199</button>
-              </div>
+              <input type="number" id="inputMonto" value="149" min="1" step="0.5" required oninput="actualizarPreviewWA()">
             </div>
 
             <div class="form-group" style="margin-bottom: 0;">
@@ -839,72 +796,49 @@
         </form>
       </main>
 
-      <!-- COLUMNA 2: FORMATO MOCKUP DLOCAL GO CHECKOUT (VISTA PREVIA EN VIVO) -->
-      <aside class="mockup-card">
-        <div class="mockup-top-bar">
-          <div class="mockup-brand">
-            <img src="/logo-edumin.png" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPSDNMA7YW5qgRCwQAyohik9m0bLTUnhP1BYEpMyoJ29KuZh9WFUmVxYMc&s=10'" alt="EDUMIN" class="mockup-logo-mini">
-            <span style="font-size: 0.8rem; font-weight: 700; letter-spacing: 0.3px;">Checkout dLocal Go</span>
+      <!-- COLUMNA 2: PREVISUALIZADOR EN VIVO DEL ENLACE OFICIAL DLOCAL GO -->
+      <aside class="preview-card">
+        <div class="preview-top-header">
+          <div class="preview-brand-tag">
+            <span>👁️ Previsualización Oficial en Vivo</span>
           </div>
-          <span style="font-size: 0.72rem; color: #94a3b8;">🔒 256-Bit SSL</span>
+          <button type="button" class="btn-external-link" onclick="probarCheckout()" title="Abrir en pestaña nueva">
+            <span>Abrir enlace</span> ↗️
+          </button>
         </div>
 
-        <div class="mockup-body">
-          <div class="mockup-pill-status">
-            <span>●</span> <span id="mockupTagAuto">Acceso Inmediato Q10</span>
+        <!-- BARRA DE DIRECCIÓN TIPO NAVEGADOR -->
+        <div class="browser-address-bar">
+          <div class="browser-dots">
+            <span class="b-dot red"></span>
+            <span class="b-dot yellow"></span>
+            <span class="b-dot green"></span>
+          </div>
+          <div class="browser-url-pill">
+            <span style="color: #10b981;">🔒</span>
+            <span id="previewUrlText" class="url-text">https://checkout.dlocalgo.com/validate/recurring/omrkYuYEjrnC5uIPhMJ4hnQH83b9aoKK</span>
+          </div>
+        </div>
+
+        <!-- IFRAME CON EL CHECKOUT OFICIAL REAL DE DLOCAL GO -->
+        <div class="iframe-container">
+          <iframe id="checkoutIframe" src="https://checkout.dlocalgo.com/validate/recurring/omrkYuYEjrnC5uIPhMJ4hnQH83b9aoKK" title="Previsualización Checkout dLocal Go"></iframe>
+        </div>
+
+        <!-- PANEL INFERIOR CON ACCIONES Y WHATSAPP -->
+        <div class="preview-bottom-panel">
+          <div class="preview-actions-grid">
+            <button type="button" class="btn-preview-action btn-preview-copy" onclick="copiarLinkGenerado()">
+              📋 Copiar Enlace
+            </button>
+            <button type="button" class="btn-preview-action btn-preview-wa" onclick="abrirWhatsApp()">
+              🟢 Enviar WhatsApp
+            </button>
           </div>
 
-          <div class="mockup-amount-display">
-            $<span id="mockupAmountText">149</span><span class="mockup-amount-currency">USD</span>
-          </div>
-
-          <div class="mockup-concept-box">
-            <div class="mockup-concept-title" id="mockupConceptText">
-              Curso Especializado en Geometalurgia - PAGO TOTAL
-            </div>
-            <span class="mockup-concept-cuota" id="mockupCuotaText">Modalidad: PAGO TOTAL</span>
-          </div>
-
-          <div class="mockup-payment-methods">
-            <div class="methods-label">Medios de Pago Internacionales Soportados:</div>
-            <div class="methods-icons">
-              <span class="method-badge">💳 Visa</span>
-              <span class="method-badge">💳 Mastercard</span>
-              <span class="method-badge">💳 Amex</span>
-              <span class="method-badge">💳 Diners</span>
-              <span class="method-badge">🏦 Transferencia Local</span>
-            </div>
-          </div>
-
-          <!-- ÁREA DE RESULTADO (SE ACTIVA AL GENERAR) -->
-          <div class="mockup-result-area" id="boxMockupResult" style="display: none;">
-            <div style="font-size: 0.76rem; font-weight: 800; color: #059669; margin-bottom: 6px;">
-              ✅ ENLACE OFICIAL DE PRODUCCIÓN GENERADO:
-            </div>
-            <div class="link-output-box" id="mockupUrlText">
-              https://checkout.dlocalgo.com/...
-            </div>
-
-            <div class="mockup-actions-grid">
-              <button type="button" class="btn-mock-action btn-mock-copy" onclick="copiarLinkGenerado()">
-                📋 Copiar Link
-              </button>
-              <button type="button" class="btn-mock-action btn-mock-wa" onclick="abrirWhatsApp()">
-                🟢 WhatsApp
-              </button>
-              <button type="button" class="btn-mock-action btn-mock-test" onclick="probarCheckout()">
-                👁️ Abrir Checkout
-              </button>
-            </div>
-
-            <!-- MENSAJE DE WHATSAPP -->
-            <div class="wa-card" id="mockupWaText">
-              ...
-            </div>
-          </div>
-
-          <div id="mockupPlaceholder" style="text-align: center; color: var(--text-muted); font-size: 0.78rem; padding: 12px 0;">
-            Configura los datos a la izquierda y presiona <strong>Generar Enlace</strong> para obtener el checkout oficial.
+          <!-- MENSAJE DE WHATSAPP LISTO PARA ENVIAR -->
+          <div class="wa-card" id="mockupWaText">
+            ...
           </div>
         </div>
       </aside>
@@ -955,7 +889,7 @@
   <script>
     // Variables de Estado
     let currentTipo = 'curso';
-    let lastUrl = '';
+    let lastUrl = 'https://checkout.dlocalgo.com/validate/recurring/omrkYuYEjrnC5uIPhMJ4hnQH83b9aoKK';
     let allLinks = [];
 
     // GESTIÓN DE TEMA (POR DEFECTO BLANCO CORPORATIVO / LIGHT)
@@ -1006,7 +940,6 @@
       const boxNotice = document.getElementById('boxCertNotice');
       const labelConcepto = document.getElementById('labelConcepto');
       const input = document.getElementById('inputConcepto');
-      const tagAuto = document.getElementById('mockupTagAuto');
 
       if (tipo === 'curso') {
         optCurso.classList.add('active');
@@ -1014,7 +947,6 @@
         grpCurso.style.display = 'block';
         boxNotice.style.display = 'none';
         labelConcepto.innerText = 'Concepto del Curso que verá el Alumno';
-        if (tagAuto) tagAuto.innerText = 'Acceso Inmediato Q10';
         actualizarConceptoFinal();
       } else {
         optCurso.classList.remove('active');
@@ -1022,10 +954,9 @@
         grpCurso.style.display = 'none';
         boxNotice.style.display = 'block';
         labelConcepto.innerText = 'Concepto de la Certificación / Trámite';
-        if (tagAuto) tagAuto.innerText = 'Coordinación Manual';
         const mod = document.getElementById('selectModalidad').value;
         input.value = `Certificación Profesional Especializada - ${mod}`;
-        sincronizarMockup();
+        actualizarPreviewWA();
       }
     }
 
@@ -1067,40 +998,10 @@
         let base = input.value.split(' - ')[0] || 'Certificación Profesional Especializada';
         input.value = `${base} - ${mod}`;
       }
-      sincronizarMockup();
+      actualizarPreviewWA();
     }
 
-    function onInputConceptoChange() {
-      sincronizarMockup();
-    }
-
-    function onInputMontoChange() {
-      sincronizarMockup();
-    }
-
-    function setMonto(monto) {
-      document.getElementById('inputMonto').value = monto;
-      const btns = document.querySelectorAll('.pills-bar .pill-btn');
-      btns.forEach(b => {
-        if (b.innerText === `$${monto}`) b.classList.add('active');
-        else if (b.innerText.startsWith('$')) b.classList.remove('active');
-      });
-      sincronizarMockup();
-    }
-
-    function sincronizarMockup() {
-      const concepto = document.getElementById('inputConcepto').value || 'Curso Especializado';
-      const mod = document.getElementById('selectModalidad').value;
-      const monto = document.getElementById('inputMonto').value || '149';
-
-      const elAmount = document.getElementById('mockupAmountText');
-      const elConcept = document.getElementById('mockupConceptText');
-      const elCuota = document.getElementById('mockupCuotaText');
-
-      if (elAmount) elAmount.innerText = monto;
-      if (elConcept) elConcept.innerText = concepto;
-      if (elCuota) elCuota.innerText = `Modalidad: ${mod}`;
-
+    function actualizarPreviewWA() {
       const elWa = document.getElementById('mockupWaText');
       if (elWa) elWa.innerText = buildWhatsAppTexto();
     }
@@ -1116,6 +1017,18 @@
         : 'Una vez realizado el pago, envíame tu comprobante por este medio para proceder con la emisión correspondiente.';
 
       return `¡Hola! 👋 Te saluda el equipo de Admisiones de EDUMIN.\n\nAquí tienes tu enlace oficial y seguro para realizar tu pago de:\n🎓 *${concepto}*\n📋 *Modalidad:* ${mod}\n\n💳 *Monto:* $${monto} USD\n🌍 *Acceso Internacional:* Válido para tarjeta de crédito/débito y banca local en tu país.\n🔗 *Link de Pago Oficial:* ${link}\n\n${postPago} ¡Cualquier consulta estamos a tu disposición! 🚀`;
+    }
+
+    // PREVISUALIZAR CUALQUIER LINK EN EL IFRAME
+    function previsualizarLink(url) {
+      if (!url) return;
+      lastUrl = url;
+      const iframe = document.getElementById('checkoutIframe');
+      const urlText = document.getElementById('previewUrlText');
+      if (iframe) iframe.src = url;
+      if (urlText) urlText.innerText = url;
+      actualizarPreviewWA();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     // GENERAR LINK EN DLOCAL GO
@@ -1168,12 +1081,8 @@
             url: data.url
           });
 
-          // Mostrar resultado en Mockup
-          document.getElementById('mockupUrlText').innerText = data.url;
-          document.getElementById('mockupWaText').innerText = buildWhatsAppTexto(data.url);
-
-          document.getElementById('boxMockupResult').style.display = 'block';
-          document.getElementById('mockupPlaceholder').style.display = 'none';
+          // Actualizar previsualizador en vivo con el enlace oficial recién creado
+          previsualizarLink(data.url);
 
           cargarHistorial();
         } else {
@@ -1265,6 +1174,12 @@
         });
 
         allLinks = Array.from(map.values()).sort((a, b) => new Date(b.date) - new Date(a.date));
+        
+        // Si hay un link activo en el historial, cargarlo en el previsualizador
+        if (allLinks.length > 0 && (!lastUrl || lastUrl.includes('omrkYuYEjrnC5uIPhMJ4hnQH83b9aoKK'))) {
+          previsualizarLink(allLinks[0].url);
+        }
+
         renderTabla(allLinks);
       } catch (err) {
         console.error('Error cargando historial:', err);
@@ -1297,6 +1212,7 @@
             <td style="font-weight: 800; color: var(--accent-green); white-space: nowrap;">$${l.amount} ${l.currency || 'USD'}</td>
             <td style="white-space: nowrap;"><span class="badge badge-active">🟢 Activo</span> ${badgeTipo}</td>
             <td style="white-space: nowrap;">
+              <button class="btn-mini btn-mini-view" onclick="previsualizarLink('${l.url}')" title="Ver en Previsualizador">👁️ Ver</button>
               <button class="btn-mini" onclick="copiarTexto('${l.url}')" title="Copiar Link">📋 Copiar</button>
               <button class="btn-mini btn-mini-wa" onclick="reenviarWA('${encodeURIComponent(JSON.stringify(l))}')" title="Enviar WhatsApp">🟢 WhatsApp</button>
             </td>
