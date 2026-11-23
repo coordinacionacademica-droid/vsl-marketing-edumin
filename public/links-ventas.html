@@ -311,6 +311,13 @@
       border-color: var(--input-focus);
       box-shadow: 0 0 0 3px var(--primary-light);
     }
+    input[readonly].input-locked {
+      background-color: var(--table-head);
+      color: var(--text-muted);
+      cursor: not-allowed;
+      border-color: var(--card-border);
+      user-select: none;
+    }
 
     /* PILLS DE CUOTA */
     .pills-bar {
@@ -751,13 +758,13 @@
             </div>
           </div>
 
-          <!-- CONCEPTO EDITABLE -->
+          <!-- CONCEPTO BLOQUEADO PARA CURSOS OFICIALES / LIBRE PARA TRÁMITES -->
           <div class="form-group">
             <label class="form-label" for="inputConcepto">
-              <span id="labelConcepto">Concepto del Cobro que verá el Alumno</span>
-              <span class="form-hint">Editable libremente</span>
+              <span id="labelConcepto">Concepto del Curso que verá el Alumno</span>
+              <span class="form-hint" id="hintConcepto">🔒 Bloqueado (automático)</span>
             </label>
-            <input type="text" id="inputConcepto" value="Curso Especializado en Geometalurgia - PAGO TOTAL" required oninput="actualizarPreviewWA()">
+            <input type="text" id="inputConcepto" value="Curso Especializado en Geometalurgia - PAGO TOTAL" readonly required oninput="actualizarPreviewWA()" class="input-locked">
           </div>
 
           <!-- MONTO EN DÓLARES Y PAÍS (SIN PILLS DE MONTO) -->
@@ -927,7 +934,7 @@
       } catch (e) {}
 
       aplicarTema(temaInicial);
-      actualizarConceptoFinal();
+      setTipoProducto('curso');
       cargarHistorial();
     });
 
@@ -939,6 +946,7 @@
       const grpCurso = document.getElementById('grpCursoSelector');
       const boxNotice = document.getElementById('boxCertNotice');
       const labelConcepto = document.getElementById('labelConcepto');
+      const hintConcepto = document.getElementById('hintConcepto');
       const input = document.getElementById('inputConcepto');
 
       if (tipo === 'curso') {
@@ -947,6 +955,9 @@
         grpCurso.style.display = 'block';
         boxNotice.style.display = 'none';
         labelConcepto.innerText = 'Concepto del Curso que verá el Alumno';
+        if (hintConcepto) hintConcepto.innerHTML = '🔒 Bloqueado (automático)';
+        input.readOnly = true;
+        input.classList.add('input-locked');
         actualizarConceptoFinal();
       } else {
         optCurso.classList.remove('active');
@@ -954,6 +965,9 @@
         grpCurso.style.display = 'none';
         boxNotice.style.display = 'block';
         labelConcepto.innerText = 'Concepto de la Certificación / Trámite';
+        if (hintConcepto) hintConcepto.innerHTML = '✏️ Editable libremente';
+        input.readOnly = false;
+        input.classList.remove('input-locked');
         const mod = document.getElementById('selectModalidad').value;
         input.value = `Certificación Profesional Especializada - ${mod}`;
         actualizarPreviewWA();
