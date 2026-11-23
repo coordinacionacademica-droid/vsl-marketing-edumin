@@ -31,8 +31,6 @@
       --input-focus: #0284c7;
       --table-head: #f8fafc;
       --table-row-hover: #f1f5f9;
-      --mockup-bg: #ffffff;
-      --mockup-border: #e2e8f0;
     }
 
     [data-theme="dark"] {
@@ -58,8 +56,6 @@
       --input-focus: #38bdf8;
       --table-head: #1f2937;
       --table-row-hover: #1e293b;
-      --mockup-bg: #131c31;
-      --mockup-border: #1e293b;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -69,12 +65,12 @@
       color: var(--text-main);
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       min-height: 100vh;
-      padding: 20px 16px;
+      padding: 24px 16px;
       -webkit-font-smoothing: antialiased;
     }
 
     .container {
-      max-width: 1200px;
+      max-width: 960px;
       margin: 0 auto;
     }
 
@@ -180,27 +176,14 @@
       color: var(--text-main);
     }
 
-    /* GRID PRINCIPAL DE 2 COLUMNAS (CONFIGURADOR vs PREVISUALIZADOR) */
-    .portal-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      margin-bottom: 24px;
-      align-items: start;
-    }
-    @media (max-width: 960px) {
-      .portal-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* TARJETA DEL FORMULARIO */
+    /* TARJETA PRINCIPAL DEL FORMULARIO */
     .card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 14px;
       padding: 24px;
       box-shadow: var(--card-shadow);
+      margin-bottom: 24px;
     }
     .card-header {
       margin-bottom: 18px;
@@ -230,6 +213,9 @@
       grid-template-columns: 1fr 1fr;
       gap: 12px;
       margin-bottom: 18px;
+    }
+    @media (max-width: 600px) {
+      .type-grid { grid-template-columns: 1fr; }
     }
     .type-option {
       border: 1.5px solid var(--card-border);
@@ -387,119 +373,24 @@
       box-shadow: none;
     }
 
-    /* COLUMNA DERECHA: PREVISUALIZADOR OFICIAL DEL ENLACE DLOCAL GO */
-    .preview-card {
-      background: var(--mockup-bg);
-      border: 1px solid var(--mockup-border);
-      border-radius: 18px;
-      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
+    /* CAJA DE RESULTADO DEL ENLACE GENERADO */
+    .result-box {
+      margin-top: 22px;
+      padding: 20px;
+      border: 1.5px solid var(--accent-green-border);
+      background: var(--accent-green-light);
+      border-radius: 12px;
     }
-    .preview-top-header {
-      background: #0f172a;
-      color: #ffffff;
-      padding: 12px 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .preview-brand-tag {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.8rem;
-      font-weight: 700;
-    }
-    .btn-external-link {
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #ffffff;
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      transition: background 0.15s;
-    }
-    .btn-external-link:hover {
-      background: rgba(255, 255, 255, 0.25);
-    }
-
-    /* BARRA DE DIRECCIÓN TIPO NAVEGADOR */
-    .browser-address-bar {
-      background: var(--table-head);
-      border-bottom: 1px solid var(--card-border);
-      padding: 8px 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .browser-dots {
-      display: flex;
-      gap: 5px;
-    }
-    .b-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-    }
-    .b-dot.red { background: #ef4444; }
-    .b-dot.yellow { background: #f59e0b; }
-    .b-dot.green { background: #10b981; }
-    .browser-url-pill {
-      flex: 1;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 6px;
-      padding: 5px 10px;
-      font-size: 0.73rem;
-      font-family: 'JetBrains Mono', monospace;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      overflow: hidden;
-      white-space: nowrap;
-    }
-    .url-text {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      color: var(--text-main);
-      font-weight: 600;
-    }
-
-    /* CONTENEDOR DEL IFRAME */
-    .iframe-container {
-      width: 100%;
-      height: 520px;
-      background: #ffffff;
-      position: relative;
-    }
-    .iframe-container iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: block;
-    }
-
-    /* CONTROLES INFERIORES DE LA PREVISUALIZACIÓN */
-    .preview-bottom-panel {
-      padding: 16px 18px;
-      background: var(--card-bg);
-      border-top: 1px solid var(--card-border);
-    }
-    .preview-actions-grid {
+    .result-actions-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
       gap: 10px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
-    .btn-preview-action {
+    @media (max-width: 640px) {
+      .result-actions-grid { grid-template-columns: 1fr; }
+    }
+    .btn-res-action {
       padding: 10px;
       border-radius: 8px;
       font-size: 0.82rem;
@@ -512,36 +403,43 @@
       gap: 6px;
       transition: all 0.15s;
     }
-    .btn-preview-copy {
+    .btn-res-copy {
       background: #0284c7;
       color: #ffffff;
     }
-    .btn-preview-copy:hover { background: #0369a1; }
-    .btn-preview-wa {
+    .btn-res-copy:hover { background: #0369a1; }
+    .btn-res-wa {
       background: #16a34a;
       color: #ffffff;
     }
-    .btn-preview-wa:hover { background: #15803d; }
+    .btn-res-wa:hover { background: #15803d; }
+    .btn-res-test {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+    }
+    .btn-res-test:hover { background: var(--table-head); }
 
     /* MENSAJE DE WHATSAPP */
     .wa-card {
-      background: var(--accent-green-light);
+      background: var(--card-bg);
       border: 1px solid var(--accent-green-border);
       border-radius: 8px;
       padding: 12px;
-      font-size: 0.77rem;
+      font-size: 0.78rem;
       line-height: 1.45;
-      color: #166534;
+      color: var(--text-main);
       white-space: pre-wrap;
     }
 
-    /* HISTORIAL */
+    /* HISTORIALES Y TABLAS */
     .history-card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 14px;
       padding: 24px;
       box-shadow: var(--card-shadow);
+      margin-bottom: 24px;
     }
     .history-toolbar {
       display: flex;
@@ -627,8 +525,6 @@
     .btn-mini:hover { background: var(--table-head); }
     .btn-mini-wa { color: #16a34a; border-color: #bbf7d0; background: #f0fdf4; }
     .btn-mini-wa:hover { background: #dcfce7; }
-    .btn-mini-view { color: #0284c7; border-color: #bae6fd; background: #f0f9ff; }
-    .btn-mini-view:hover { background: #e0f2fe; }
   </style>
 </head>
 <body>
@@ -659,203 +555,182 @@
       </div>
     </header>
 
-    <!-- GRID DE 2 COLUMNAS (CONFIGURADOR vs PREVISUALIZADOR) -->
-    <div class="portal-grid">
+    <!-- FORMULARIO GENERADOR DEL PAGO -->
+    <main class="card">
+      <div class="card-header">
+        <div>
+          <h2 class="card-title">Configuración del Cobro</h2>
+          <p class="card-subtitle">Completa el concepto y el monto para generar el enlace recurrente.</p>
+        </div>
+      </div>
 
-      <!-- COLUMNA 1: CONFIGURADOR DEL PAGO -->
-      <main class="card">
-        <div class="card-header">
+      <!-- TIPO DE CONCEPTO -->
+      <div class="type-grid">
+        <label class="type-option active" id="optTipoCurso" onclick="setTipoProducto('curso')">
+          <input type="radio" name="radioTipo" value="curso" checked>
           <div>
-            <h2 class="card-title">Configuración del Cobro</h2>
-            <p class="card-subtitle">Completa el concepto y el monto para generar el enlace recurrente.</p>
+            <div class="type-option-title">
+              🎓 Curso Especializado
+              <span class="badge badge-active" style="font-size:0.68rem;">Auto Q10</span>
+            </div>
+            <div class="type-option-desc">Catálogo de Diplomados Oficiales con matrícula automática en Campus Q10.</div>
+          </div>
+        </label>
+
+        <label class="type-option" id="optTipoCert" onclick="setTipoProducto('certificacion')">
+          <input type="radio" name="radioTipo" value="certificacion">
+          <div>
+            <div class="type-option-title">
+              📜 Certificación / Trámite
+              <span class="badge badge-manual" style="font-size:0.68rem;">Manual</span>
+            </div>
+            <div class="type-option-desc">Cobro libre de certificaciones físicas o trámites sin matrícula automática.</div>
+          </div>
+        </label>
+      </div>
+
+      <!-- AVISO DE CERTIFICACIÓN -->
+      <div class="notice-box" id="boxCertNotice">
+        ⚠️ <strong>AVISO PARA EL ASESOR COMERCIAL:</strong> Este concepto no cuenta con matrícula automática en Campus Virtual Q10. El pago se procesa normalmente en dLocal Go, pero la emisión física debe coordinarse con Coordinación Académica.
+      </div>
+
+      <form id="formGenerador" onsubmit="generarLink(event)">
+
+        <!-- SELECTOR DE CURSO OFICIAL (ORDENADO ALFABÉTICAMENTE) -->
+        <div class="form-group" id="grpCursoSelector">
+          <label class="form-label" for="selectCurso">
+            <span>Curso Oficial EDUMIN</span>
+            <span class="form-hint">Orden alfabético</span>
+          </label>
+          <select id="selectCurso" onchange="actualizarConceptoFinal()">
+            <optgroup label="✅ Cursos Disponibles para Venta Inmediata">
+              <option value="Curso Especializado en Geometalurgia" selected>🔬 Curso Especializado en Geometalurgia</option>
+              <option value="Curso Especializado en Gestión Minera">⛏️ Curso Especializado en Gestión Minera</option>
+            </optgroup>
+            <optgroup label="🔒 Próximamente (Bloqueados temporalmente)">
+              <option value="Curso Especializado en Derecho Minero" disabled>🔒 Curso Especializado en Derecho Minero</option>
+              <option value="Curso Especializado en Especialista en Comercio Internacional: Gestión Aduanera y Logística" disabled>🔒 Curso Especializado en Especialista en Comercio Internacional: Gestión Aduanera y Logística</option>
+              <option value="Curso Especializado en Gerencia de Sistemas Integrados de Gestión HSEQ" disabled>🔒 Curso Especializado en Gerencia de Sistemas Integrados de Gestión HSEQ</option>
+              <option value="Curso Especializado en Gerencia Estratégica y Liderazgo de Equipos en la Minería" disabled>🔒 Curso Especializado en Gerencia Estratégica y Liderazgo de Equipos en la Minería</option>
+              <option value="Curso Especializado en Geología Minera" disabled>🔒 Curso Especializado en Geología Minera</option>
+              <option value="Curso Especializado en Geomecánica Subterránea y Superficial" disabled>🔒 Curso Especializado en Geomecánica Subterránea y Superficial</option>
+              <option value="Curso Especializado en Geotecnia Minera" disabled>🔒 Curso Especializado en Geotecnia Minera</option>
+              <option value="Curso Especializado en Gestión Ambiental para el Sector Minero e Industrial" disabled>🔒 Curso Especializado en Gestión Ambiental para el Sector Minero e Industrial</option>
+              <option value="Curso Especializado en Gestión de Control Operativo en Procesos Mineros" disabled>🔒 Curso Especializado en Gestión de Control Operativo en Procesos Mineros</option>
+              <option value="Curso Especializado en Gestión de Operaciones Industriales" disabled>🔒 Curso Especializado en Gestión de Operaciones Industriales</option>
+              <option value="Curso Especializado en Gestión Estratégica para Empresas Utilizando Big Data y Análisis Predictivo" disabled>🔒 Curso Especializado en Gestión Estratégica para Empresas Utilizando Big Data y Análisis Predictivo</option>
+              <option value="Curso Especializado en Gestión Logística: Compras, Inventarios y Manejo de Proveedores" disabled>🔒 Curso Especializado en Gestión Logística: Compras, Inventarios y Manejo de Proveedores</option>
+              <option value="Curso Especializado en Gestión Logística y Almacenes en Minería" disabled>🔒 Curso Especializado en Gestión Logística y Almacenes en Minería</option>
+              <option value="Curso Especializado en Gestión Logística y Proveedores en Industria y Minería" disabled>🔒 Curso Especializado en Gestión Logística y Proveedores en Industria y Minería</option>
+              <option value="Curso Especializado en Legislación Laboral y Elaboración de Planillas" disabled>🔒 Curso Especializado en Legislación Laboral y Elaboración de Planillas</option>
+              <option value="Curso Especializado en Minería 4.0 y Digitalización Minera" disabled>🔒 Curso Especializado en Minería 4.0 y Digitalización Minera</option>
+              <option value="Curso Especializado en Prevención de la Conflictividad, Riesgos Sociales y Responsabilidad Social Minera" disabled>🔒 Curso Especializado en Prevención de la Conflictividad, Riesgos Sociales y Responsabilidad Social Minera</option>
+              <option value="Curso Especializado en Seguridad Industrial" disabled>🔒 Curso Especializado en Seguridad Industrial</option>
+              <option value="Curso Especializado en Seguridad y Salud Ocupacional en la Industria y Minería" disabled>🔒 Curso Especializado en Seguridad y Salud Ocupacional en la Industria y Minería</option>
+              <option value="Curso Especializado en Supply Chain Management en Industria y Minería" disabled>🔒 Curso Especializado en Supply Chain Management en Industria y Minería</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <!-- CONDICIÓN DE PAGO (CUOTAS) -->
+        <div class="form-group">
+          <label class="form-label" for="selectModalidad">
+            <span>Condición de Pago: Total o en Cuotas</span>
+            <span class="form-hint">Selección rápida con botones</span>
+          </label>
+          <select id="selectModalidad" onchange="onModalidadChange(this.value)">
+            <option value="PAGO TOTAL" selected>💳 PAGO TOTAL (Pago Completo)</option>
+            <option value="PRIMERA CUOTA">1️⃣ PRIMERA CUOTA</option>
+            <option value="SEGUNDA CUOTA">2️⃣ SEGUNDA CUOTA</option>
+            <option value="TERCERA CUOTA">3️⃣ TERCERA CUOTA</option>
+            <option value="CUARTA CUOTA">4️⃣ CUARTA CUOTA</option>
+          </select>
+          <div class="pills-bar">
+            <button type="button" class="pill-btn active" id="btnModTotal" onclick="setModalidad('PAGO TOTAL')">Pago Total</button>
+            <button type="button" class="pill-btn" id="btnMod1" onclick="setModalidad('PRIMERA CUOTA')">1ra Cuota</button>
+            <button type="button" class="pill-btn" id="btnMod2" onclick="setModalidad('SEGUNDA CUOTA')">2da Cuota</button>
+            <button type="button" class="pill-btn" id="btnMod3" onclick="setModalidad('TERCERA CUOTA')">3ra Cuota</button>
+            <button type="button" class="pill-btn" id="btnMod4" onclick="setModalidad('CUARTA CUOTA')">4ta Cuota</button>
           </div>
         </div>
 
-        <!-- TIPO DE CONCEPTO -->
-        <div class="type-grid">
-          <label class="type-option active" id="optTipoCurso" onclick="setTipoProducto('curso')">
-            <input type="radio" name="radioTipo" value="curso" checked>
-            <div>
-              <div class="type-option-title">
-                🎓 Curso Especializado
-                <span class="badge badge-active" style="font-size:0.68rem;">Auto Q10</span>
-              </div>
-              <div class="type-option-desc">Catálogo de Diplomados Oficiales con matrícula automática en Campus Q10.</div>
-            </div>
+        <!-- CONCEPTO BLOQUEADO PARA CURSOS OFICIALES / LIBRE PARA TRÁMITES -->
+        <div class="form-group">
+          <label class="form-label" for="inputConcepto">
+            <span id="labelConcepto">Concepto del Curso que verá el Alumno</span>
+            <span class="form-hint" id="hintConcepto">🔒 Bloqueado (automático)</span>
           </label>
-
-          <label class="type-option" id="optTipoCert" onclick="setTipoProducto('certificacion')">
-            <input type="radio" name="radioTipo" value="certificacion">
-            <div>
-              <div class="type-option-title">
-                📜 Certificación / Trámite
-                <span class="badge badge-manual" style="font-size:0.68rem;">Manual</span>
-              </div>
-              <div class="type-option-desc">Cobro libre de certificaciones físicas o trámites sin matrícula automática.</div>
-            </div>
-          </label>
+          <input type="text" id="inputConcepto" value="Curso Especializado en Geometalurgia - PAGO TOTAL" readonly required oninput="actualizarPreviewWA()" class="input-locked">
         </div>
 
-        <!-- AVISO DE CERTIFICACIÓN -->
-        <div class="notice-box" id="boxCertNotice">
-          ⚠️ <strong>AVISO PARA EL ASESOR COMERCIAL:</strong> Este concepto no cuenta con matrícula automática en Campus Virtual Q10. El pago se procesa normalmente en dLocal Go, pero la emisión física debe coordinarse con Coordinación Académica.
-        </div>
-
-        <form id="formGenerador" onsubmit="generarLink(event)">
-
-          <!-- SELECTOR DE CURSO OFICIAL (ORDENADO ALFABÉTICAMENTE) -->
-          <div class="form-group" id="grpCursoSelector">
-            <label class="form-label" for="selectCurso">
-              <span>Curso Oficial EDUMIN</span>
-              <span class="form-hint">Orden alfabético</span>
+        <!-- MONTO EN DÓLARES Y PAÍS (SIN PILLS DE MONTO) -->
+        <div class="form-row">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" for="inputMonto">
+              <span>Monto en Dólares ($ USD)</span>
+              <span class="form-hint">Escribe el importe</span>
             </label>
-            <select id="selectCurso" onchange="actualizarConceptoFinal()">
-              <optgroup label="✅ Cursos Disponibles para Venta Inmediata">
-                <option value="Curso Especializado en Geometalurgia" selected>🔬 Curso Especializado en Geometalurgia</option>
-                <option value="Curso Especializado en Gestión Minera">⛏️ Curso Especializado en Gestión Minera</option>
-              </optgroup>
-              <optgroup label="🔒 Próximamente (Bloqueados temporalmente)">
-                <option value="Curso Especializado en Derecho Minero" disabled>🔒 Curso Especializado en Derecho Minero</option>
-                <option value="Curso Especializado en Especialista en Comercio Internacional: Gestión Aduanera y Logística" disabled>🔒 Curso Especializado en Especialista en Comercio Internacional: Gestión Aduanera y Logística</option>
-                <option value="Curso Especializado en Gerencia de Sistemas Integrados de Gestión HSEQ" disabled>🔒 Curso Especializado en Gerencia de Sistemas Integrados de Gestión HSEQ</option>
-                <option value="Curso Especializado en Gerencia Estratégica y Liderazgo de Equipos en la Minería" disabled>🔒 Curso Especializado en Gerencia Estratégica y Liderazgo de Equipos en la Minería</option>
-                <option value="Curso Especializado en Geología Minera" disabled>🔒 Curso Especializado en Geología Minera</option>
-                <option value="Curso Especializado en Geomecánica Subterránea y Superficial" disabled>🔒 Curso Especializado en Geomecánica Subterránea y Superficial</option>
-                <option value="Curso Especializado en Geotecnia Minera" disabled>🔒 Curso Especializado en Geotecnia Minera</option>
-                <option value="Curso Especializado en Gestión Ambiental para el Sector Minero e Industrial" disabled>🔒 Curso Especializado en Gestión Ambiental para el Sector Minero e Industrial</option>
-                <option value="Curso Especializado en Gestión de Control Operativo en Procesos Mineros" disabled>🔒 Curso Especializado en Gestión de Control Operativo en Procesos Mineros</option>
-                <option value="Curso Especializado en Gestión de Operaciones Industriales" disabled>🔒 Curso Especializado en Gestión de Operaciones Industriales</option>
-                <option value="Curso Especializado en Gestión Estratégica para Empresas Utilizando Big Data y Análisis Predictivo" disabled>🔒 Curso Especializado en Gestión Estratégica para Empresas Utilizando Big Data y Análisis Predictivo</option>
-                <option value="Curso Especializado en Gestión Logística: Compras, Inventarios y Manejo de Proveedores" disabled>🔒 Curso Especializado en Gestión Logística: Compras, Inventarios y Manejo de Proveedores</option>
-                <option value="Curso Especializado en Gestión Logística y Almacenes en Minería" disabled>🔒 Curso Especializado en Gestión Logística y Almacenes en Minería</option>
-                <option value="Curso Especializado en Gestión Logística y Proveedores en Industria y Minería" disabled>🔒 Curso Especializado en Gestión Logística y Proveedores en Industria y Minería</option>
-                <option value="Curso Especializado en Legislación Laboral y Elaboración de Planillas" disabled>🔒 Curso Especializado en Legislación Laboral y Elaboración de Planillas</option>
-                <option value="Curso Especializado en Minería 4.0 y Digitalización Minera" disabled>🔒 Curso Especializado en Minería 4.0 y Digitalización Minera</option>
-                <option value="Curso Especializado en Prevención de la Conflictividad, Riesgos Sociales y Responsabilidad Social Minera" disabled>🔒 Curso Especializado en Prevención de la Conflictividad, Riesgos Sociales y Responsabilidad Social Minera</option>
-                <option value="Curso Especializado en Seguridad Industrial" disabled>🔒 Curso Especializado en Seguridad Industrial</option>
-                <option value="Curso Especializado en Seguridad y Salud Ocupacional en la Industria y Minería" disabled>🔒 Curso Especializado en Seguridad y Salud Ocupacional en la Industria y Minería</option>
-                <option value="Curso Especializado en Supply Chain Management en Industria y Minería" disabled>🔒 Curso Especializado en Supply Chain Management en Industria y Minería</option>
-              </optgroup>
+            <input type="number" id="inputMonto" value="149" min="1" step="0.5" required oninput="actualizarPreviewWA()">
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" for="selectPais">
+              <span>País del Comprador</span>
+              <span class="form-hint">Cobertura global</span>
+            </label>
+            <select id="selectPais">
+              <option value="ALL" selected>🌍 Internacional (Todos los países)</option>
+              <option value="PE">🇵🇪 Perú</option>
+              <option value="CO">🇨🇴 Colombia</option>
+              <option value="CL">🇨🇱 Chile</option>
+              <option value="MX">🇲🇽 México</option>
+              <option value="BO">🇧🇴 Bolivia</option>
+              <option value="EC">🇪🇨 Ecuador</option>
+              <option value="AR">🇦🇷 Argentina</option>
+              <option value="PA">🇵🇦 Panamá</option>
+              <option value="CR">🇨🇷 Costa Rica</option>
             </select>
           </div>
+        </div>
 
-          <!-- CONDICIÓN DE PAGO (CUOTAS) -->
-          <div class="form-group">
-            <label class="form-label" for="selectModalidad">
-              <span>Condición de Pago: Total o en Cuotas</span>
-              <span class="form-hint">Selección rápida con botones</span>
-            </label>
-            <select id="selectModalidad" onchange="onModalidadChange(this.value)">
-              <option value="PAGO TOTAL" selected>💳 PAGO TOTAL (Pago Completo)</option>
-              <option value="PRIMERA CUOTA">1️⃣ PRIMERA CUOTA</option>
-              <option value="SEGUNDA CUOTA">2️⃣ SEGUNDA CUOTA</option>
-              <option value="TERCERA CUOTA">3️⃣ TERCERA CUOTA</option>
-              <option value="CUARTA CUOTA">4️⃣ CUARTA CUOTA</option>
-            </select>
-            <div class="pills-bar">
-              <button type="button" class="pill-btn active" id="btnModTotal" onclick="setModalidad('PAGO TOTAL')">Pago Total</button>
-              <button type="button" class="pill-btn" id="btnMod1" onclick="setModalidad('PRIMERA CUOTA')">1ra Cuota</button>
-              <button type="button" class="pill-btn" id="btnMod2" onclick="setModalidad('SEGUNDA CUOTA')">2da Cuota</button>
-              <button type="button" class="pill-btn" id="btnMod3" onclick="setModalidad('TERCERA CUOTA')">3ra Cuota</button>
-              <button type="button" class="pill-btn" id="btnMod4" onclick="setModalidad('CUARTA CUOTA')">4ta Cuota</button>
-            </div>
-          </div>
+        <button type="submit" class="btn-submit" id="btnGenerar">
+          <span>⚡ Generar Enlace Oficial en dLocal Go</span>
+        </button>
+      </form>
 
-          <!-- CONCEPTO BLOQUEADO PARA CURSOS OFICIALES / LIBRE PARA TRÁMITES -->
-          <div class="form-group">
-            <label class="form-label" for="inputConcepto">
-              <span id="labelConcepto">Concepto del Curso que verá el Alumno</span>
-              <span class="form-hint" id="hintConcepto">🔒 Bloqueado (automático)</span>
-            </label>
-            <input type="text" id="inputConcepto" value="Curso Especializado en Geometalurgia - PAGO TOTAL" readonly required oninput="actualizarPreviewWA()" class="input-locked">
-          </div>
+      <!-- RESULTADO DEL ENLACE GENERADO (APARECE AL GENERAR) -->
+      <div class="result-box" id="boxResultado" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+          <span style="font-size: 0.82rem; font-weight: 800; color: var(--accent-green); text-transform: uppercase; letter-spacing: 0.5px;">
+            ✅ Enlace Oficial Generado en dLocal Go
+          </span>
+          <span class="badge badge-active" id="badgeModalidadResultado">PAGO TOTAL</span>
+        </div>
 
-          <!-- MONTO EN DÓLARES Y PAÍS (SIN PILLS DE MONTO) -->
-          <div class="form-row">
-            <div class="form-group" style="margin-bottom: 0;">
-              <label class="form-label" for="inputMonto">
-                <span>Monto en Dólares ($ USD)</span>
-                <span class="form-hint">Escribe el importe</span>
-              </label>
-              <input type="number" id="inputMonto" value="149" min="1" step="0.5" required oninput="actualizarPreviewWA()">
-            </div>
+        <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+          <input type="text" id="resInputUrl" readonly value="" style="flex: 1; padding: 10px 14px; background: var(--card-bg); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; border: 1px solid var(--input-border); border-radius: 8px; color: var(--text-main);">
+        </div>
 
-            <div class="form-group" style="margin-bottom: 0;">
-              <label class="form-label" for="selectPais">
-                <span>País del Comprador</span>
-                <span class="form-hint">Cobertura global</span>
-              </label>
-              <select id="selectPais">
-                <option value="ALL" selected>🌍 Internacional (Todos los países)</option>
-                <option value="PE">🇵🇪 Perú</option>
-                <option value="CO">🇨🇴 Colombia</option>
-                <option value="CL">🇨🇱 Chile</option>
-                <option value="MX">🇲🇽 México</option>
-                <option value="BO">🇧🇴 Bolivia</option>
-                <option value="EC">🇪🇨 Ecuador</option>
-                <option value="AR">🇦🇷 Argentina</option>
-                <option value="PA">🇵🇦 Panamá</option>
-                <option value="CR">🇨🇷 Costa Rica</option>
-              </select>
-            </div>
-          </div>
-
-          <button type="submit" class="btn-submit" id="btnGenerar">
-            <span>⚡ Generar Enlace Oficial en dLocal Go</span>
+        <div class="result-actions-grid">
+          <button type="button" class="btn-res-action btn-res-copy" onclick="copiarLinkGenerado()">
+            📋 Copiar Enlace
           </button>
-        </form>
-      </main>
-
-      <!-- COLUMNA 2: PREVISUALIZADOR EN VIVO DEL ENLACE OFICIAL DLOCAL GO -->
-      <aside class="preview-card">
-        <div class="preview-top-header">
-          <div class="preview-brand-tag">
-            <span>👁️ Previsualización Oficial en Vivo</span>
-          </div>
-          <button type="button" class="btn-external-link" onclick="probarCheckout()" title="Abrir en pestaña nueva">
-            <span>Abrir enlace</span> ↗️
+          <button type="button" class="btn-res-action btn-res-wa" onclick="abrirWhatsApp()">
+            🟢 Enviar WhatsApp
+          </button>
+          <button type="button" class="btn-res-action btn-res-test" onclick="probarCheckout()">
+            👁️ Abrir Pasarela ↗️
           </button>
         </div>
 
-        <!-- BARRA DE DIRECCIÓN TIPO NAVEGADOR -->
-        <div class="browser-address-bar">
-          <div class="browser-dots">
-            <span class="b-dot red"></span>
-            <span class="b-dot yellow"></span>
-            <span class="b-dot green"></span>
-          </div>
-          <div class="browser-url-pill">
-            <span style="color: #10b981;">🔒</span>
-            <span id="previewUrlText" class="url-text">https://checkout.dlocalgo.com/validate/recurring/omrkYuYEjrnC5uIPhMJ4hnQH83b9aoKK</span>
-          </div>
+        <!-- MENSAJE DE WHATSAPP -->
+        <div class="wa-card" id="resWaText">
+          ...
         </div>
+      </div>
+    </main>
 
-        <!-- IFRAME CON EL CHECKOUT OFICIAL REAL DE DLOCAL GO -->
-        <div class="iframe-container">
-          <iframe id="checkoutIframe" src="https://checkout.dlocalgo.com/validate/recurring/omrkYuYEjrnC5uIPhMJ4hnQH83b9aoKK" title="Previsualización Checkout dLocal Go"></iframe>
-        </div>
-
-        <!-- PANEL INFERIOR CON ACCIONES Y WHATSAPP -->
-        <div class="preview-bottom-panel">
-          <div class="preview-actions-grid">
-            <button type="button" class="btn-preview-action btn-preview-copy" onclick="copiarLinkGenerado()">
-              📋 Copiar Enlace
-            </button>
-            <button type="button" class="btn-preview-action btn-preview-wa" onclick="abrirWhatsApp()">
-              🟢 Enviar WhatsApp
-            </button>
-          </div>
-
-          <!-- MENSAJE DE WHATSAPP LISTO PARA ENVIAR -->
-          <div class="wa-card" id="mockupWaText">
-            ...
-          </div>
-        </div>
-      </aside>
-
-    </div>
-
-    <!-- SECCIÓN INFERIOR: HISTORIAL DE ENLACES ACTIVOS -->
+    <!-- SECCIÓN 1: HISTORIAL DE ENLACES ACTIVOS -->
     <section class="history-card">
       <div class="card-header">
         <div>
@@ -894,8 +769,8 @@
       </div>
     </section>
 
-    <!-- SECCIÓN INFERIOR 2: PAGOS Y VENTAS EN TIEMPO REAL DIRECTO DESDE DLOCAL GO -->
-    <section class="history-card" style="margin-top: 24px;">
+    <!-- SECCIÓN 2: PAGOS Y VENTAS EN TIEMPO REAL DIRECTO DESDE DLOCAL GO -->
+    <section class="history-card">
       <div class="card-header">
         <div>
           <h2 class="card-title">💰 Ventas & Pagos en Tiempo Real</h2>
@@ -948,7 +823,7 @@
   <script>
     // Variables de Estado
     let currentTipo = 'curso';
-    let lastUrl = 'https://checkout.dlocalgo.com/validate/recurring/omrkYuYEjrnC5uIPhMJ4hnQH83b9aoKK';
+    let lastUrl = '';
     let allLinks = [];
 
     // GESTIÓN DE TEMA (POR DEFECTO BLANCO CORPORATIVO / LIGHT)
@@ -1069,7 +944,7 @@
     }
 
     function actualizarPreviewWA() {
-      const elWa = document.getElementById('mockupWaText');
+      const elWa = document.getElementById('resWaText');
       if (elWa) elWa.innerText = buildWhatsAppTexto();
     }
 
@@ -1084,18 +959,6 @@
         : 'Una vez realizado el pago, envíame tu comprobante por este medio para proceder con la emisión correspondiente.';
 
       return `¡Hola! 👋 Te saluda el Área Comercial de EDUMIN.\n\nDe acuerdo a lo conversado, aquí tienes tu enlace oficial y seguro para realizar tu pago de:\n🎓 *${concepto}*\n📋 *Modalidad:* Asincrónica\n\n💳 *Monto:* $${monto} USD\n🌍 *Acceso Internacional:* Válido para tarjeta de crédito/débito y banca local en tu país.\n🔗 *Link de Pago Oficial:* ${link}\n\n${postPago} ¡Cualquier consulta estamos a tu disposición! 🚀`;
-    }
-
-    // PREVISUALIZAR CUALQUIER LINK EN EL IFRAME
-    function previsualizarLink(url) {
-      if (!url) return;
-      lastUrl = url;
-      const iframe = document.getElementById('checkoutIframe');
-      const urlText = document.getElementById('previewUrlText');
-      if (iframe) iframe.src = url;
-      if (urlText) urlText.innerText = url;
-      actualizarPreviewWA();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     // GENERAR LINK EN DLOCAL GO
@@ -1148,8 +1011,14 @@
             url: data.url
           });
 
-          // Actualizar previsualizador en vivo con el enlace oficial recién creado
-          previsualizarLink(data.url);
+          // Mostrar resultado
+          document.getElementById('resInputUrl').value = data.url;
+          document.getElementById('badgeModalidadResultado').innerText = modalidad;
+          document.getElementById('resWaText').innerText = buildWhatsAppTexto(data.url);
+
+          const box = document.getElementById('boxResultado');
+          box.style.display = 'block';
+          box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
           cargarHistorial();
         } else {
@@ -1241,12 +1110,6 @@
         });
 
         allLinks = Array.from(map.values()).sort((a, b) => new Date(b.date) - new Date(a.date));
-        
-        // Si hay un link activo en el historial, cargarlo en el previsualizador
-        if (allLinks.length > 0 && (!lastUrl || lastUrl.includes('omrkYuYEjrnC5uIPhMJ4hnQH83b9aoKK'))) {
-          previsualizarLink(allLinks[0].url);
-        }
-
         renderTabla(allLinks);
       } catch (err) {
         console.error('Error cargando historial:', err);
@@ -1279,7 +1142,6 @@
             <td style="font-weight: 800; color: var(--accent-green); white-space: nowrap;">$${l.amount} ${l.currency || 'USD'}</td>
             <td style="white-space: nowrap;"><span class="badge badge-active">🟢 Activo</span> ${badgeTipo}</td>
             <td style="white-space: nowrap;">
-              <button class="btn-mini btn-mini-view" onclick="previsualizarLink('${l.url}')" title="Ver en Previsualizador">👁️ Ver</button>
               <button class="btn-mini" onclick="copiarTexto('${l.url}')" title="Copiar Link">📋 Copiar</button>
               <button class="btn-mini btn-mini-wa" onclick="reenviarWA('${encodeURIComponent(JSON.stringify(l))}')" title="Enviar WhatsApp">🟢 WhatsApp</button>
             </td>
