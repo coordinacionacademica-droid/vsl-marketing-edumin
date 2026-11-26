@@ -461,7 +461,15 @@ app.get('/api/payments-history', async (req, res) => {
       page++;
     }
 
-    const formatted = allPayments.map(p => {
+    // FILTRO ESTRICTO: Solo transacciones registradas desde el 20 de Noviembre de 2026
+    const cutoffPaymentsDate = new Date('2026-11-20T00:00:00.000Z');
+    const filteredPayments = allPayments.filter(p => {
+      const d = p.created_date || p.approved_date;
+      if (!d) return false;
+      return new Date(d) >= cutoffPaymentsDate;
+    });
+
+    const formatted = filteredPayments.map(p => {
       const payer = p.payer || {};
       const fullName = `${payer.first_name || ''} ${payer.last_name || ''}`.trim() || 'Alumno dLocal Go';
       const doc = `${payer.document_type || ''}: ${payer.document || ''}`.replace(/^:\s*/, '').trim() || '-';

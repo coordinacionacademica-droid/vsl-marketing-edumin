@@ -230,11 +230,11 @@
     /* SELECTOR TIPO DE CONCEPTO */
     .type-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 12px;
       margin-bottom: 18px;
     }
-    @media (max-width: 600px) {
+    @media (max-width: 680px) {
       .type-grid { grid-template-columns: 1fr; }
     }
     .type-option {
@@ -593,7 +593,7 @@
               🎓 Curso Especializado
               <span class="badge badge-active" style="font-size:0.68rem;">Auto Q10</span>
             </div>
-            <div class="type-option-desc">Catálogo de Diplomados Oficiales con matrícula automática en Campus Q10.</div>
+            <div class="type-option-desc">Catálogo de Cursos Oficiales con matrícula automática en Campus Q10.</div>
           </div>
         </label>
 
@@ -607,6 +607,17 @@
             <div class="type-option-desc">Cobro libre de certificaciones físicas o trámites sin matrícula automática.</div>
           </div>
         </label>
+
+        <label class="type-option" id="optTipoDiplomado" onclick="setTipoProducto('diplomado')">
+          <input type="radio" name="radioTipo" value="diplomado">
+          <div>
+            <div class="type-option-title">
+              🏛️ Diplomados de Alta Especialización
+              <span class="badge badge-active" style="font-size:0.68rem;">22 Diplomados</span>
+            </div>
+            <div class="type-option-desc">Catálogo completo de Diplomados desbloqueados en Soles o Dólares.</div>
+          </div>
+        </label>
       </div>
 
       <!-- AVISO DE CERTIFICACIÓN -->
@@ -616,40 +627,13 @@
 
       <form id="formGenerador" onsubmit="generarLink(event)">
 
-        <!-- SELECTOR DE CURSO OFICIAL (ORDENADO ALFABÉTICAMENTE) -->
+        <!-- SELECTOR DE PROGRAMA OFICIAL (CURSOS O DIPLOMADOS) -->
         <div class="form-group" id="grpCursoSelector">
           <label class="form-label" for="selectCurso">
-            <span>Curso Oficial EDUMIN</span>
-            <span class="form-hint">Orden alfabético</span>
+            <span id="labelCursoSelector">Curso Oficial EDUMIN</span>
+            <span class="form-hint" id="hintCursoSelector">Orden alfabético</span>
           </label>
-          <select id="selectCurso" onchange="actualizarConceptoFinal()">
-            <optgroup label="✅ Cursos Disponibles para Venta Inmediata">
-              <option value="Curso Especializado en Geometalurgia" selected>🔬 Curso Especializado en Geometalurgia</option>
-              <option value="Curso Especializado en Gestión Minera">⛏️ Curso Especializado en Gestión Minera</option>
-            </optgroup>
-            <optgroup label="🔒 Próximamente (Bloqueados temporalmente)">
-              <option value="Curso Especializado en Derecho Minero" disabled>🔒 Curso Especializado en Derecho Minero</option>
-              <option value="Curso Especializado en Especialista en Comercio Internacional: Gestión Aduanera y Logística" disabled>🔒 Curso Especializado en Especialista en Comercio Internacional: Gestión Aduanera y Logística</option>
-              <option value="Curso Especializado en Gerencia de Sistemas Integrados de Gestión HSEQ" disabled>🔒 Curso Especializado en Gerencia de Sistemas Integrados de Gestión HSEQ</option>
-              <option value="Curso Especializado en Gerencia Estratégica y Liderazgo de Equipos en la Minería" disabled>🔒 Curso Especializado en Gerencia Estratégica y Liderazgo de Equipos en la Minería</option>
-              <option value="Curso Especializado en Geología Minera" disabled>🔒 Curso Especializado en Geología Minera</option>
-              <option value="Curso Especializado en Geomecánica Subterránea y Superficial" disabled>🔒 Curso Especializado en Geomecánica Subterránea y Superficial</option>
-              <option value="Curso Especializado en Geotecnia Minera" disabled>🔒 Curso Especializado en Geotecnia Minera</option>
-              <option value="Curso Especializado en Gestión Ambiental para el Sector Minero e Industrial" disabled>🔒 Curso Especializado en Gestión Ambiental para el Sector Minero e Industrial</option>
-              <option value="Curso Especializado en Gestión de Control Operativo en Procesos Mineros" disabled>🔒 Curso Especializado en Gestión de Control Operativo en Procesos Mineros</option>
-              <option value="Curso Especializado en Gestión de Operaciones Industriales" disabled>🔒 Curso Especializado en Gestión de Operaciones Industriales</option>
-              <option value="Curso Especializado en Gestión Estratégica para Empresas Utilizando Big Data y Análisis Predictivo" disabled>🔒 Curso Especializado en Gestión Estratégica para Empresas Utilizando Big Data y Análisis Predictivo</option>
-              <option value="Curso Especializado en Gestión Logística: Compras, Inventarios y Manejo de Proveedores" disabled>🔒 Curso Especializado en Gestión Logística: Compras, Inventarios y Manejo de Proveedores</option>
-              <option value="Curso Especializado en Gestión Logística y Almacenes en Minería" disabled>🔒 Curso Especializado en Gestión Logística y Almacenes en Minería</option>
-              <option value="Curso Especializado en Gestión Logística y Proveedores en Industria y Minería" disabled>🔒 Curso Especializado en Gestión Logística y Proveedores en Industria y Minería</option>
-              <option value="Curso Especializado en Legislación Laboral y Elaboración de Planillas" disabled>🔒 Curso Especializado en Legislación Laboral y Elaboración de Planillas</option>
-              <option value="Curso Especializado en Minería 4.0 y Digitalización Minera" disabled>🔒 Curso Especializado en Minería 4.0 y Digitalización Minera</option>
-              <option value="Curso Especializado en Prevención de la Conflictividad, Riesgos Sociales y Responsabilidad Social Minera" disabled>🔒 Curso Especializado en Prevención de la Conflictividad, Riesgos Sociales y Responsabilidad Social Minera</option>
-              <option value="Curso Especializado en Seguridad Industrial" disabled>🔒 Curso Especializado en Seguridad Industrial</option>
-              <option value="Curso Especializado en Seguridad y Salud Ocupacional en la Industria y Minería" disabled>🔒 Curso Especializado en Seguridad y Salud Ocupacional en la Industria y Minería</option>
-              <option value="Curso Especializado en Supply Chain Management en Industria y Minería" disabled>🔒 Curso Especializado en Supply Chain Management en Industria y Minería</option>
-            </optgroup>
-          </select>
+          <select id="selectCurso" onchange="actualizarConceptoFinal()"></select>
         </div>
 
         <!-- CONDICIÓN DE PAGO (CUOTAS) -->
@@ -683,34 +667,47 @@
           <input type="text" id="inputConcepto" value="Curso Especializado en Geometalurgia - PAGO TOTAL" readonly required oninput="actualizarPreviewWA()" class="input-locked">
         </div>
 
-        <!-- MONTO EN DÓLARES Y PAÍS (SIN PILLS DE MONTO) -->
+        <!-- MONEDA DE COBRO Y MONTO -->
         <div class="form-row">
           <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label">
+              <span>Moneda de Cobro</span>
+              <span class="form-hint" id="hintMoneda">Divisa activa</span>
+            </label>
+            <div class="pills-bar" style="margin-top: 4px;">
+              <button type="button" class="pill-btn" id="btnMonedaPEN" onclick="setMoneda('PEN')">🇵🇪 S/ Soles (PEN)</button>
+              <button type="button" class="pill-btn active" id="btnMonedaUSD" onclick="setMoneda('USD')">💵 $ Dólares (USD)</button>
+            </div>
+            <input type="hidden" id="inputMoneda" value="USD">
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0;">
             <label class="form-label" for="inputMonto">
-              <span>Monto en Dólares ($ USD)</span>
+              <span id="labelMonto">Monto en Dólares ($ USD)</span>
               <span class="form-hint">Escribe el importe</span>
             </label>
             <input type="number" id="inputMonto" value="149" min="1" step="0.5" required oninput="actualizarPreviewWA()">
           </div>
+        </div>
 
-          <div class="form-group" style="margin-bottom: 0;">
-            <label class="form-label" for="selectPais">
-              <span>País del Comprador</span>
-              <span class="form-hint">Cobertura global</span>
-            </label>
-            <select id="selectPais">
-              <option value="ALL" selected>🌍 Internacional (Todos los países)</option>
-              <option value="PE">🇵🇪 Perú</option>
-              <option value="CO">🇨🇴 Colombia</option>
-              <option value="CL">🇨🇱 Chile</option>
-              <option value="MX">🇲🇽 México</option>
-              <option value="BO">🇧🇴 Bolivia</option>
-              <option value="EC">🇪🇨 Ecuador</option>
-              <option value="AR">🇦🇷 Argentina</option>
-              <option value="PA">🇵🇦 Panamá</option>
-              <option value="CR">🇨🇷 Costa Rica</option>
-            </select>
-          </div>
+        <!-- PAÍS DEL COMPRADOR -->
+        <div class="form-group" style="margin-top: 14px;">
+          <label class="form-label" for="selectPais">
+            <span>País del Comprador</span>
+            <span class="form-hint">Cobertura global</span>
+          </label>
+          <select id="selectPais">
+            <option value="ALL" selected>🌍 Internacional (Todos los países)</option>
+            <option value="PE">🇵🇪 Perú</option>
+            <option value="CO">🇨🇴 Colombia</option>
+            <option value="CL">🇨🇱 Chile</option>
+            <option value="MX">🇲🇽 México</option>
+            <option value="BO">🇧🇴 Bolivia</option>
+            <option value="EC">🇪🇨 Ecuador</option>
+            <option value="AR">🇦🇷 Argentina</option>
+            <option value="PA">🇵🇦 Panamá</option>
+            <option value="CR">🇨🇷 Costa Rica</option>
+          </select>
         </div>
 
         <button type="submit" class="btn-submit" id="btnGenerar">
@@ -794,7 +791,7 @@
       <div class="card-header">
         <div>
           <h2 class="card-title">💰 Ventas & Pagos en Tiempo Real</h2>
-          <p class="card-subtitle">Transacciones reales de alumnos registradas directamente en dLocal Go (Producción Oficial).</p>
+          <p class="card-subtitle">Transacciones reales de alumnos registradas directamente en dLocal Go (desde el 20 de Noviembre).</p>
         </div>
         <div style="display: flex; gap: 8px;">
           <button type="button" class="btn-secondary" onclick="exportarPagosCSV()">📥 Exportar CSV</button>
@@ -843,8 +840,35 @@
   <script>
     // Variables de Estado
     let currentTipo = 'curso';
+    let currentMoneda = 'USD';
     let lastUrl = '';
     let allLinks = [];
+
+    // Catálogo de los 22 Temas Especializados Oficiales
+    const CATALOGO_TEMAS = [
+      { id: "geometalurgia", tema: "Geometalurgia", icono: "🔬", activoCurso: true },
+      { id: "gestion_minera", tema: "Gestión Minera", icono: "⛏️", activoCurso: true },
+      { id: "derecho_minero", tema: "Derecho Minero", icono: "⚖️", activoCurso: false },
+      { id: "comercio_int", tema: "Especialista en Comercio Internacional: Gestión Aduanera y Logística", icono: "🚢", activoCurso: false },
+      { id: "hseq", tema: "Gerencia de Sistemas Integrados de Gestión HSEQ", icono: "🛡️", activoCurso: false },
+      { id: "liderazgo", tema: "Gerencia Estratégica y Liderazgo de Equipos en la Minería", icono: "👥", activoCurso: false },
+      { id: "geologia", tema: "Geología Minera", icono: "🪨", activoCurso: false },
+      { id: "geomecanica", tema: "Geomecánica Subterránea y Superficial", icono: "⛰️", activoCurso: false },
+      { id: "geotecnia", tema: "Geotecnia Minera", icono: "🏗️", activoCurso: false },
+      { id: "ambiental", tema: "Gestión Ambiental para el Sector Minero e Industrial", icono: "🌿", activoCurso: false },
+      { id: "control_op", tema: "Gestión de Control Operativo en Procesos Mineros", icono: "⚙️", activoCurso: false },
+      { id: "op_industriales", tema: "Gestión de Operaciones Industriales", icono: "🏭", activoCurso: false },
+      { id: "big_data", tema: "Gestión Estratégica para Empresas Utilizando Big Data y Análisis Predictivo", icono: "📊", activoCurso: false },
+      { id: "logistica_compras", tema: "Gestión Logística: Compras, Inventarios y Manejo de Proveedores", icono: "📦", activoCurso: false },
+      { id: "logistica_almacenes", tema: "Gestión Logística y Almacenes en Minería", icono: "🏬", activoCurso: false },
+      { id: "logistica_proveedores", tema: "Gestión Logística y Proveedores en Industria y Minería", icono: "🚚", activoCurso: false },
+      { id: "legislacion_laboral", tema: "Legislación Laboral y Elaboración de Planillas", icono: "📑", activoCurso: false },
+      { id: "mineria_40", tema: "Minería 4.0 y Digitalización Minera", icono: "🤖", activoCurso: false },
+      { id: "conflictividad", tema: "Prevención de la Conflictividad, Riesgos Sociales y Responsabilidad Social Minera", icono: "🤝", activoCurso: false },
+      { id: "seguridad_industrial", tema: "Seguridad Industrial", icono: "🦺", activoCurso: false },
+      { id: "seguridad_salud", tema: "Seguridad y Salud Ocupacional en la Industria y Minería", icono: "🩺", activoCurso: false },
+      { id: "supply_chain", tema: "Supply Chain Management en Industria y Minería", icono: "🔄", activoCurso: false }
+    ];
 
     // GESTIÓN DE TEMA (POR DEFECTO BLANCO CORPORATIVO / LIGHT)
     function aplicarTema(tema) {
@@ -886,29 +910,121 @@
       cargarPagos();
     });
 
+    // POBLAR SELECTOR SEGÚN CURSO O DIPLOMADO DE ALTA ESPECIALIZACIÓN
+    function poblarSelectorProgramas(tipo) {
+      const select = document.getElementById('selectCurso');
+      if (!select) return;
+
+      select.innerHTML = '';
+
+      if (tipo === 'curso') {
+        const optgroupActivos = document.createElement('optgroup');
+        optgroupActivos.label = '✅ Cursos Disponibles para Venta Inmediata';
+
+        const optgroupBloqueados = document.createElement('optgroup');
+        optgroupBloqueados.label = '🔒 Próximamente (Bloqueados temporalmente)';
+
+        CATALOGO_TEMAS.forEach(c => {
+          const opt = document.createElement('option');
+          const val = `Curso Especializado en ${c.tema}`;
+          opt.value = val;
+          if (c.activoCurso) {
+            opt.textContent = `${c.icono} ${val}`;
+            optgroupActivos.appendChild(opt);
+          } else {
+            opt.textContent = `🔒 ${val}`;
+            opt.disabled = true;
+            optgroupBloqueados.appendChild(opt);
+          }
+        });
+
+        select.appendChild(optgroupActivos);
+        select.appendChild(optgroupBloqueados);
+        select.value = 'Curso Especializado en Geometalurgia';
+      } else {
+        // diplomado: toda la lista desbloqueada con "Diplomado de Alta Especialización en"
+        const optgroupDiplomados = document.createElement('optgroup');
+        optgroupDiplomados.label = '🏛️ 22 Diplomados de Alta Especialización Disponibles';
+
+        CATALOGO_TEMAS.forEach(c => {
+          const opt = document.createElement('option');
+          const val = `Diplomado de Alta Especialización en ${c.tema}`;
+          opt.value = val;
+          opt.textContent = `${c.icono} ${val}`;
+          optgroupDiplomados.appendChild(opt);
+        });
+
+        select.appendChild(optgroupDiplomados);
+        select.value = 'Diplomado de Alta Especialización en Geometalurgia';
+      }
+    }
+
+    // CAMBIO DE MONEDA (SOLES / DÓLARES)
+    function setMoneda(moneda) {
+      currentMoneda = moneda;
+      const inp = document.getElementById('inputMoneda');
+      if (inp) inp.value = moneda;
+
+      const btnPEN = document.getElementById('btnMonedaPEN');
+      const btnUSD = document.getElementById('btnMonedaUSD');
+      const labelMonto = document.getElementById('labelMonto');
+      const selectPais = document.getElementById('selectPais');
+
+      if (moneda === 'PEN') {
+        if (btnPEN) btnPEN.classList.add('active');
+        if (btnUSD) btnUSD.classList.remove('active');
+        if (labelMonto) labelMonto.innerText = 'Monto en Soles (S/ PEN)';
+        if (selectPais && selectPais.value === 'ALL') selectPais.value = 'PE';
+      } else {
+        if (btnUSD) btnUSD.classList.add('active');
+        if (btnPEN) btnPEN.classList.remove('active');
+        if (labelMonto) labelMonto.innerText = 'Monto en Dólares ($ USD)';
+      }
+      actualizarPreviewWA();
+    }
+
     // CAMBIO DE TIPO DE PRODUCTO
     function setTipoProducto(tipo) {
       currentTipo = tipo;
       const optCurso = document.getElementById('optTipoCurso');
       const optCert = document.getElementById('optTipoCert');
+      const optDiplomado = document.getElementById('optTipoDiplomado');
       const grpCurso = document.getElementById('grpCursoSelector');
+      const labelCurso = document.getElementById('labelCursoSelector');
       const boxNotice = document.getElementById('boxCertNotice');
       const labelConcepto = document.getElementById('labelConcepto');
       const hintConcepto = document.getElementById('hintConcepto');
       const input = document.getElementById('inputConcepto');
 
+      optCurso.classList.remove('active');
+      optCert.classList.remove('active');
+      if (optDiplomado) optDiplomado.classList.remove('active');
+
       if (tipo === 'curso') {
         optCurso.classList.add('active');
-        optCert.classList.remove('active');
         grpCurso.style.display = 'block';
+        if (labelCurso) labelCurso.innerText = 'Curso Oficial EDUMIN';
         boxNotice.style.display = 'none';
         labelConcepto.innerText = 'Concepto del Curso que verá el Alumno';
         if (hintConcepto) hintConcepto.innerHTML = '🔒 Bloqueado (automático)';
         input.readOnly = true;
         input.classList.add('input-locked');
+        poblarSelectorProgramas('curso');
+        setMoneda('USD');
         actualizarConceptoFinal();
-      } else {
-        optCurso.classList.remove('active');
+      } else if (tipo === 'diplomado') {
+        if (optDiplomado) optDiplomado.classList.add('active');
+        grpCurso.style.display = 'block';
+        if (labelCurso) labelCurso.innerText = 'Diplomado de Alta Especialización EDUMIN';
+        boxNotice.style.display = 'none';
+        labelConcepto.innerText = 'Concepto del Diplomado que verá el Alumno';
+        if (hintConcepto) hintConcepto.innerHTML = '🔒 Bloqueado (automático)';
+        input.readOnly = true;
+        input.classList.add('input-locked');
+        poblarSelectorProgramas('diplomado');
+        setMoneda('PEN'); // Soles de manera activa por defecto
+        actualizarConceptoFinal();
+      } else { // certificacion
         optCert.classList.add('active');
         grpCurso.style.display = 'none';
         boxNotice.style.display = 'block';
@@ -953,9 +1069,9 @@
       const input = document.getElementById('inputConcepto');
       const mod = document.getElementById('selectModalidad').value;
 
-      if (currentTipo === 'curso') {
-        const cursoBase = document.getElementById('selectCurso').value;
-        input.value = `${cursoBase} - ${mod}`;
+      if (currentTipo === 'curso' || currentTipo === 'diplomado') {
+        const progBase = document.getElementById('selectCurso').value;
+        input.value = `${progBase} - ${mod}`;
       } else {
         let base = input.value.split(' - ')[0] || 'Certificación Profesional Especializada';
         input.value = `${base} - ${mod}`;
@@ -972,13 +1088,17 @@
       const concepto = document.getElementById('inputConcepto').value.trim();
       const mod = document.getElementById('selectModalidad').value;
       const monto = document.getElementById('inputMonto').value || '149';
+      const moneda = currentMoneda || document.getElementById('inputMoneda')?.value || 'USD';
       const link = url || lastUrl || '[ENLACE DE PAGO]';
 
-      let postPago = currentTipo === 'curso'
-        ? 'Una vez realizado el pago, tu acceso al Campus Virtual Q10 queda habilitado de inmediato.'
-        : 'Una vez realizado el pago, envíame tu comprobante por este medio para proceder con la emisión correspondiente.';
+      const montoTexto = moneda === 'PEN' ? `S/ ${monto} PEN` : `$${monto} USD`;
+      const iconoProg = currentTipo === 'diplomado' ? '🏛️' : '🎓';
 
-      return `¡Hola! 👋 Te saluda el Área Comercial de EDUMIN.\n\nDe acuerdo a lo conversado, aquí tienes tu enlace oficial y seguro para realizar tu pago de:\n🎓 *${concepto}*\n📋 *Modalidad:* Asincrónica\n\n💳 *Monto:* $${monto} USD\n🌍 *Acceso Internacional:* Válido para tarjeta de crédito/débito y banca local en tu país.\n🔗 *Link de Pago Oficial:* ${link}\n\n${postPago} ¡Cualquier consulta estamos a tu disposición! 🚀`;
+      let postPago = currentTipo === 'certificacion'
+        ? 'Una vez realizado el pago, envíame tu comprobante por este medio para proceder con la emisión correspondiente.'
+        : 'Una vez realizado el pago, tu acceso al Campus Virtual Q10 queda habilitado de inmediato.';
+
+      return `¡Hola! 👋 Te saluda el Área Comercial de EDUMIN.\n\nDe acuerdo a lo conversado, aquí tienes tu enlace oficial y seguro para realizar tu pago de:\n${iconoProg} *${concepto}*\n📋 *Modalidad:* Asincrónica\n\n💳 *Monto:* ${montoTexto}\n🌍 *Acceso Internacional:* Válido para tarjeta de crédito/débito y banca local en tu país.\n🔗 *Link de Pago Oficial:* ${link}\n\n${postPago} ¡Cualquier consulta estamos a tu disposición! 🚀`;
     }
 
     // GENERAR LINK EN DLOCAL GO
@@ -992,13 +1112,14 @@
       const concepto = document.getElementById('inputConcepto').value.trim();
       const modalidad = document.getElementById('selectModalidad').value;
       const monto = Number(document.getElementById('inputMonto').value);
+      const moneda = currentMoneda || document.getElementById('inputMoneda')?.value || 'USD';
       const pais = document.getElementById('selectPais').value;
 
       try {
         const payload = {
           description: concepto,
           amount: monto,
-          currency: 'USD',
+          currency: moneda,
           country: pais,
           campaign: 'Venta Asesor EDUMIN',
           modalidad: modalidad,
@@ -1024,9 +1145,9 @@
             program: concepto,
             modalidad: modalidad,
             tipoProducto: currentTipo,
-            tieneAutomatizacion: currentTipo === 'curso',
+            tieneAutomatizacion: currentTipo !== 'certificacion',
             amount: monto,
-            currency: 'USD',
+            currency: moneda,
             environment: 'production',
             url: data.url
           });
@@ -1153,13 +1274,14 @@
         const mod = l.modalidad || (l.program?.includes('CUOTA') ? l.program.split(' - ')[1] : 'PAGO TOTAL');
         const isAuto = l.tieneAutomatizacion !== false && l.tipoProducto !== 'certificacion';
         const badgeTipo = isAuto ? `<span class="badge badge-active">Auto Q10</span>` : `<span class="badge badge-manual">Manual</span>`;
+        const simbolo = (l.currency === 'PEN') ? 'S/' : '$';
 
         return `
           <tr>
             <td style="white-space: nowrap; color: var(--text-muted);">${fStr}</td>
             <td style="font-weight: 700; max-width: 280px;">${l.program}</td>
             <td><span class="badge badge-cuota">${mod}</span></td>
-            <td style="font-weight: 800; color: var(--accent-green); white-space: nowrap;">$${l.amount} ${l.currency || 'USD'}</td>
+            <td style="font-weight: 800; color: var(--accent-green); white-space: nowrap;">${simbolo} ${l.amount} ${l.currency || 'USD'}</td>
             <td style="white-space: nowrap;"><span class="badge badge-active">🟢 Activo</span> ${badgeTipo}</td>
             <td style="white-space: nowrap;">
               <button class="btn-mini" onclick="copiarTexto('${l.url}')" title="Copiar Link">📋 Copiar</button>
@@ -1186,10 +1308,18 @@
     function reenviarWA(jsonStr) {
       try {
         const l = JSON.parse(decodeURIComponent(jsonStr));
-        const concepto = l.program || 'Curso Especializado';
+        const concepto = l.program || 'Curso Oficial EDUMIN';
         const monto = l.amount || 149;
         const mod = l.modalidad || 'PAGO TOTAL';
-        const msg = `¡Hola! 👋 Te saluda el Área Comercial de EDUMIN.\n\nDe acuerdo a lo conversado, aquí tienes tu enlace oficial para realizar tu pago de:\n🎓 *${concepto}*\n📋 *Modalidad:* Asincrónica\n\n💳 *Monto:* $${monto} USD\n🔗 *Link de Pago Oficial:* ${l.url}\n\n¡Cualquier consulta estamos a tu disposición! 🚀`;
+        const moneda = l.currency || 'USD';
+        const montoTexto = moneda === 'PEN' ? `S/ ${monto} PEN` : `$${monto} USD`;
+        const iconoProg = (l.tipoProducto === 'diplomado' || concepto.includes('Diplomado')) ? '🏛️' : '🎓';
+
+        let postPago = l.tipoProducto === 'certificacion'
+          ? 'Una vez realizado el pago, envíame tu comprobante por este medio para proceder con la emisión correspondiente.'
+          : 'Una vez realizado el pago, tu acceso al Campus Virtual Q10 queda habilitado de inmediato.';
+
+        const msg = `¡Hola! 👋 Te saluda el Área Comercial de EDUMIN.\n\nDe acuerdo a lo conversado, aquí tienes tu enlace oficial para realizar tu pago de:\n${iconoProg} *${concepto}*\n📋 *Modalidad:* Asincrónica\n\n💳 *Monto:* ${montoTexto}\n🔗 *Link de Pago Oficial:* ${l.url}\n\n${postPago} ¡Cualquier consulta estamos a tu disposición! 🚀`;
         window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
       } catch (e) {}
     }
@@ -1233,7 +1363,13 @@
         const data = await res.json();
 
         if (data.success && Array.isArray(data.payments)) {
-          allPayments = data.payments;
+          // Filtrar: Solo transacciones registradas desde el 20 de Noviembre de 2026
+          const cutoff = new Date('2026-11-20T00:00:00.000Z');
+          allPayments = data.payments.filter(p => {
+            const d = p.created_date || p.approved_date;
+            if (!d) return true;
+            return new Date(d) >= cutoff;
+          });
           filtrarPagos();
         } else {
           tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 24px;">No se pudieron cargar los pagos de dLocal Go.</td></tr>';
@@ -1281,6 +1417,8 @@
           ? `<a href="https://wa.me/${cleanPhone.replace('+', '')}?text=${waMsg}" target="_blank" class="btn-mini btn-mini-wa" style="text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="Chat WhatsApp Alumno">🟢 WA</a>`
           : '-';
 
+        const simbolo = (p.currency === 'PEN') ? 'S/' : '$';
+
         return `
           <tr>
             <td style="white-space: nowrap; color: var(--text-muted); font-size: 0.78rem;">${fechaStr}</td>
@@ -1293,7 +1431,7 @@
               <div style="font-size: 0.72rem; color: var(--text-muted);">${p.payer.document} (${p.payer.country || p.country})</div>
             </td>
             <td style="font-weight: 600; max-width: 220px; font-size: 0.78rem;">${p.description}</td>
-            <td style="font-weight: 800; color: var(--accent-green); white-space: nowrap;">$${p.amount} ${p.currency}</td>
+            <td style="font-weight: 800; color: var(--accent-green); white-space: nowrap;">${simbolo} ${p.amount} ${p.currency}</td>
             <td style="white-space: nowrap; font-size: 0.74rem; color: var(--text-muted);">${p.payment_method_type}</td>
             <td style="white-space: nowrap;"><span class="badge ${badgeClass}">${badgeText}</span></td>
             <td style="white-space: nowrap;">${waBtn}</td>
