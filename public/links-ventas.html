@@ -584,16 +584,27 @@
         </div>
       </div>
 
-      <!-- TIPO DE CONCEPTO -->
+      <!-- TIPO DE CONCEPTO (DIPLOMADOS PRIORITARIO) -->
       <div class="type-grid">
-        <label class="type-option active" id="optTipoCurso" onclick="setTipoProducto('curso')">
-          <input type="radio" name="radioTipo" value="curso" checked>
+        <label class="type-option active" id="optTipoDiplomado" onclick="setTipoProducto('diplomado')">
+          <input type="radio" name="radioTipo" value="diplomado" checked>
+          <div>
+            <div class="type-option-title">
+              🏛️ Diplomados de Alta Especialización
+              <span class="badge badge-active" style="font-size:0.68rem; background:rgba(0,80,255,0.12); color:#0050ff; border-color:rgba(0,80,255,0.3);">Prioritario</span>
+            </div>
+            <div class="type-option-desc">Catálogo completo de los 22 Diplomados desbloqueados en Soles o Dólares.</div>
+          </div>
+        </label>
+
+        <label class="type-option" id="optTipoCurso" onclick="setTipoProducto('curso')">
+          <input type="radio" name="radioTipo" value="curso">
           <div>
             <div class="type-option-title">
               🎓 Curso Especializado
-              <span class="badge badge-active" style="font-size:0.68rem;">Auto Q10</span>
+              <span class="badge badge-active" style="font-size:0.68rem;">Solo Dólares</span>
             </div>
-            <div class="type-option-desc">Catálogo de Cursos Oficiales con matrícula automática en Campus Q10.</div>
+            <div class="type-option-desc">Catálogo de Cursos Oficiales en USD con matrícula automática en Campus Q10.</div>
           </div>
         </label>
 
@@ -605,17 +616,6 @@
               <span class="badge badge-manual" style="font-size:0.68rem;">Manual</span>
             </div>
             <div class="type-option-desc">Cobro libre de certificaciones físicas o trámites sin matrícula automática.</div>
-          </div>
-        </label>
-
-        <label class="type-option" id="optTipoDiplomado" onclick="setTipoProducto('diplomado')">
-          <input type="radio" name="radioTipo" value="diplomado">
-          <div>
-            <div class="type-option-title">
-              🏛️ Diplomados de Alta Especialización
-              <span class="badge badge-active" style="font-size:0.68rem;">22 Diplomados</span>
-            </div>
-            <div class="type-option-desc">Catálogo completo de Diplomados desbloqueados en Soles o Dólares.</div>
           </div>
         </label>
       </div>
@@ -664,7 +664,7 @@
             <span id="labelConcepto">Concepto del Curso que verá el Alumno</span>
             <span class="form-hint" id="hintConcepto">🔒 Bloqueado (automático)</span>
           </label>
-          <input type="text" id="inputConcepto" value="Curso Especializado en Geometalurgia - PAGO TOTAL" readonly required oninput="actualizarPreviewWA()" class="input-locked">
+          <input type="text" id="inputConcepto" value="Diplomado de Alta Especialización en Geometalurgia - PAGO TOTAL" readonly required oninput="actualizarPreviewWA()" class="input-locked">
         </div>
 
         <!-- MONEDA DE COBRO Y MONTO -->
@@ -672,18 +672,18 @@
           <div class="form-group" style="margin-bottom: 0;">
             <label class="form-label">
               <span>Moneda de Cobro</span>
-              <span class="form-hint" id="hintMoneda">Divisa activa</span>
+              <span class="form-hint" id="hintMoneda">Soles o Dólares disponibles</span>
             </label>
             <div class="pills-bar" style="margin-top: 4px;">
-              <button type="button" class="pill-btn" id="btnMonedaPEN" onclick="setMoneda('PEN')">🇵🇪 S/ Soles (PEN)</button>
-              <button type="button" class="pill-btn active" id="btnMonedaUSD" onclick="setMoneda('USD')">💵 $ Dólares (USD)</button>
+              <button type="button" class="pill-btn active" id="btnMonedaPEN" onclick="setMoneda('PEN')">🇵🇪 S/ Soles (PEN)</button>
+              <button type="button" class="pill-btn" id="btnMonedaUSD" onclick="setMoneda('USD')">💵 $ Dólares (USD)</button>
             </div>
-            <input type="hidden" id="inputMoneda" value="USD">
+            <input type="hidden" id="inputMoneda" value="PEN">
           </div>
 
           <div class="form-group" style="margin-bottom: 0;">
             <label class="form-label" for="inputMonto">
-              <span id="labelMonto">Monto en Dólares ($ USD)</span>
+              <span id="labelMonto">Monto en Soles (S/ PEN)</span>
               <span class="form-hint">Escribe el importe</span>
             </label>
             <input type="number" id="inputMonto" value="149" min="1" step="0.5" required oninput="actualizarPreviewWA()">
@@ -697,8 +697,8 @@
             <span class="form-hint">Cobertura global</span>
           </label>
           <select id="selectPais">
-            <option value="ALL" selected>🌍 Internacional (Todos los países)</option>
-            <option value="PE">🇵🇪 Perú</option>
+            <option value="PE" selected>🇵🇪 Perú</option>
+            <option value="ALL">🌍 Internacional (Todos los países)</option>
             <option value="CO">🇨🇴 Colombia</option>
             <option value="CL">🇨🇱 Chile</option>
             <option value="MX">🇲🇽 México</option>
@@ -839,8 +839,8 @@
 
   <script>
     // Variables de Estado
-    let currentTipo = 'curso';
-    let currentMoneda = 'USD';
+    let currentTipo = 'diplomado';
+    let currentMoneda = 'PEN';
     let lastUrl = '';
     let allLinks = [];
 
@@ -905,7 +905,7 @@
       } catch (e) {}
 
       aplicarTema(temaInicial);
-      setTipoProducto('curso');
+      setTipoProducto('diplomado');
       cargarHistorial();
       cargarPagos();
     });
@@ -996,23 +996,15 @@
       const hintConcepto = document.getElementById('hintConcepto');
       const input = document.getElementById('inputConcepto');
 
-      optCurso.classList.remove('active');
-      optCert.classList.remove('active');
+      const btnPEN = document.getElementById('btnMonedaPEN');
+      const btnUSD = document.getElementById('btnMonedaUSD');
+      const hintMoneda = document.getElementById('hintMoneda');
+
+      if (optCurso) optCurso.classList.remove('active');
+      if (optCert) optCert.classList.remove('active');
       if (optDiplomado) optDiplomado.classList.remove('active');
 
-      if (tipo === 'curso') {
-        optCurso.classList.add('active');
-        grpCurso.style.display = 'block';
-        if (labelCurso) labelCurso.innerText = 'Curso Oficial EDUMIN';
-        boxNotice.style.display = 'none';
-        labelConcepto.innerText = 'Concepto del Curso que verá el Alumno';
-        if (hintConcepto) hintConcepto.innerHTML = '🔒 Bloqueado (automático)';
-        input.readOnly = true;
-        input.classList.add('input-locked');
-        poblarSelectorProgramas('curso');
-        setMoneda('USD');
-        actualizarConceptoFinal();
-      } else if (tipo === 'diplomado') {
+      if (tipo === 'diplomado') {
         if (optDiplomado) optDiplomado.classList.add('active');
         grpCurso.style.display = 'block';
         if (labelCurso) labelCurso.innerText = 'Diplomado de Alta Especialización EDUMIN';
@@ -1022,16 +1014,45 @@
         input.readOnly = true;
         input.classList.add('input-locked');
         poblarSelectorProgramas('diplomado');
-        setMoneda('PEN'); // Soles de manera activa por defecto
+
+        // Diplomados: SÍ tiene Soles activo y SÍ permite cambiar a Dólares
+        if (btnPEN) btnPEN.style.display = 'inline-block';
+        if (btnUSD) btnUSD.style.display = 'inline-block';
+        if (hintMoneda) hintMoneda.innerText = 'Soles o Dólares disponibles';
+        setMoneda('PEN');
+        actualizarConceptoFinal();
+      } else if (tipo === 'curso') {
+        if (optCurso) optCurso.classList.add('active');
+        grpCurso.style.display = 'block';
+        if (labelCurso) labelCurso.innerText = 'Curso Oficial EDUMIN';
+        boxNotice.style.display = 'none';
+        labelConcepto.innerText = 'Concepto del Curso que verá el Alumno';
+        if (hintConcepto) hintConcepto.innerHTML = '🔒 Bloqueado (automático)';
+        input.readOnly = true;
+        input.classList.add('input-locked');
+        poblarSelectorProgramas('curso');
+
+        // Curso Especializado: SÓLO ES DÓLARES (no existe soles ni posibilidad de cambiar)
+        if (btnPEN) btnPEN.style.display = 'none';
+        if (btnUSD) btnUSD.style.display = 'inline-block';
+        if (hintMoneda) hintMoneda.innerText = '🔒 Solo disponible en Dólares ($ USD)';
+        setMoneda('USD');
         actualizarConceptoFinal();
       } else { // certificacion
-        optCert.classList.add('active');
+        if (optCert) optCert.classList.add('active');
         grpCurso.style.display = 'none';
         boxNotice.style.display = 'block';
         labelConcepto.innerText = 'Concepto de la Certificación / Trámite';
         if (hintConcepto) hintConcepto.innerHTML = '✏️ Editable libremente';
         input.readOnly = false;
         input.classList.remove('input-locked');
+
+        // Certificación / Trámite: Solo dólares
+        if (btnPEN) btnPEN.style.display = 'none';
+        if (btnUSD) btnUSD.style.display = 'inline-block';
+        if (hintMoneda) hintMoneda.innerText = '🔒 Solo disponible en Dólares ($ USD)';
+        setMoneda('USD');
+
         const mod = document.getElementById('selectModalidad').value;
         input.value = `Certificación Profesional Especializada - ${mod}`;
         actualizarPreviewWA();
@@ -1227,31 +1248,37 @@
 
     async function cargarHistorial() {
       try {
-        let server = [];
-        try {
-          const res = await fetch('/api/links-history');
-          const data = await res.json();
-          if (data.success && data.links) {
-            server = data.links.filter(esLinkActivoNov19);
-          }
-        } catch (_) {}
+        const tbody = document.getElementById('tablaHistorial');
+        const txtCount = document.getElementById('txtTotalLinks');
+        if (txtCount) txtCount.innerText = 'Consultando dLocal Go...';
 
-        let local = [];
-        try {
-          local = JSON.parse(localStorage.getItem('edumin_links_history') || '[]');
-          local = local.filter(esLinkActivoNov19);
-          localStorage.setItem('edumin_links_history', JSON.stringify(local));
-        } catch (_) {}
+        const res = await fetch('/api/links-history');
+        const data = await res.json();
 
-        const map = new Map();
-        [...server, ...local].forEach(item => {
-          if (item && item.url && !map.has(item.url)) {
-            map.set(item.url, item);
-          }
-        });
+        if (data.success && Array.isArray(data.links)) {
+          const serverActivos = data.links.filter(esLinkActivoNov19);
+          const activeUrls = new Set(serverActivos.map(s => s.url));
+          const activeIds = new Set(serverActivos.map(s => s.id));
 
-        allLinks = Array.from(map.values()).sort((a, b) => new Date(b.date) - new Date(a.date));
-        renderTabla(allLinks);
+          // Limpiar de localStorage cualquier enlace que fue desactivado en dLocal Go
+          try {
+            let local = JSON.parse(localStorage.getItem('edumin_links_history') || '[]');
+            local = local.filter(l => activeUrls.has(l.url) || activeIds.has(l.id));
+            localStorage.setItem('edumin_links_history', JSON.stringify(local));
+          } catch (_) {}
+
+          // La lista oficial de dLocal Go es la fuente única de la verdad
+          allLinks = serverActivos;
+          renderTabla(allLinks);
+        } else {
+          // Fallback a localStorage únicamente si el servidor no responde
+          let local = [];
+          try {
+            local = JSON.parse(localStorage.getItem('edumin_links_history') || '[]');
+          } catch (_) {}
+          allLinks = local.filter(esLinkActivoNov19);
+          renderTabla(allLinks);
+        }
       } catch (err) {
         console.error('Error cargando historial:', err);
       }

@@ -416,14 +416,7 @@ app.get('/api/links-history', async (req, res) => {
       return link;
     });
 
-    // Agregar items locales activos creados desde el 19 de noviembre
-    const existingIds = new Set(combined.map(c => c.id));
-    localHistory.forEach(localItem => {
-      if (localItem && localItem.id && !existingIds.has(localItem.id)) {
-        combined.unshift(localItem);
-      }
-    });
-
+    // Solo los links que están realmente activos en dLocal Go se retornan
     return res.json({ success: true, links: combined });
   } catch (error) {
     console.error('Error fetching links history:', error);
