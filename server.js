@@ -707,7 +707,7 @@ app.get('/gestion-minera', (req, res) => {
 app.get('/geometalurgia', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'geometalurgia.html'));
 });
-app.get(['/links-ventas', '/ventas', '/asesor', '/panel-ventas'], (req, res) => {
+app.get(['/links-ventas', '/links-ventas.html', '/ventas', '/ventas.html', '/asesor', '/panel-ventas'], (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'links-ventas.html'));
 });
 

@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Comercial de Pagos | EDUMIN & dLocal Go</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root, [data-theme="light"] {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
+      --card-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.03);
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-light: #94a3b8;
+      --primary: #0284c7;
+      --primary-hover: #0369a1;
+      --primary-light: #f0f9ff;
+      --primary-border: #bae6fd;
+      --accent-green: #059669;
+      --accent-green-light: #ecfdf5;
+      --accent-green-border: #a7f3d0;
+      --accent-amber: #d97706;
+      --accent-amber-light: #fffbeb;
+      --accent-amber-border: #fde68a;
+      --input-bg: #ffffff;
+      --input-border: #cbd5e1;
+      --input-focus: #0284c7;
+      --table-head: #f8fafc;
+      --table-row-hover: #f1f5f9;
+    }
+
+    [data-theme="dark"] {
+      --bg: #090e1a;
+      --card-bg: #111827;
+      --card-border: #1f2937;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --text-light: #6b7280;
+      --primary: #38bdf8;
+      --primary-hover: #0ea5e9;
+      --primary-light: rgba(56, 189, 248, 0.1);
+      --primary-border: rgba(56, 189, 248, 0.25);
+      --accent-green: #10b981;
+      --accent-green-light: rgba(16, 185, 129, 0.12);
+      --accent-green-border: rgba(16, 185, 129, 0.3);
+      --accent-amber: #f59e0b;
+      --accent-amber-light: rgba(245, 158, 11, 0.12);
+      --accent-amber-border: rgba(245, 158, 11, 0.3);
+      --input-bg: #1f2937;
+      --input-border: #374151;
+      --input-focus: #38bdf8;
+      --table-head: #1f2937;
+      --table-row-hover: #1e293b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      padding: 24px 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* NAVBAR PROFESIONAL CON LOGO EDUMIN & DLOCAL GO */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding: 14px 22px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      box-shadow: var(--card-shadow);
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      background: #ffffff;
+      padding: 4px 10px;
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .edumin-logo-img {
+      height: 38px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+    .brand-text h1 {
+      font-size: 1.08rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.2;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .brand-text p {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .dlocal-partner-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .dlocal-tag-badge {
+      background: #0050ff;
+      color: #ffffff;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.3px;
+    }
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 6px #10b981;
+    }
+    .theme-toggle-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .theme-toggle-btn:hover {
+      background: var(--table-head);
+      color: var(--text-main);
+    }
+
+    /* TARJETA PRINCIPAL DEL FORMULARIO */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: var(--card-shadow);
+      margin-bottom: 24px;
+    }
+    .card.form-card {
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 30px;
+    }
+    .card.form-card .card-header {
+      text-align: center;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .card.form-card .card-title {
+      justify-content: center;
+      text-align: center;
+    }
+    .card.form-card .card-subtitle {
+      text-align: center;
+    }
+    .card-header {
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    /* SELECTOR TIPO DE CONCEPTO */
+    .type-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    @media (max-width: 600px) {
+      .type-grid { grid-template-columns: 1fr; }
+    }
+    .type-option {
+      border: 1.5px solid var(--card-border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: var(--card-bg);
+      transition: all 0.15s ease-in-out;
+    }
+    .type-option input[type="radio"] {
+      margin-top: 3px;
+      accent-color: var(--primary);
+    }
+    .type-option.active {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+    .type-option-title {
+      font-size: 0.86rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .type-option-desc {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+      line-height: 1.35;
+    }
+
+    /* AVISO DE CERTIFICACIÓN */
+    .notice-box {
+      background: var(--accent-amber-light);
+      border: 1px solid var(--accent-amber-border);
+      color: var(--accent-amber);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 0.8rem;
+      margin-bottom: 18px;
+      line-height: 1.45;
+      display: none;
+    }
+
+    /* FORM GROUPS */
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+    .form-hint {
+      font-weight: 500;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+    }
+    input[type="text"], input[type="number"], select {
+      width: 100%;
+      padding: 10px 14px;
+      font-size: 0.88rem;
+      font-family: inherit;
+      border: 1px solid var(--input-border);
+      border-radius: 8px;
+      background: var(--input-bg);
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    input[type="text"]:focus, input[type="number"]:focus, select:focus {
+      border-color: var(--input-focus);
+      box-shadow: 0 0 0 3px var(--primary-light);
+    }
+    input[readonly].input-locked {
+      background-color: var(--table-head);
+      color: var(--text-muted);
+      cursor: not-allowed;
+      border-color: var(--card-border);
+      user-select: none;
+    }
+
+    /* PILLS DE CUOTA */
+    .pills-bar {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+    .pill-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--input-border);
+      color: var(--text-muted);
+      font-size: 0.76rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .pill-btn:hover {
+      border-color: var(--primary);
+      color: var(--text-main);
+      background: var(--primary-light);
+    }
+    .pill-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* BOTÓN GENERAR */
+    .btn-submit {
+      width: 100%;
+      background: #0050ff;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: 13px 20px;
+      font-size: 0.94rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      transition: background-color 0.15s ease-in-out;
+      margin-top: 8px;
+      box-shadow: 0 2px 8px rgba(0, 80, 255, 0.25);
+    }
+    .btn-submit:hover {
+      background: #0043d9;
+    }
+    .btn-submit:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* CAJA DE RESULTADO DEL ENLACE GENERADO */
+    .result-box {
+      margin-top: 22px;
+      padding: 20px;
+      border: 1.5px solid var(--accent-green-border);
+      background: var(--accent-green-light);
+      border-radius: 12px;
+    }
+    .result-actions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    @media (max-width: 640px) {
+      .result-actions-grid { grid-template-columns: 1fr; }
+    }
+    .btn-res-action {
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+    .btn-res-copy {
+      background: #0284c7;
+      color: #ffffff;
+    }
+    .btn-res-copy:hover { background: #0369a1; }
+    .btn-res-wa {
+      background: #16a34a;
+      color: #ffffff;
+    }
+    .btn-res-wa:hover { background: #15803d; }
+    .btn-res-test {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+    }
+    .btn-res-test:hover { background: var(--table-head); }
+
+    /* MENSAJE DE WHATSAPP */
+    .wa-card {
+      background: var(--card-bg);
+      border: 1px solid var(--accent-green-border);
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 0.78rem;
+      line-height: 1.45;
+      color: var(--text-main);
+      white-space: pre-wrap;
+    }
+
+    /* HISTORIALES Y TABLAS */
+    .history-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: var(--card-shadow);
+      margin-bottom: 24px;
+    }
+    .history-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .search-input {
+      padding: 8px 12px;
+      font-size: 0.82rem;
+      border: 1px solid var(--input-border);
+      border-radius: 6px;
+      background: var(--input-bg);
+      color: var(--text-main);
+      min-width: 250px;
+    }
+    .btn-secondary {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .btn-secondary:hover { background: var(--table-head); }
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+      text-align: left;
+    }
+    th {
+      background: var(--table-head);
+      color: var(--text-muted);
+      font-weight: 700;
+      padding: 10px 14px;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--card-border);
+    }
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--card-border);
+      color: var(--text-main);
+      vertical-align: middle;
+    }
+    tr:hover td { background: var(--table-row-hover); }
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .badge-cuota { background: var(--primary-light); color: var(--primary); }
+    .badge-active { background: var(--accent-green-light); color: var(--accent-green); }
+    .badge-manual { background: var(--accent-amber-light); color: var(--accent-amber); }
+    .badge-paid { background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; }
+    .badge-pending { background: #fffbeb; color: #d97706; border: 1px solid #fde68a; }
+    .badge-cancelled { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+    .btn-mini {
+      padding: 5px 9px;
+      border-radius: 5px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--card-border);
+      background: var(--card-bg);
+      color: var(--text-main);
+      margin-right: 4px;
+    }
+    .btn-mini:hover { background: var(--table-head); }
+    .btn-mini-wa { color: #16a34a; border-color: #bbf7d0; background: #f0fdf4; }
+    .btn-mini-wa:hover { background: #dcfce7; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- NAVBAR CORPORATIVO CON LOGO DE EDUMIN -->
+    <header class="navbar">
+      <div class="brand-wrap">
+        <div class="logo-container">
+          <img src="/logo-edumin.png" onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPSDNMA7YW5qgRCwQAyohik9m0bLTUnhP1BYEpMyoJ29KuZh9WFUmVxYMc&s=10'" alt="EDUMIN Logo" class="edumin-logo-img">
+        </div>
+        <div class="brand-text">
+          <h1>Portal Comercial de Pagos</h1>
+          <p>Generador Oficial de Enlaces de Cobro para Ventas Internacionales</p>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <div class="dlocal-partner-pill">
+          <span class="live-dot"></span>
+          <span>Pasarela Oficial</span>
+          <span class="dlocal-tag-badge">dLocal GO</span>
+        </div>
+        <button type="button" class="theme-toggle-btn" id="btnThemeToggle" onclick="toggleTema()" title="Cambiar tema">
+          <span id="themeToggleIcon">🌙</span> <span id="themeToggleText">Oscuro</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- FORMULARIO GENERADOR DEL PAGO -->
+    <main class="card form-card">
+      <div class="card-header">
+        <div style="width: 100%; text-align: center;">
+          <h2 class="card-title" style="justify-content: center;">Configuración del Cobro</h2>
+          <p class="card-subtitle">Completa el concepto y el monto para generar el enlace recurrente.</p>
+        </div>
+      </div>
+
+      <!-- TIPO DE CONCEPTO -->
+      <div class="type-grid">
+        <label class="type-option active" id="optTipoCurso" onclick="setTipoProducto('curso')">
+          <input type="radio" name="radioTipo" value="curso" checked>
+          <div>
+            <div class="type-option-title">
+              🎓 Curso Especializado
+              <span class="badge badge-active" style="font-size:0.68rem;">Auto Q10</span>
+            </div>
+            <div class="type-option-desc">Catálogo de Diplomados Oficiales con matrícula automática en Campus Q10.</div>
+          </div>
+        </label>
+
+        <label class="type-option" id="optTipoCert" onclick="setTipoProducto('certificacion')">
+          <input type="radio" name="radioTipo" value="certificacion">
+          <div>
+            <div class="type-option-title">
+              📜 Certificación / Trámite
+              <span class="badge badge-manual" style="font-size:0.68rem;">Manual</span>
+            </div>
+            <div class="type-option-desc">Cobro libre de certificaciones físicas o trámites sin matrícula automática.</div>
+          </div>
+        </label>
+      </div>
+
+      <!-- AVISO DE CERTIFICACIÓN -->
+      <div class="notice-box" id="boxCertNotice">
+        ⚠️ <strong>AVISO PARA EL ASESOR COMERCIAL:</strong> Este concepto no cuenta con matrícula automática en Campus Virtual Q10. El pago se procesa normalmente en dLocal Go, pero la emisión física debe coordinarse con Coordinación Académica.
+      </div>
+
+      <form id="formGenerador" onsubmit="generarLink(event)">
+
+        <!-- SELECTOR DE CURSO OFICIAL (ORDENADO ALFABÉTICAMENTE) -->
+        <div class="form-group" id="grpCursoSelector">
+          <label class="form-label" for="selectCurso">
+            <span>Curso Oficial EDUMIN</span>
+            <span class="form-hint">Orden alfabético</span>
+          </label>
+          <select id="selectCurso" onchange="actualizarConceptoFinal()">
+            <optgroup label="✅ Cursos Disponibles para Venta Inmediata">
+              <option value="Curso Especializado en Geometalurgia" selected>🔬 Curso Especializado en Geometalurgia</option>
+              <option value="Curso Especializado en Gestión Minera">⛏️ Curso Especializado en Gestión Minera</option>
+            </optgroup>
+            <optgroup label="🔒 Próximamente (Bloqueados temporalmente)">
+              <option value="Curso Especializado en Derecho Minero" disabled>🔒 Curso Especializado en Derecho Minero</option>
+              <option value="Curso Especializado en Especialista en Comercio Internacional: Gestión Aduanera y Logística" disabled>🔒 Curso Especializado en Especialista en Comercio Internacional: Gestión Aduanera y Logística</option>
+              <option value="Curso Especializado en Gerencia de Sistemas Integrados de Gestión HSEQ" disabled>🔒 Curso Especializado en Gerencia de Sistemas Integrados de Gestión HSEQ</option>
+              <option value="Curso Especializado en Gerencia Estratégica y Liderazgo de Equipos en la Minería" disabled>🔒 Curso Especializado en Gerencia Estratégica y Liderazgo de Equipos en la Minería</option>
+              <option value="Curso Especializado en Geología Minera" disabled>🔒 Curso Especializado en Geología Minera</option>
+              <option value="Curso Especializado en Geomecánica Subterránea y Superficial" disabled>🔒 Curso Especializado en Geomecánica Subterránea y Superficial</option>
+              <option value="Curso Especializado en Geotecnia Minera" disabled>🔒 Curso Especializado en Geotecnia Minera</option>
+              <option value="Curso Especializado en Gestión Ambiental para el Sector Minero e Industrial" disabled>🔒 Curso Especializado en Gestión Ambiental para el Sector Minero e Industrial</option>
+              <option value="Curso Especializado en Gestión de Control Operativo en Procesos Mineros" disabled>🔒 Curso Especializado en Gestión de Control Operativo en Procesos Mineros</option>
+              <option value="Curso Especializado en Gestión de Operaciones Industriales" disabled>🔒 Curso Especializado en Gestión de Operaciones Industriales</option>
+              <option value="Curso Especializado en Gestión Estratégica para Empresas Utilizando Big Data y Análisis Predictivo" disabled>🔒 Curso Especializado en Gestión Estratégica para Empresas Utilizando Big Data y Análisis Predictivo</option>
+              <option value="Curso Especializado en Gestión Logística: Compras, Inventarios y Manejo de Proveedores" disabled>🔒 Curso Especializado en Gestión Logística: Compras, Inventarios y Manejo de Proveedores</option>
+              <option value="Curso Especializado en Gestión Logística y Almacenes en Minería" disabled>🔒 Curso Especializado en Gestión Logística y Almacenes en Minería</option>
+              <option value="Curso Especializado en Gestión Logística y Proveedores en Industria y Minería" disabled>🔒 Curso Especializado en Gestión Logística y Proveedores en Industria y Minería</option>
+              <option value="Curso Especializado en Legislación Laboral y Elaboración de Planillas" disabled>🔒 Curso Especializado en Legislación Laboral y Elaboración de Planillas</option>
+              <option value="Curso Especializado en Minería 4.0 y Digitalización Minera" disabled>🔒 Curso Especializado en Minería 4.0 y Digitalización Minera</option>
+              <option value="Curso Especializado en Prevención de la Conflictividad, Riesgos Sociales y Responsabilidad Social Minera" disabled>🔒 Curso Especializado en Prevención de la Conflictividad, Riesgos Sociales y Responsabilidad Social Minera</option>
+              <option value="Curso Especializado en Seguridad Industrial" disabled>🔒 Curso Especializado en Seguridad Industrial</option>
+              <option value="Curso Especializado en Seguridad y Salud Ocupacional en la Industria y Minería" disabled>🔒 Curso Especializado en Seguridad y Salud Ocupacional en la Industria y Minería</option>
+              <option value="Curso Especializado en Supply Chain Management en Industria y Minería" disabled>🔒 Curso Especializado en Supply Chain Management en Industria y Minería</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <!-- CONDICIÓN DE PAGO (CUOTAS) -->
+        <div class="form-group">
+          <label class="form-label" for="selectModalidad">
+            <span>Condición de Pago: Total o en Cuotas</span>
+            <span class="form-hint">Selección rápida con botones</span>
+          </label>
+          <select id="selectModalidad" onchange="onModalidadChange(this.value)">
+            <option value="PAGO TOTAL" selected>💳 PAGO TOTAL (Pago Completo)</option>
+            <option value="PRIMERA CUOTA">1️⃣ PRIMERA CUOTA</option>
+            <option value="SEGUNDA CUOTA">2️⃣ SEGUNDA CUOTA</option>
+            <option value="TERCERA CUOTA">3️⃣ TERCERA CUOTA</option>
+            <option value="CUARTA CUOTA">4️⃣ CUARTA CUOTA</option>
+          </select>
+          <div class="pills-bar">
+            <button type="button" class="pill-btn active" id="btnModTotal" onclick="setModalidad('PAGO TOTAL')">Pago Total</button>
+            <button type="button" class="pill-btn" id="btnMod1" onclick="setModalidad('PRIMERA CUOTA')">1ra Cuota</button>
+            <button type="button" class="pill-btn" id="btnMod2" onclick="setModalidad('SEGUNDA CUOTA')">2da Cuota</button>
+            <button type="button" class="pill-btn" id="btnMod3" onclick="setModalidad('TERCERA CUOTA')">3ra Cuota</button>
+            <button type="button" class="pill-btn" id="btnMod4" onclick="setModalidad('CUARTA CUOTA')">4ta Cuota</button>
+          </div>
+        </div>
+
+        <!-- CONCEPTO BLOQUEADO PARA CURSOS OFICIALES / LIBRE PARA TRÁMITES -->
+        <div class="form-group">
+          <label class="form-label" for="inputConcepto">
+            <span id="labelConcepto">Concepto del Curso que verá el Alumno</span>
+            <span class="form-hint" id="hintConcepto">🔒 Bloqueado (automático)</span>
+          </label>
+          <input type="text" id="inputConcepto" value="Curso Especializado en Geometalurgia - PAGO TOTAL" readonly required oninput="actualizarPreviewWA()" class="input-locked">
+        </div>
+
+        <!-- MONTO EN DÓLARES Y PAÍS (SIN PILLS DE MONTO) -->
+        <div class="form-row">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" for="inputMonto">
+              <span>Monto en Dólares ($ USD)</span>
+              <span class="form-hint">Escribe el importe</span>
+            </label>
+            <input type="number" id="inputMonto" value="149" min="1" step="0.5" required oninput="actualizarPreviewWA()">
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" for="selectPais">
+              <span>País del Comprador</span>
+              <span class="form-hint">Cobertura global</span>
+            </label>
+            <select id="selectPais">
+              <option value="ALL" selected>🌍 Internacional (Todos los países)</option>
+              <option value="PE">🇵🇪 Perú</option>
+              <option value="CO">🇨🇴 Colombia</option>
+              <option value="CL">🇨🇱 Chile</option>
+              <option value="MX">🇲🇽 México</option>
+              <option value="BO">🇧🇴 Bolivia</option>
+              <option value="EC">🇪🇨 Ecuador</option>
+              <option value="AR">🇦🇷 Argentina</option>
+              <option value="PA">🇵🇦 Panamá</option>
+              <option value="CR">🇨🇷 Costa Rica</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit" id="btnGenerar">
+          <span>⚡ Generar Enlace Oficial en dLocal Go</span>
+        </button>
+      </form>
+
+      <!-- RESULTADO DEL ENLACE GENERADO (APARECE AL GENERAR) -->
+      <div class="result-box" id="boxResultado" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+          <span style="font-size: 0.82rem; font-weight: 800; color: var(--accent-green); text-transform: uppercase; letter-spacing: 0.5px;">
+            ✅ Enlace Oficial Generado en dLocal Go
+          </span>
+          <span class="badge badge-active" id="badgeModalidadResultado">PAGO TOTAL</span>
+        </div>
+
+        <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+          <input type="text" id="resInputUrl" readonly value="" style="flex: 1; padding: 10px 14px; background: var(--card-bg); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; border: 1px solid var(--input-border); border-radius: 8px; color: var(--text-main);">
+        </div>
+
+        <div class="result-actions-grid">
+          <button type="button" class="btn-res-action btn-res-copy" onclick="copiarLinkGenerado()">
+            📋 Copiar Enlace
+          </button>
+          <button type="button" class="btn-res-action btn-res-wa" onclick="abrirWhatsApp()">
+            🟢 Enviar WhatsApp
+          </button>
+          <button type="button" class="btn-res-action btn-res-test" onclick="probarCheckout()">
+            👁️ Abrir Pasarela ↗️
+          </button>
+        </div>
+
+        <!-- MENSAJE DE WHATSAPP -->
+        <div class="wa-card" id="resWaText">
+          ...
+        </div>
+      </div>
+    </main>
+
+    <!-- SECCIÓN 1: HISTORIAL DE ENLACES ACTIVOS -->
+    <section class="history-card">
+      <div class="card-header">
+        <div>
+          <h2 class="card-title">Registro de Enlaces Activos</h2>
+          <p class="card-subtitle">Enlaces reales de producción creados desde el 19 de Noviembre en dLocal Go.</p>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button type="button" class="btn-secondary" onclick="exportarCSV()">📥 Exportar CSV</button>
+          <button type="button" class="btn-secondary" onclick="cargarHistorial()">🔄 Actualizar</button>
+        </div>
+      </div>
+
+      <div class="history-toolbar">
+        <input type="text" class="search-input" id="inputFiltro" placeholder="Buscar por curso o cuota..." oninput="filtrarHistorial(this.value)">
+        <span style="font-size: 0.78rem; color: var(--text-muted);" id="txtTotalLinks">Cargando enlaces...</span>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Concepto / Programa</th>
+              <th>Modalidad</th>
+              <th>Monto</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tablaHistorial">
+            <tr>
+              <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 24px;">Cargando historial de enlaces...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 2: PAGOS Y VENTAS EN TIEMPO REAL DIRECTO DESDE DLOCAL GO -->
+    <section class="history-card">
+      <div class="card-header">
+        <div>
+          <h2 class="card-title">💰 Ventas & Pagos en Tiempo Real</h2>
+          <p class="card-subtitle">Transacciones reales de alumnos registradas directamente en dLocal Go (Producción Oficial).</p>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button type="button" class="btn-secondary" onclick="exportarPagosCSV()">📥 Exportar CSV</button>
+          <button type="button" class="btn-secondary" onclick="cargarPagos()">🔄 Actualizar Pagos</button>
+        </div>
+      </div>
+
+      <div class="history-toolbar">
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; flex: 1;">
+          <input type="text" class="search-input" id="inputFiltroPagos" placeholder="Buscar por alumno, correo o concepto..." oninput="filtrarPagos()" style="flex: 1; min-width: 260px;">
+          <select id="selectFiltroEstado" onchange="filtrarPagos()" style="max-width: 200px; padding: 8px 12px; font-size: 0.82rem;">
+            <option value="PAID" selected>🟢 Pagados (PAID)</option>
+            <option value="ALL">Todos los Estados</option>
+            <option value="PENDING">🟡 Pendientes (PENDING)</option>
+            <option value="CANCELLED">🔴 Cancelados / Rechazados</option>
+          </select>
+        </div>
+        <span style="font-size: 0.78rem; color: var(--text-muted);" id="txtTotalPagos">Cargando transacciones...</span>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Alumno</th>
+              <th>Contacto</th>
+              <th>Concepto / Curso</th>
+              <th>Monto</th>
+              <th>Método</th>
+              <th>Estado</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody id="tablaPagos">
+            <tr>
+              <td colspan="8" style="text-align: center; color: var(--text-muted); padding: 24px;">Cargando pagos desde dLocal Go...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // Variables de Estado
+    let currentTipo = 'curso';
+    let lastUrl = '';
+    let allLinks = [];
+
+    // GESTIÓN DE TEMA (POR DEFECTO BLANCO CORPORATIVO / LIGHT)
+    function aplicarTema(tema) {
+      document.documentElement.setAttribute('data-theme', tema);
+      try {
+        localStorage.setItem('edumin_theme_pref', tema);
+      } catch (e) {}
+
+      const icon = document.getElementById('themeToggleIcon');
+      const text = document.getElementById('themeToggleText');
+      if (tema === 'dark') {
+        if (icon) icon.innerText = '☀️';
+        if (text) text.innerText = 'Claro';
+      } else {
+        if (icon) icon.innerText = '🌙';
+        if (text) text.innerText = 'Oscuro';
+      }
+    }
+
+    function toggleTema() {
+      const actual = document.documentElement.getAttribute('data-theme') || 'light';
+      const nuevo = (actual === 'dark') ? 'light' : 'dark';
+      aplicarTema(nuevo);
+    }
+
+    // Inicialización
+    document.addEventListener('DOMContentLoaded', () => {
+      let temaInicial = 'light';
+      try {
+        const guardado = localStorage.getItem('edumin_theme_pref');
+        if (guardado === 'dark' || guardado === 'light') {
+          temaInicial = guardado;
+        }
+      } catch (e) {}
+
+      aplicarTema(temaInicial);
+      setTipoProducto('curso');
+      cargarHistorial();
+      cargarPagos();
+    });
+
+    // CAMBIO DE TIPO DE PRODUCTO
+    function setTipoProducto(tipo) {
+      currentTipo = tipo;
+      const optCurso = document.getElementById('optTipoCurso');
+      const optCert = document.getElementById('optTipoCert');
+      const grpCurso = document.getElementById('grpCursoSelector');
+      const boxNotice = document.getElementById('boxCertNotice');
+      const labelConcepto = document.getElementById('labelConcepto');
+      const hintConcepto = document.getElementById('hintConcepto');
+      const input = document.getElementById('inputConcepto');
+
+      if (tipo === 'curso') {
+        optCurso.classList.add('active');
+        optCert.classList.remove('active');
+        grpCurso.style.display = 'block';
+        boxNotice.style.display = 'none';
+        labelConcepto.innerText = 'Concepto del Curso que verá el Alumno';
+        if (hintConcepto) hintConcepto.innerHTML = '🔒 Bloqueado (automático)';
+        input.readOnly = true;
+        input.classList.add('input-locked');
+        actualizarConceptoFinal();
+      } else {
+        optCurso.classList.remove('active');
+        optCert.classList.add('active');
+        grpCurso.style.display = 'none';
+        boxNotice.style.display = 'block';
+        labelConcepto.innerText = 'Concepto de la Certificación / Trámite';
+        if (hintConcepto) hintConcepto.innerHTML = '✏️ Editable libremente';
+        input.readOnly = false;
+        input.classList.remove('input-locked');
+        const mod = document.getElementById('selectModalidad').value;
+        input.value = `Certificación Profesional Especializada - ${mod}`;
+        actualizarPreviewWA();
+      }
+    }
+
+    // GESTIÓN DE MODALIDAD (CUOTAS)
+    function onModalidadChange(val) {
+      setModalidad(val);
+    }
+
+    function setModalidad(mod) {
+      document.getElementById('selectModalidad').value = mod;
+
+      const map = {
+        'PAGO TOTAL': 'btnModTotal',
+        'PRIMERA CUOTA': 'btnMod1',
+        'SEGUNDA CUOTA': 'btnMod2',
+        'TERCERA CUOTA': 'btnMod3',
+        'CUARTA CUOTA': 'btnMod4'
+      };
+
+      Object.keys(map).forEach(k => {
+        const btn = document.getElementById(map[k]);
+        if (btn) {
+          if (k === mod) btn.classList.add('active');
+          else btn.classList.remove('active');
+        }
+      });
+
+      actualizarConceptoFinal();
+    }
+
+    function actualizarConceptoFinal() {
+      const input = document.getElementById('inputConcepto');
+      const mod = document.getElementById('selectModalidad').value;
+
+      if (currentTipo === 'curso') {
+        const cursoBase = document.getElementById('selectCurso').value;
+        input.value = `${cursoBase} - ${mod}`;
+      } else {
+        let base = input.value.split(' - ')[0] || 'Certificación Profesional Especializada';
+        input.value = `${base} - ${mod}`;
+      }
+      actualizarPreviewWA();
+    }
+
+    function actualizarPreviewWA() {
+      const elWa = document.getElementById('resWaText');
+      if (elWa) elWa.innerText = buildWhatsAppTexto();
+    }
+
+    function buildWhatsAppTexto(url) {
+      const concepto = document.getElementById('inputConcepto').value.trim();
+      const mod = document.getElementById('selectModalidad').value;
+      const monto = document.getElementById('inputMonto').value || '149';
+      const link = url || lastUrl || '[ENLACE DE PAGO]';
+
+      let postPago = currentTipo === 'curso'
+        ? 'Una vez realizado el pago, tu acceso al Campus Virtual Q10 queda habilitado de inmediato.'
+        : 'Una vez realizado el pago, envíame tu comprobante por este medio para proceder con la emisión correspondiente.';
+
+      return `¡Hola! 👋 Te saluda el Área Comercial de EDUMIN.\n\nDe acuerdo a lo conversado, aquí tienes tu enlace oficial y seguro para realizar tu pago de:\n🎓 *${concepto}*\n📋 *Modalidad:* Asincrónica\n\n💳 *Monto:* $${monto} USD\n🌍 *Acceso Internacional:* Válido para tarjeta de crédito/débito y banca local en tu país.\n🔗 *Link de Pago Oficial:* ${link}\n\n${postPago} ¡Cualquier consulta estamos a tu disposición! 🚀`;
+    }
+
+    // GENERAR LINK EN DLOCAL GO
+    async function generarLink(e) {
+      e.preventDefault();
+
+      const btn = document.getElementById('btnGenerar');
+      btn.disabled = true;
+      btn.innerHTML = '<span>⏳ Generando enlace en dLocal Go...</span>';
+
+      const concepto = document.getElementById('inputConcepto').value.trim();
+      const modalidad = document.getElementById('selectModalidad').value;
+      const monto = Number(document.getElementById('inputMonto').value);
+      const pais = document.getElementById('selectPais').value;
+
+      try {
+        const payload = {
+          description: concepto,
+          amount: monto,
+          currency: 'USD',
+          country: pais,
+          campaign: 'Venta Asesor EDUMIN',
+          modalidad: modalidad,
+          tipoProducto: currentTipo,
+          environment: 'production'
+        };
+
+        const res = await fetch('/api/create-recurring-link', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+
+        if (data.success && data.url) {
+          lastUrl = data.url;
+
+          // Guardar en localStorage
+          guardarEnStorage({
+            id: 'LNK-' + Date.now(),
+            date: new Date().toISOString(),
+            program: concepto,
+            modalidad: modalidad,
+            tipoProducto: currentTipo,
+            tieneAutomatizacion: currentTipo === 'curso',
+            amount: monto,
+            currency: 'USD',
+            environment: 'production',
+            url: data.url
+          });
+
+          // Mostrar resultado
+          document.getElementById('resInputUrl').value = data.url;
+          document.getElementById('badgeModalidadResultado').innerText = modalidad;
+          document.getElementById('resWaText').innerText = buildWhatsAppTexto(data.url);
+
+          const box = document.getElementById('boxResultado');
+          box.style.display = 'block';
+          box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+          cargarHistorial();
+        } else {
+          alert('Error: ' + (data.error || 'No se pudo generar el enlace en dLocal Go'));
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Error de conexión con el servidor.');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<span>⚡ Generar Enlace Oficial en dLocal Go</span>';
+      }
+    }
+
+    function copiarLinkGenerado() {
+      if (!lastUrl) return;
+      navigator.clipboard.writeText(lastUrl).then(() => {
+        alert('✅ Enlace oficial copiado al portapapeles');
+      });
+    }
+
+    function abrirWhatsApp() {
+      if (!lastUrl) return;
+      const msg = encodeURIComponent(buildWhatsAppTexto(lastUrl));
+      window.open(`https://wa.me/?text=${msg}`, '_blank');
+    }
+
+    function probarCheckout() {
+      if (lastUrl) window.open(lastUrl, '_blank');
+    }
+
+    function guardarEnStorage(item) {
+      try {
+        let lista = JSON.parse(localStorage.getItem('edumin_links_history') || '[]');
+        lista.unshift(item);
+        localStorage.setItem('edumin_links_history', JSON.stringify(lista.slice(0, 50)));
+      } catch (e) {}
+    }
+
+    // HISTORIAL: SOLO LINKS ACTIVOS DE PRODUCCIÓN CREADOS DESDE EL 19 DE NOVIEMBRE
+    const EXCLUDED_IDS = new Set([
+      'oxIKtFRVNlGbxSRqYYh2P6zBskEgncn2',
+      'T6MBPv9LdorjYYqsNfCpiqGc6gLrUTwo',
+      'u51qsUe8OLaKYJpG4b70YOjBt00ad82X',
+      'U7pZBjCqfmuSdo9vPDFHK9gRRokfylkm',
+      'wBMWyAZRG10ZqBMyVW8vKhC4FS3w1I6W',
+      'cUvol5cB7IzLUEGXJhxs5YY716LDtIiB',
+      'JlWJzyDqfArXmhH2tCf8JS4av3hLaJhQ',
+      'G92q7Fj1X1w40RiC0myJb5bg0FzV4DL6',
+      'bSGfNYPks1bfcx47wvtz6L8MPD5t6BWL',
+      'FZTktq4WqIVR1kfR3OJI1LGB0ZvoZqy6'
+    ]);
+
+    function esLinkActivoNov19(l) {
+      if (!l || !l.url) return false;
+      if (l.enabled === false) return false;
+      if (l.environment === 'sandbox' || l.url.includes('-sbx')) return false;
+      if (l.id && EXCLUDED_IDS.has(l.id)) return false;
+      if (l.date) {
+        const d = new Date(l.date);
+        if (d < new Date('2026-11-19T00:00:00')) return false;
+      }
+      return true;
+    }
+
+    async function cargarHistorial() {
+      try {
+        let server = [];
+        try {
+          const res = await fetch('/api/links-history');
+          const data = await res.json();
+          if (data.success && data.links) {
+            server = data.links.filter(esLinkActivoNov19);
+          }
+        } catch (_) {}
+
+        let local = [];
+        try {
+          local = JSON.parse(localStorage.getItem('edumin_links_history') || '[]');
+          local = local.filter(esLinkActivoNov19);
+          localStorage.setItem('edumin_links_history', JSON.stringify(local));
+        } catch (_) {}
+
+        const map = new Map();
+        [...server, ...local].forEach(item => {
+          if (item && item.url && !map.has(item.url)) {
+            map.set(item.url, item);
+          }
+        });
+
+        allLinks = Array.from(map.values()).sort((a, b) => new Date(b.date) - new Date(a.date));
+        renderTabla(allLinks);
+      } catch (err) {
+        console.error('Error cargando historial:', err);
+      }
+    }
+
+    function renderTabla(lista) {
+      const tbody = document.getElementById('tablaHistorial');
+      const txtCount = document.getElementById('txtTotalLinks');
+      const validos = (lista || []).filter(esLinkActivoNov19);
+
+      if (txtCount) txtCount.innerText = `${validos.length} enlaces activos registrados`;
+
+      if (!validos || validos.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 24px;">No hay enlaces activos registrados a partir del 19 de Noviembre.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = validos.map(l => {
+        const fStr = new Date(l.date).toLocaleDateString('es-PE', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+        const mod = l.modalidad || (l.program?.includes('CUOTA') ? l.program.split(' - ')[1] : 'PAGO TOTAL');
+        const isAuto = l.tieneAutomatizacion !== false && l.tipoProducto !== 'certificacion';
+        const badgeTipo = isAuto ? `<span class="badge badge-active">Auto Q10</span>` : `<span class="badge badge-manual">Manual</span>`;
+
+        return `
+          <tr>
+            <td style="white-space: nowrap; color: var(--text-muted);">${fStr}</td>
+            <td style="font-weight: 700; max-width: 280px;">${l.program}</td>
+            <td><span class="badge badge-cuota">${mod}</span></td>
+            <td style="font-weight: 800; color: var(--accent-green); white-space: nowrap;">$${l.amount} ${l.currency || 'USD'}</td>
+            <td style="white-space: nowrap;"><span class="badge badge-active">🟢 Activo</span> ${badgeTipo}</td>
+            <td style="white-space: nowrap;">
+              <button class="btn-mini" onclick="copiarTexto('${l.url}')" title="Copiar Link">📋 Copiar</button>
+              <button class="btn-mini btn-mini-wa" onclick="reenviarWA('${encodeURIComponent(JSON.stringify(l))}')" title="Enviar WhatsApp">🟢 WhatsApp</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function filtrarHistorial(query) {
+      const q = query.toLowerCase().trim();
+      if (!q) {
+        renderTabla(allLinks);
+        return;
+      }
+      const filtrados = allLinks.filter(l => 
+        (l.program && l.program.toLowerCase().includes(q)) ||
+        (l.modalidad && l.modalidad.toLowerCase().includes(q))
+      );
+      renderTabla(filtrados);
+    }
+
+    function reenviarWA(jsonStr) {
+      try {
+        const l = JSON.parse(decodeURIComponent(jsonStr));
+        const concepto = l.program || 'Curso Especializado';
+        const monto = l.amount || 149;
+        const mod = l.modalidad || 'PAGO TOTAL';
+        const msg = `¡Hola! 👋 Te saluda el Área Comercial de EDUMIN.\n\nDe acuerdo a lo conversado, aquí tienes tu enlace oficial para realizar tu pago de:\n🎓 *${concepto}*\n📋 *Modalidad:* Asincrónica\n\n💳 *Monto:* $${monto} USD\n🔗 *Link de Pago Oficial:* ${l.url}\n\n¡Cualquier consulta estamos a tu disposición! 🚀`;
+        window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+      } catch (e) {}
+    }
+
+    function copiarTexto(txt) {
+      navigator.clipboard.writeText(txt).then(() => {
+        alert('✅ Enlace copiado al portapapeles');
+      });
+    }
+
+    function exportarCSV() {
+      if (!allLinks || allLinks.length === 0) {
+        alert('No hay registros para exportar.');
+        return;
+      }
+      let csv = 'Fecha,Programa,Modalidad,Monto,Moneda,Automatizacion,URL\n';
+      allLinks.forEach(l => {
+        const isAuto = l.tieneAutomatizacion !== false && l.tipoProducto !== 'certificacion' ? 'SI' : 'NO';
+        csv += `"${l.date}","${(l.program || '').replace(/"/g, '""')}","${l.modalidad || 'PAGO TOTAL'}","${l.amount}","${l.currency || 'USD'}","${isAuto}","${l.url}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `enlaces_edumin_${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click();
+    }
+
+    // ==========================================
+    // GESTIÓN DE VENTAS Y PAGOS REALES DLOCAL GO
+    // ==========================================
+    let allPayments = [];
+
+    async function cargarPagos() {
+      try {
+        const tbody = document.getElementById('tablaPagos');
+        const txtTotal = document.getElementById('txtTotalPagos');
+        if (txtTotal) txtTotal.innerText = 'Consultando dLocal Go...';
+
+        const res = await fetch('/api/payments-history');
+        const data = await res.json();
+
+        if (data.success && Array.isArray(data.payments)) {
+          allPayments = data.payments;
+          filtrarPagos();
+        } else {
+          tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 24px;">No se pudieron cargar los pagos de dLocal Go.</td></tr>';
+        }
+      } catch (err) {
+        console.error('Error cargando pagos:', err);
+      }
+    }
+
+    function renderTablaPagos(lista) {
+      const tbody = document.getElementById('tablaPagos');
+      const txtTotal = document.getElementById('txtTotalPagos');
+      if (txtTotal) {
+        const estadoSel = document.getElementById('selectFiltroEstado')?.value;
+        const etiqueta = estadoSel === 'PAID' ? 'pagos confirmados' : 'transacciones';
+        txtTotal.innerText = `${lista.length} ${etiqueta} (${allPayments.length} en total)`;
+      }
+
+      if (!lista || lista.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 24px;">No hay pagos registrados con los filtros seleccionados.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = lista.map(p => {
+        const fechaStr = p.created_date 
+          ? new Date(p.created_date).toLocaleDateString('es-PE', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }) 
+          : '-';
+
+        let badgeClass = 'badge-pending';
+        let badgeText = '🟡 ' + p.status;
+        if (p.status === 'PAID') {
+          badgeClass = 'badge-paid';
+          badgeText = '🟢 PAGADO';
+        } else if (p.status === 'CANCELLED' || p.status === 'REJECTED') {
+          badgeClass = 'badge-cancelled';
+          badgeText = '🔴 ' + p.status;
+        } else if (p.status === 'PENDING') {
+          badgeClass = 'badge-pending';
+          badgeText = '🟡 PENDIENTE';
+        }
+
+        const cleanPhone = (p.payer.phone || '').replace(/[^0-9+]/g, '');
+        const waMsg = encodeURIComponent(`¡Hola ${p.payer.name}! 👋 Te saluda el Área Comercial de EDUMIN con respecto a tu orden de ${p.description}.`);
+        const waBtn = cleanPhone 
+          ? `<a href="https://wa.me/${cleanPhone.replace('+', '')}?text=${waMsg}" target="_blank" class="btn-mini btn-mini-wa" style="text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="Chat WhatsApp Alumno">🟢 WA</a>`
+          : '-';
+
+        return `
+          <tr>
+            <td style="white-space: nowrap; color: var(--text-muted); font-size: 0.78rem;">${fechaStr}</td>
+            <td>
+              <div style="font-weight: 700; color: var(--text-main);">${p.payer.name}</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted);">${p.payer.email || '-'}</div>
+            </td>
+            <td>
+              <div style="font-weight: 600; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;">${p.payer.phone || '-'}</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted);">${p.payer.document} (${p.payer.country || p.country})</div>
+            </td>
+            <td style="font-weight: 600; max-width: 220px; font-size: 0.78rem;">${p.description}</td>
+            <td style="font-weight: 800; color: var(--accent-green); white-space: nowrap;">$${p.amount} ${p.currency}</td>
+            <td style="white-space: nowrap; font-size: 0.74rem; color: var(--text-muted);">${p.payment_method_type}</td>
+            <td style="white-space: nowrap;"><span class="badge ${badgeClass}">${badgeText}</span></td>
+            <td style="white-space: nowrap;">${waBtn}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function filtrarPagos() {
+      const q = (document.getElementById('inputFiltroPagos')?.value || '').toLowerCase().trim();
+      const statusFilter = document.getElementById('selectFiltroEstado')?.value || 'ALL';
+
+      let filtrados = allPayments;
+
+      if (statusFilter !== 'ALL') {
+        filtrados = filtrados.filter(p => (p.status || '').toUpperCase() === statusFilter.toUpperCase());
+      }
+
+      if (q) {
+        filtrados = filtrados.filter(p => 
+          (p.payer.name && p.payer.name.toLowerCase().includes(q)) ||
+          (p.payer.email && p.payer.email.toLowerCase().includes(q)) ||
+          (p.payer.phone && p.payer.phone.includes(q)) ||
+          (p.description && p.description.toLowerCase().includes(q)) ||
+          (p.id && p.id.toLowerCase().includes(q))
+        );
+      }
+
+      renderTablaPagos(filtrados);
+    }
+
+    function exportarPagosCSV() {
+      if (!allPayments || allPayments.length === 0) {
+        alert('No hay transacciones para exportar.');
+        return;
+      }
+      let csv = 'ID,Fecha,Alumno,Email,Telefono,Documento,Pais,Concepto,Monto,Moneda,Metodo,Estado\n';
+      allPayments.forEach(p => {
+        csv += `"${p.id}","${p.created_date}","${(p.payer.name || '').replace(/"/g, '""')}","${p.payer.email}","${p.payer.phone}","${p.payer.document}","${p.country}","${(p.description || '').replace(/"/g, '""')}","${p.amount}","${p.currency}","${p.payment_method_type}","${p.status}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `pagos_dlocalgo_${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click();
+    }
+  </script>
+</body>
+</html>
